@@ -1,5 +1,6 @@
 package com.ryanpconnors.artthief;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,12 @@ import com.ryanpconnors.artthief.vote.VoteFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements UpdateArtFragment.OnUpdateArtFragmentInteractionListener,
+        CompareArtFragment.OnCompareArtFragmentInteractionListener,
+        RateArtFragment.OnRateArtFragmentInteractionListener,
+        ShowFragment.OnShowFragmentInteractionListener,
+        VoteFragment.OnVoteFragmentInteractionListener {
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -117,4 +123,31 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTitleList.add(title);
         }
     }
+
+
+    /****************************************************************************
+     * Fragment Communication Methods
+     * http://developer.android.com/training/basics/fragments/communicating.html
+     ****************************************************************************/
+
+    public void onUpdateArtFragmentInteraction(Uri uri) {
+        // communicate with the UpdateArtFragment
+    }
+
+    public void onCompareArtFragmentInteraction(Uri uri) {
+        // communicate with the CompareArtFragment
+    }
+
+    public void onRateArtFragmentInteraction(Uri uri) {
+        // communicate with the RateArtFragment
+    }
+
+    public void onShowFragmentInteraction(Uri uri) {
+        // communicate with the ShowFragment
+    }
+
+    public void onVoteFragmentInteraction(Uri uri) {
+        // communicate with the VoteFragment
+    }
+
 }

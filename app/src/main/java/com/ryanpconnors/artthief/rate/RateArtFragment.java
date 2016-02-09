@@ -14,12 +14,13 @@ import com.ryanpconnors.artthief.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RateArtFragment.OnFragmentInteractionListener} interface
+ * {@link RateArtFragment.OnRateArtFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link RateArtFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class RateArtFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +30,7 @@ public class RateArtFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnRateArtFragmentInteractionListener mListener;
 
     public RateArtFragment() {
         // Required empty public constructor
@@ -72,15 +73,15 @@ public class RateArtFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onRateArtFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnRateArtFragmentInteractionListener) {
+            mListener = (OnRateArtFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -103,8 +104,9 @@ public class RateArtFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnRateArtFragmentInteractionListener {
+
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onRateArtFragmentInteraction(Uri uri);
     }
 }

@@ -13,7 +13,7 @@ import com.ryanpconnors.artthief.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ShowFragment.OnFragmentInteractionListener} interface
+ * {@link ShowFragment.OnShowFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ShowFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -29,7 +29,7 @@ public class ShowFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnShowFragmentInteractionListener mListener;
 
     public ShowFragment() {
         // Required empty public constructor
@@ -74,15 +74,15 @@ public class ShowFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onShowFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnShowFragmentInteractionListener) {
+            mListener = (OnShowFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -105,8 +105,8 @@ public class ShowFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnShowFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onShowFragmentInteraction(Uri uri);
     }
 }
