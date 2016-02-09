@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Art Thief</string>
+    <string name="update_art_title">Update Art</string>
+    <string name="rate_art_title">Rate Art</string>
+    <string name="compare_art_title">Compare Art</string>
+    <string name="the_show_title">The Show</string>
+    <string name="vote_title">Vote</string>
+    <string name="action_settings">Settings</string>
 </resources>

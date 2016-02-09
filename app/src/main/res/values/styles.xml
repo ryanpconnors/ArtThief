@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Source: http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/ -->
+    <style name="TabbedTheme" parent="TabbedTheme.Base">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TabbedTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TabbedTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="TabbedTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 </resources>
