@@ -13,12 +13,12 @@ import com.ryanpconnors.artthief.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TheShowFragment.OnFragmentInteractionListener} interface
+ * {@link ShowFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TheShowFragment#newInstance} factory method to
+ * Use the {@link ShowFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TheShowFragment extends Fragment {
+public class ShowFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +31,7 @@ public class TheShowFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TheShowFragment() {
+    public ShowFragment() {
         // Required empty public constructor
     }
 
@@ -39,10 +39,10 @@ public class TheShowFragment extends Fragment {
      * Create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment TheShowFragment.
+     * @return A new instance of fragment ShowFragment.
      */
-    public static TheShowFragment newInstance() {
-        TheShowFragment fragment = new TheShowFragment();
+    public static ShowFragment newInstance() {
+        ShowFragment fragment = new ShowFragment();
 
         // For arguments passed into the new instance
 //        Bundle args = new Bundle();

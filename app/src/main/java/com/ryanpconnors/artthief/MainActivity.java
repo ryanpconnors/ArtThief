@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.RateArtFragment;
-import com.ryanpconnors.artthief.show.TheShowFragment;
+import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtFragment;
 import com.ryanpconnors.artthief.vote.VoteFragment;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(UpdateArtFragment.newInstance(), getString(R.string.update_art_title));
         adapter.addFragment(RateArtFragment.newInstance(), getString(R.string.rate_art_title));
         adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
-        adapter.addFragment(TheShowFragment.newInstance(), getString(R.string.the_show_title));
+        adapter.addFragment(ShowFragment.newInstance(), getString(R.string.the_show_title));
         adapter.addFragment(VoteFragment.newInstance(), getString(R.string.vote_title));
 
         viewPager.setAdapter(adapter);
