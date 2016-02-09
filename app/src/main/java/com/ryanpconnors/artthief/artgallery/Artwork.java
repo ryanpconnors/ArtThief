@@ -41,9 +41,9 @@ public class Artwork {
     }
 
 
-    /**
+    /**********
      * Getters
-     */
+     **********/
 
     public int getArtThiefID() {
         return mArtThiefID;
@@ -89,9 +89,9 @@ public class Artwork {
         return mStars;
     }
 
-    /**
+    /**********
      * Setters
-     */
+     **********/
 
     public void setStars(int stars) {
 
