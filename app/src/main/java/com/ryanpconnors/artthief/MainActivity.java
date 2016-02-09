@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the sections of the activity.
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new UpdateArtFragment(), getString(R.string.update_art_title));
-        adapter.addFragment(new RateArtFragment(), getString(R.string.rate_art_title));
-        adapter.addFragment(new CompareArtFragment(), getString(R.string.compare_art_title));
-        adapter.addFragment(new TheShowFragment(), getString(R.string.the_show_title));
-        adapter.addFragment(new VoteFragment(), getString(R.string.vote_title));
+        adapter.addFragment(UpdateArtFragment.newInstance(), getString(R.string.update_art_title));
+        adapter.addFragment(RateArtFragment.newInstance(), getString(R.string.rate_art_title));
+        adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
+        adapter.addFragment(TheShowFragment.newInstance(), getString(R.string.the_show_title));
+        adapter.addFragment(VoteFragment.newInstance(), getString(R.string.vote_title));
 
         viewPager.setAdapter(adapter);
     }
