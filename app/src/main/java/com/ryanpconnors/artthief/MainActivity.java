@@ -22,8 +22,6 @@ import com.ryanpconnors.artthief.vote.VoteFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-// This is a test
-
 public class MainActivity extends AppCompatActivity
         implements UpdateArtFragment.OnUpdateArtFragmentInteractionListener,
         CompareArtFragment.OnCompareArtFragmentInteractionListener,
