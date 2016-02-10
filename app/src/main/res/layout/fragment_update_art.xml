@@ -3,14 +3,54 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
                 tools:context=".update.UpdateArtFragment">
 
     <TextView
+        android:id="@+id/update_art_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/update_art_title"
+        android:text="@string/update_art_header"
         android:textSize="40dp"
-        android:textStyle="bold"
+        android:textStyle="normal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textColorPrimary"/>
+
+    <TextView
+        android:id="@+id/update_art_sub_header"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/update_art_header"
+        android:layout_centerHorizontal="true"
+        android:text="@string/update_art_sub_header"
+        android:textSize="18dp"
+        android:textStyle="normal"
+        android:textColor="@color/textColorSecondary"
+        android:textAlignment="center"
         android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/last_update_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/update_art_sub_header"
+        android:paddingTop="60dp"
+        android:text="@string/update_art_last_update"
+        android:textSize="18dp"
+        android:textStyle="normal"
+        android:textColor="@color/textColorThirdly"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/update_artworks_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_artworks_button_label"
+        android:textColor="@color/textColorPrimary"
+        android:backgroundTint="@color/colorPrimaryLight"
+        android:layout_below="@id/last_update_text"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

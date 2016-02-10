@@ -5,6 +5,7 @@
     <color name="colorPrimaryLight">#007F7B</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#01A6A0</color>
+    <color name="textColorThirdly">#829696</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#01A6A0</color>
