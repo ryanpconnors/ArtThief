@@ -10,8 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.RateArtFragment;
@@ -33,6 +35,12 @@ public class MainActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
+//    private int [] mTabIcons = {
+//            R.drawable.ic_update_art,
+//            R.drawable.ic_update_art,
+//            R.drawable.ic_update_art,
+//            R.drawable.ic_update_art
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        setupTabIcons();
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -66,6 +76,35 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(VoteFragment.newInstance(), getString(R.string.vote_title));
 
         viewPager.setAdapter(adapter);
+    }
+
+    private void setupTabIcons() {
+        TextView updateTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        updateTab.setText(R.string.update_art_tab_label);
+        updateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_art, 0, 0);
+        mTabLayout.getTabAt(0).setCustomView(updateTab);
+
+        TextView rateTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        rateTab.setText(R.string.rate_art_tab_label);
+        rateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_art, 0, 0);
+        mTabLayout.getTabAt(1).setCustomView(rateTab);
+
+        TextView compareTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        compareTab.setText(R.string.compare_art_tab_label);
+        compareTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_art, 0, 0);
+        mTabLayout.getTabAt(2).setCustomView(compareTab);
+
+        TextView showTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        showTab.setText(R.string.the_show_tab_label);
+        showTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_art, 0, 0);
+        mTabLayout.getTabAt(3).setCustomView(showTab);
+
+        TextView voteTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        voteTab.setText(R.string.vote_tab_label);
+        voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_art, 0, 0);
+        mTabLayout.getTabAt(4).setCustomView(voteTab);
+
+        //TODO setup tIcons for remaining tabs
     }
 
 
@@ -84,12 +123,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else {
-            return super.onOptionsItemSelected(item);
-        }
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
 

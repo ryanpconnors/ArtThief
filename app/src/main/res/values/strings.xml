@@ -5,5 +5,10 @@
     <string name="compare_art_title">Compare Art</string>
     <string name="the_show_title">The Show</string>
     <string name="vote_title">Vote</string>
+    <string name="update_art_tab_label">Update</string>
+    <string name="rate_art_tab_label">Rate</string>
+    <string name="compare_art_tab_label">Compare</string>
+    <string name="the_show_tab_label">Show</string>
+    <string name="vote_tab_label">Vote</string>
     <string name="action_settings">Settings</string>
 </resources>
