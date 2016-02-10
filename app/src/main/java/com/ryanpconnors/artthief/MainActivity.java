@@ -35,13 +35,6 @@ public class MainActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-//    private int [] mTabIcons = {
-//            R.drawable.ic_update_art,
-//            R.drawable.ic_update_art,
-//            R.drawable.ic_update_art,
-//            R.drawable.ic_update_art
-//    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +96,6 @@ public class MainActivity extends AppCompatActivity
         voteTab.setText(R.string.vote_tab_label);
         voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
         mTabLayout.getTabAt(4).setCustomView(voteTab);
-
-        //TODO setup tIcons for remaining tabs
     }
 
 
