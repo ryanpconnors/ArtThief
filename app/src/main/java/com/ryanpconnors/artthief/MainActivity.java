@@ -76,27 +76,27 @@ public class MainActivity extends AppCompatActivity
     private void setupTabIcons() {
         TextView updateTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         updateTab.setText(R.string.update_art_tab_label);
-        updateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
+        updateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_update_artwork, 0, 0);
         mTabLayout.getTabAt(0).setCustomView(updateTab);
 
         TextView rateTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         rateTab.setText(R.string.rate_art_tab_label);
-        rateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
+        rateTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_rate_artwork, 0, 0);
         mTabLayout.getTabAt(1).setCustomView(rateTab);
 
         TextView compareTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         compareTab.setText(R.string.compare_art_tab_label);
-        compareTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
+        compareTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_rate_artwork, 0, 0);
         mTabLayout.getTabAt(2).setCustomView(compareTab);
 
         TextView showTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         showTab.setText(R.string.the_show_tab_label);
-        showTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
+        showTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_rate_artwork, 0, 0);
         mTabLayout.getTabAt(3).setCustomView(showTab);
 
         TextView voteTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         voteTab.setText(R.string.vote_tab_label);
-        voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grade_black_24dp, 0, 0);
+        voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_rate_artwork, 0, 0);
         mTabLayout.getTabAt(4).setCustomView(voteTab);
     }
 
