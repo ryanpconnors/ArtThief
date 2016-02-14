@@ -12,6 +12,6 @@
     <dimen name="artwork_fragment_ratingbar_padding">14dp</dimen>
     <dimen name="artwork_fragment_artwork_title_text_size">24sp</dimen>
     <dimen name="artwork_fragment_artwork_info_text_size">18sp</dimen>
-    <dimen name="artwork_fragment_info_padding_left">14dp</dimen>
+    <dimen name="artwork_fragment_info_margin_left">14dp</dimen>
     <dimen name="artwork_fragment_info_padding_bottom">14dp</dimen>
 </resources>

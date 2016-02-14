@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
+import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.RateArtFragment;
 import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtFragment;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity
         CompareArtFragment.OnCompareArtFragmentInteractionListener,
         RateArtFragment.OnRateArtFragmentInteractionListener,
         ShowFragment.OnShowFragmentInteractionListener,
-        VoteFragment.OnVoteFragmentInteractionListener {
+        VoteFragment.OnVoteFragmentInteractionListener,
+        ArtWorkFragment.OnArtWorkFragmentInteractionListener {
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -63,7 +65,10 @@ public class MainActivity extends AppCompatActivity
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(UpdateArtFragment.newInstance(), getString(R.string.update_art_title));
-        adapter.addFragment(RateArtFragment.newInstance(), getString(R.string.rate_art_title));
+
+//        adapter.addFragment(RateArtFragment.newInstance(), getString(R.string.rate_art_title));
+        adapter.addFragment(ArtWorkFragment.newInstance(), getString(R.string.rate_art_title));
+
         adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
         adapter.addFragment(ShowFragment.newInstance(), getString(R.string.the_show_title));
         adapter.addFragment(VoteFragment.newInstance(), getString(R.string.vote_title));
@@ -176,6 +181,10 @@ public class MainActivity extends AppCompatActivity
 
     public void onVoteFragmentInteraction(Uri uri) {
         // communicate with the VoteFragment
+    }
+
+    public void onArtWorkFragmentInteraction(Uri uri) {
+        // communicate with the ArtWorkFragment
     }
 
 }
