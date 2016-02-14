@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
-import com.ryanpconnors.artthief.rate.RateArtFragment;
 import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtFragment;
 import com.ryanpconnors.artthief.vote.VoteFragment;
@@ -28,7 +27,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements UpdateArtFragment.OnUpdateArtFragmentInteractionListener,
         CompareArtFragment.OnCompareArtFragmentInteractionListener,
-        RateArtFragment.OnRateArtFragmentInteractionListener,
         ShowFragment.OnShowFragmentInteractionListener,
         VoteFragment.OnVoteFragmentInteractionListener,
         ArtWorkFragment.OnArtWorkFragmentInteractionListener {
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity
 
         adapter.addFragment(UpdateArtFragment.newInstance(), getString(R.string.update_art_title));
 
-//        adapter.addFragment(RateArtFragment.newInstance(), getString(R.string.rate_art_title));
         adapter.addFragment(ArtWorkFragment.newInstance(), getString(R.string.rate_art_title));
 
         adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
@@ -169,10 +166,6 @@ public class MainActivity extends AppCompatActivity
 
     public void onCompareArtFragmentInteraction(Uri uri) {
         // communicate with the CompareArtFragment
-    }
-
-    public void onRateArtFragmentInteraction(Uri uri) {
-        // communicate with the RateArtFragment
     }
 
     public void onShowFragmentInteraction(Uri uri) {
