@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/artwork_large_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/thief"
+        android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/artwork_rating_bar"/>
+
+    <RatingBar
+        android:id="@id/artwork_rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:layout_above="@+id/artwork_title"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/artwork_fragment_ratingbar_padding"/>
+
+    <TextView
+        android:id="@id/artwork_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="(#) Artwork Title"
+        android:textSize="@dimen/artwork_fragment_artwork_title_text_size"
+        android:layout_above="@+id/artwork_artist"
+        android:paddingLeft="@dimen/artwork_fragment_info_padding_left"/>
+
+    <TextView
+        android:id="@id/artwork_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:text="Artist Name"
+        android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
+        android:layout_above="@+id/artwork_media"
+        android:paddingLeft="@dimen/artwork_fragment_info_padding_left"/>
+
+    <TextView
+        android:id="@id/artwork_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Media"
+        android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
+        android:paddingLeft="@dimen/artwork_fragment_info_padding_left"
+        android:paddingBottom="@dimen/artwork_fragment_info_padding_bottom"/>
+
+</RelativeLayout>

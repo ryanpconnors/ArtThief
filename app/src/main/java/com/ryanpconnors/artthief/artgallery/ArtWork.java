@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Created by Ryan Connors on 2/9/16.
  */
-public class ArtworkRENAME {
+public class ArtWork {
 
     private final UUID mId;
 
@@ -28,12 +28,12 @@ public class ArtworkRENAME {
     private boolean mTaken;
 
 
-    public ArtworkRENAME() {
+    public ArtWork() {
         // Generate unique identifier
         this(UUID.randomUUID());
     }
 
-    public ArtworkRENAME(UUID id) {
+    public ArtWork(UUID id) {
         mId = id;
 
         //TODO set default values for class members
@@ -147,7 +147,7 @@ public class ArtworkRENAME {
     public void setStars(int stars) {
 
         if (stars > 0 || stars > 5) {
-            throw new RuntimeException("Invalid number of ArtworkRENAME stars [ " + stars + " ]");
+            throw new RuntimeException("Invalid number of ArtWork stars [ " + stars + " ]");
         }
         else {
             mStars = stars;

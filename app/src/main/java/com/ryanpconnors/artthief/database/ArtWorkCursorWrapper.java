@@ -3,7 +3,7 @@ package com.ryanpconnors.artthief.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.ryanpconnors.artthief.artgallery.ArtworkRENAME;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
 
 import java.util.UUID;
 
@@ -22,9 +22,9 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
 
     /**
      * Wrapper method that returns the current artwork pointed to by this cursor
-     * @return ArtworkRENAME
+     * @return ArtWork
      */
-    public ArtworkRENAME getArtWork() {
+    public ArtWork getArtWork() {
         String uuidString = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.UUID));
         int artThiefId = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.ART_THIEF_ID));
         int showId = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SHOW_ID));
@@ -42,23 +42,23 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
         int stars = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.STARS));
         int taken = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TAKEN));
 
-        ArtworkRENAME artworkRENAME = new ArtworkRENAME(UUID.fromString(uuidString));
+        ArtWork artWork = new ArtWork(UUID.fromString(uuidString));
 
-        artworkRENAME.setArtThiefID(artThiefId);
-        artworkRENAME.setShowId(showId);
-        artworkRENAME.setTitle(title);
-        artworkRENAME.setArtist(artist);
-        artworkRENAME.setMedia(media);
-        artworkRENAME.setTags(tags);
+        artWork.setArtThiefID(artThiefId);
+        artWork.setShowId(showId);
+        artWork.setTitle(title);
+        artWork.setArtist(artist);
+        artWork.setMedia(media);
+        artWork.setTags(tags);
 
-        artworkRENAME.setSmallImageUrl(smallImageUrl);
-        artworkRENAME.setSmallImage(smallImage);
-        artworkRENAME.setLargeImageUrl(largeImageUrl);
-        artworkRENAME.setLargeImage(largeImage);
+        artWork.setSmallImageUrl(smallImageUrl);
+        artWork.setSmallImage(smallImage);
+        artWork.setLargeImageUrl(largeImageUrl);
+        artWork.setLargeImage(largeImage);
 
-        artworkRENAME.setStars(stars);
-        artworkRENAME.setTaken(taken != 0);
+        artWork.setStars(stars);
+        artWork.setTaken(taken != 0);
 
-        return artworkRENAME;
+        return artWork;
     }
 }
