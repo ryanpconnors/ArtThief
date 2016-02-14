@@ -5,10 +5,20 @@ package com.ryanpconnors.artthief.database;
  */
 public class ArtWorkDbSchema {
 
+    /**
+     * SQLite database table - Info
+     */
     public static final class InfoTable {
 
+        /**
+         * Name of this database table - info
+         */
         public static final String NAME = "info";
 
+
+        /**
+         * Columns in the database table Info
+         */
         public static final class Cols {
             public static final String UUID = "uuid";
             public static final String SHOW_YEAR = "show_year";
@@ -17,8 +27,14 @@ public class ArtWorkDbSchema {
 
     }
 
+    /**
+     * SQLite database table - Artworks
+     */
     public static final class ArtWorkTable {
 
+        /**
+         * Name of this database table - artWorks
+         */
         public static final String NAME = "artWorks";
 
         public static final class Cols {

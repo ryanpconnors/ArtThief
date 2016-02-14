@@ -36,12 +36,12 @@ public class Gallery {
         return sGallery;
     }
 
-    public void addArtWork(ArtWork artWork) {
-        ContentValues values = getContentValues(artWork);
+    public void addArtWork(ArtworkRENAME artworkRENAME) {
+        ContentValues values = getContentValues(artworkRENAME);
         mDatabase.insert(ArtWorkTable.NAME, null, values);
     }
 
-    public ArtWork getArtWork(UUID id) {
+    public ArtworkRENAME getArtWork(UUID id) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
                 ArtWorkTable.Cols.UUID + " = ?",
                 new String[]{id.toString()}
@@ -60,50 +60,50 @@ public class Gallery {
         }
     }
 
-    public List<ArtWork> getArtWorks() {
-        List<ArtWork> artWorks = new ArrayList<>();
+    public List<ArtworkRENAME> getArtWorks() {
+        List<ArtworkRENAME> artworkRENAMEs = new ArrayList<>();
 
         ArtWorkCursorWrapper cursor = queryArtWorks(null, null);
 
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                artWorks.add(cursor.getArtWork());
+                artworkRENAMEs.add(cursor.getArtWork());
                 cursor.moveToNext();
             }
         }
         finally {
             cursor.close();
         }
-        return artWorks;
+        return artworkRENAMEs;
     }
 
-    public void updateArtWork(ArtWork artWork) {
-        String uuidString = artWork.getId().toString();
-        ContentValues values = getContentValues(artWork);
+    public void updateArtWork(ArtworkRENAME artworkRENAME) {
+        String uuidString = artworkRENAME.getId().toString();
+        ContentValues values = getContentValues(artworkRENAME);
         mDatabase.update(ArtWorkTable.NAME, values,
                 ArtWorkTable.Cols.UUID + " = ?",
                 new String[] { uuidString });
     }
 
-    public static ContentValues getContentValues(ArtWork artWork) {
+    public static ContentValues getContentValues(ArtworkRENAME artworkRENAME) {
         ContentValues values = new ContentValues();
-        values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
+        values.put(ArtWorkTable.Cols.UUID, artworkRENAME.getId().toString());
 
-        values.put(ArtWorkTable.Cols.ART_THIEF_ID, artWork.getArtThiefID());
-        values.put(ArtWorkTable.Cols.SHOW_ID, artWork.getShowId());
-        values.put(ArtWorkTable.Cols.TITLE, artWork.getTitle());
-        values.put(ArtWorkTable.Cols.ARTIST, artWork.getArtist());
-        values.put(ArtWorkTable.Cols.MEDIA, artWork.getMedia());
-        values.put(ArtWorkTable.Cols.TAGS, artWork.getTags());
+        values.put(ArtWorkTable.Cols.ART_THIEF_ID, artworkRENAME.getArtThiefID());
+        values.put(ArtWorkTable.Cols.SHOW_ID, artworkRENAME.getShowId());
+        values.put(ArtWorkTable.Cols.TITLE, artworkRENAME.getTitle());
+        values.put(ArtWorkTable.Cols.ARTIST, artworkRENAME.getArtist());
+        values.put(ArtWorkTable.Cols.MEDIA, artworkRENAME.getMedia());
+        values.put(ArtWorkTable.Cols.TAGS, artworkRENAME.getTags());
 
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE, artWork.getSmallImage());
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE, artWork.getLargeImage());
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artworkRENAME.getSmallImageUrl());
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE, artworkRENAME.getSmallImage());
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artworkRENAME.getLargeImageUrl());
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE, artworkRENAME.getLargeImage());
 
-        values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
-        values.put(ArtWorkTable.Cols.TAKEN, artWork.isTaken() ? 1 : 0);
+        values.put(ArtWorkTable.Cols.STARS, artworkRENAME.getStars());
+        values.put(ArtWorkTable.Cols.TAKEN, artworkRENAME.isTaken() ? 1 : 0);
 
         return values;
     }
