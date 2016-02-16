@@ -14,4 +14,5 @@
     <dimen name="artwork_fragment_artwork_info_text_size">18sp</dimen>
     <dimen name="artwork_fragment_info_margin_left">14dp</dimen>
     <dimen name="artwork_fragment_info_padding_bottom">14dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
