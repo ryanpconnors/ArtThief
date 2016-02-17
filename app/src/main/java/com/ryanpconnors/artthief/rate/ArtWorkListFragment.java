@@ -66,11 +66,14 @@ public class ArtWorkListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
+
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
+            }
+            else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
             recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(
                     Gallery.get(getActivity()).getArtWorks(),
                     mListener)
