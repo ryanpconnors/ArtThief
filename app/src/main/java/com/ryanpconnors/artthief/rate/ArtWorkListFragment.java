@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ryanpconnors.artthief.R;
-import com.ryanpconnors.artthief.rate.dummy.DummyContent;
-import com.ryanpconnors.artthief.rate.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 
 /**
  * A fragment representing a list of Items.
@@ -73,7 +71,10 @@ public class ArtWorkListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(
+                    Gallery.get(getActivity()).getArtWorks(),
+                    mListener)
+            );
         }
         return view;
     }
@@ -109,6 +110,6 @@ public class ArtWorkListFragment extends Fragment {
     public interface OnArtWorkListFragmentInteractionListener {
 
         // TODO: Update argument type and name
-        void onArtWorkListFragmentInteraction(DummyItem item);
+        void onArtWorkListFragmentInteraction(ArtWork artWork);
     }
 }

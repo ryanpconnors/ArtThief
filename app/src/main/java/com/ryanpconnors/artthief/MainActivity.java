@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
         // communicate with the ArtWorkFragment
     }
 
-    public void onArtWorkListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onArtWorkListFragmentInteraction(ArtWork artWork) {
         // communicate with the ArtWorkListFragment
     }
 

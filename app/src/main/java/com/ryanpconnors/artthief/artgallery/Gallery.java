@@ -143,7 +143,6 @@ public class Gallery {
         );
 
         return new ArtWorkCursorWrapper(cursor);
-
     }
 
 }

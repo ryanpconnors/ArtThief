@@ -7,22 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ryanpconnors.artthief.R;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment.OnArtWorkListFragmentInteractionListener;
-import com.ryanpconnors.artthief.rate.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link ArtWork} and makes a call to the
  * specified {@link OnArtWorkListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ArtWork> mValues;
     private final OnArtWorkListFragmentInteractionListener mListener;
 
-    public ArtWorkRecyclerViewAdapter(List<DummyItem> items, OnArtWorkListFragmentInteractionListener listener) {
+    public ArtWorkRecyclerViewAdapter(List<ArtWork> items, OnArtWorkListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -34,11 +34,18 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkRecy
         return new ViewHolder(view);
     }
 
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        //TODO rewrite this method for displaying ArtWork
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getTitle());
+        holder.mContentView.setText(mValues.get(position).getArtist());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +68,7 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkRecy
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public ArtWork mItem;
 
         public ViewHolder(View view) {
             super(view);
