@@ -21,12 +21,14 @@ public class ArtWork {
     private String mLargeImageUrl;
     private String mSmallImageUrl;
 
-    private byte[] mLargeImage;
+    private String mSmallImagePath;
     private byte[] mSmallImage;
+
+    private String mLargeImagePath;
+    private byte[] mLargeImage;
 
     private int mStars;
     private boolean mTaken;
-
 
     public ArtWork() {
         // Generate unique identifier
@@ -80,6 +82,14 @@ public class ArtWork {
         return mSmallImageUrl;
     }
 
+    public String getSmallImagePath() {
+        return mSmallImagePath;
+    }
+
+    public String getLargeImagePath() {
+        return mLargeImagePath;
+    }
+
     public byte[] getLargeImage() {
         return mLargeImage;
     }
@@ -130,6 +140,14 @@ public class ArtWork {
 
     public void setSmallImageUrl(String smallImageUrl) {
         mSmallImageUrl = smallImageUrl;
+    }
+
+    public void setSmallImagePath(String smallImagePath) {
+        mSmallImagePath = smallImagePath;
+    }
+
+    public void setLargeImagePath(String largeImagePath) {
+        mLargeImagePath = largeImagePath;
     }
 
     public void setLargeImage(byte[] largeImage) {

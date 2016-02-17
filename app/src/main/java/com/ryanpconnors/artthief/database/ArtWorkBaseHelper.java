@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.ArtWorkTable;
 
 /**
@@ -24,16 +25,18 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
                     " _id integer primary key autoincrement, " +
                     ArtWorkTable.Cols.UUID + ", " +
                     ArtWorkTable.Cols.ART_THIEF_ID + "," +
-                    ArtWorkTable.Cols.ARTIST + ", " +
-                    ArtWorkTable.Cols.LARGE_IMAGE + ", " +
-                    ArtWorkTable.Cols.MEDIA + ", " +
-                    ArtWorkTable.Cols.LARGE_IMAGE_URL + ", " +
                     ArtWorkTable.Cols.SHOW_ID + ", " +
-                    ArtWorkTable.Cols.SMALL_IMAGE + ", " +
-                    ArtWorkTable.Cols.SMALL_IMAGE_URL + ", " +
-                    ArtWorkTable.Cols.STARS + ", " +
-                    ArtWorkTable.Cols.TAGS + ", " +
                     ArtWorkTable.Cols.TITLE + ", " +
+                    ArtWorkTable.Cols.ARTIST + ", " +
+                    ArtWorkTable.Cols.MEDIA + ", " +
+                    ArtWorkTable.Cols.TAGS + ", " +
+                    ArtWorkTable.Cols.SMALL_IMAGE_URL + ", " +
+                    ArtWorkTable.Cols.SMALL_IMAGE_PATH + ", " +
+                    ArtWorkTable.Cols.SMALL_IMAGE_BLOB + "," +
+                    ArtWorkTable.Cols.LARGE_IMAGE_URL + ", " +
+                    ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
+                    ArtWorkTable.Cols.LARGE_IMAGE_BLOB + "," +
+                    ArtWorkTable.Cols.STARS + ", " +
                     ArtWorkTable.Cols.TAKEN +
                     ")"
         );

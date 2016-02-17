@@ -5,6 +5,7 @@ import android.database.CursorWrapper;
 
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 
+import java.sql.Blob;
 import java.util.UUID;
 
 /**
@@ -34,10 +35,14 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
         String media = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.MEDIA));
         String tags = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TAGS));
 
-        String largeImageUrl = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_URL));
         String smallImageUrl = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_URL));
-        byte[] smallImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE));
-        byte[] largeImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE));
+        String largeImageUrl = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_URL));
+
+        String smallImagePath = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_PATH));
+        String largeImagePath = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_PATH));
+
+        byte[] smallImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_BLOB));
+        byte[] largeImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_BLOB));
 
         int stars = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.STARS));
         int taken = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TAKEN));
@@ -51,9 +56,14 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
         artWork.setMedia(media);
         artWork.setTags(tags);
 
+        artWork.setSmallImagePath(smallImagePath);
+        artWork.setLargeImagePath(largeImagePath);
+
         artWork.setSmallImageUrl(smallImageUrl);
-        artWork.setSmallImage(smallImage);
         artWork.setLargeImageUrl(largeImageUrl);
+
+        //TODO determine conversion of BLOB to image and/or obtaining image from storage
+        artWork.setSmallImage(smallImage);
         artWork.setLargeImage(largeImage);
 
         artWork.setStars(stars);

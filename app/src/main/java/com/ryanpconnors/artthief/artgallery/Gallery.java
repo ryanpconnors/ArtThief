@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Gallery class for storing downloaded artworks and
+ * Gallery class for storing downloaded artworks
  * Created by Ryan Connors on 2/9/16.
  */
 public class Gallery {
@@ -41,9 +41,11 @@ public class Gallery {
             dummyArtWork.setArtist("Artist" + i);
             dummyArtWork.setMedia("Media" + i);
             dummyArtWork.setTags("Tags" + i);
+            dummyArtWork.setSmallImagePath("SmallImagePath" + i);
             dummyArtWork.setSmallImageUrl("SmallImageUrl" + i);
-            dummyArtWork.setLargeImageUrl("LargeImageUrl" + i);
             dummyArtWork.setSmallImage(null);
+            dummyArtWork.setLargeImagePath("LargeImagePath" + i);
+            dummyArtWork.setLargeImageUrl("LargeImageUrl" + i);
             dummyArtWork.setLargeImage(null);
             dummyArtWork.setTaken(false);
             dummyArtWork.setStars(i % 5);
@@ -130,9 +132,9 @@ public class Gallery {
         values.put(ArtWorkTable.Cols.TAGS, artWork.getTags());
 
         values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE, artWork.getSmallImage());
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE_BLOB, artWork.getSmallImage());
         values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE, artWork.getLargeImage());
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE_BLOB, artWork.getLargeImage());
 
         values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
         values.put(ArtWorkTable.Cols.TAKEN, artWork.isTaken() ? 1 : 0);
