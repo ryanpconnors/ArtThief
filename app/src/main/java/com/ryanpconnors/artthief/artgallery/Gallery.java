@@ -26,7 +26,34 @@ public class Gallery {
 
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase= new ArtWorkBaseHelper(mContext).getWritableDatabase();
+        mDatabase = new ArtWorkBaseHelper(mContext).getWritableDatabase();
+
+        //TODO remove call to this test method
+        addDummyArtWork();
+    }
+
+    //TODO remove this test method
+    public void addDummyArtWork() {
+
+        for (int i = 0; i < 25; i++) {
+
+            ArtWork dummyArtWork = new ArtWork();
+
+            dummyArtWork.setArtThiefID(i);
+            dummyArtWork.setShowId(i + 100);
+            dummyArtWork.setTitle("Title" + i);
+            dummyArtWork.setArtist("Artist" + i);
+            dummyArtWork.setMedia("Media" + i);
+            dummyArtWork.setTags("Tags" + i);
+            dummyArtWork.setSmallImageUrl("SmallImageUrl" + i);
+            dummyArtWork.setLargeImageUrl("LargeImageUrl" + i);
+            dummyArtWork.setSmallImage(null);
+            dummyArtWork.setLargeImage(null);
+            dummyArtWork.setTaken(false);
+            dummyArtWork.setStars(i % 5);
+
+            addArtWork(dummyArtWork);
+        }
     }
 
     public static Gallery get(Context context) {
