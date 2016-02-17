@@ -20,7 +20,7 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table" + ArtWorkTable.NAME + "(" +
+    db.execSQL("create table " + ArtWorkTable.NAME + "(" +
                     " _id integer primary key autoincrement, " +
                     ArtWorkTable.Cols.UUID + ", " +
                     ArtWorkTable.Cols.ART_THIEF_ID + "," +
