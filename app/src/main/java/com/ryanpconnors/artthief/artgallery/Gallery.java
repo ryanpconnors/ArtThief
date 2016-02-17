@@ -36,19 +36,24 @@ public class Gallery {
         for (int i = 0; i < 25; i++) {
             ArtWork dummyArtWork = new ArtWork();
             dummyArtWork.setArtThiefID(i);
+
             dummyArtWork.setShowId(i + 100);
             dummyArtWork.setTitle("Title" + i);
             dummyArtWork.setArtist("Artist" + i);
             dummyArtWork.setMedia("Media" + i);
             dummyArtWork.setTags("Tags" + i);
+
             dummyArtWork.setSmallImagePath("SmallImagePath" + i);
             dummyArtWork.setSmallImageUrl("SmallImageUrl" + i);
             dummyArtWork.setSmallImage(null);
+
             dummyArtWork.setLargeImagePath("LargeImagePath" + i);
             dummyArtWork.setLargeImageUrl("LargeImageUrl" + i);
             dummyArtWork.setLargeImage(null);
+
             dummyArtWork.setTaken(false);
             dummyArtWork.setStars(i % 5);
+
             addArtWork(dummyArtWork);
         }
         Log.d("addDummyArtWork()", "SIZE: " + getArtWorks().size());
@@ -126,14 +131,18 @@ public class Gallery {
 
         values.put(ArtWorkTable.Cols.ART_THIEF_ID, artWork.getArtThiefID());
         values.put(ArtWorkTable.Cols.SHOW_ID, artWork.getShowId());
+
         values.put(ArtWorkTable.Cols.TITLE, artWork.getTitle());
         values.put(ArtWorkTable.Cols.ARTIST, artWork.getArtist());
         values.put(ArtWorkTable.Cols.MEDIA, artWork.getMedia());
         values.put(ArtWorkTable.Cols.TAGS, artWork.getTags());
 
         values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE_PATH, artWork.getSmallImagePath());
         values.put(ArtWorkTable.Cols.SMALL_IMAGE_BLOB, artWork.getSmallImage());
+
         values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE_PATH, artWork.getLargeImagePath());
         values.put(ArtWorkTable.Cols.LARGE_IMAGE_BLOB, artWork.getLargeImage());
 
         values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
