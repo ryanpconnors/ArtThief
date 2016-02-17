@@ -20,7 +20,6 @@ import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
-import com.ryanpconnors.artthief.rate.dummy.DummyContent;
 import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtFragment;
 import com.ryanpconnors.artthief.vote.VoteFragment;
@@ -168,27 +167,29 @@ public class MainActivity extends AppCompatActivity
      ****************************************************************************/
 
     public void onUpdateArtFragmentInteraction(Uri uri) {
-        // communicate with the UpdateArtFragment
+        // communication from the UpdateArtFragment
     }
 
     public void onCompareArtFragmentInteraction(Uri uri) {
-        // communicate with the CompareArtFragment
+        // communication from the CompareArtFragment
     }
 
     public void onShowFragmentInteraction(Uri uri) {
-        // communicate with the ShowFragment
+        // communication from the ShowFragment
     }
 
     public void onVoteFragmentInteraction(Uri uri) {
-        // communicate with the VoteFragment
+        // communication from the VoteFragment
     }
 
     public void onArtWorkFragmentInteraction(Uri uri) {
-        // communicate with the ArtWorkFragment
+        // communication from the ArtWorkFragment
     }
 
     public void onArtWorkListFragmentInteraction(ArtWork artWork) {
-        // communicate with the ArtWorkListFragment
+
+        // communication from the ArtWorkListFragment
+
     }
 
 }

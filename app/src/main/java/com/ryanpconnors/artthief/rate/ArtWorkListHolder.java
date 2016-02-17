@@ -57,15 +57,15 @@ public class ArtWorkListHolder extends RecyclerView.ViewHolder implements View.O
 
     public void onClick(View view) {
 
-        //TODO implement onClick to start a new ArtWorkActivity to show the detailed view of the artwork
-//        Intent intent = ArtWorkActivity.newIntent(getActivity(), mArtWork.getId());
-//        startActivity(intent);
-
-        if (null != mListener) {
+        if (mListener != null) {
 
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onArtWorkListFragmentInteraction(mArtWork);
         }
+
+        // TODO implement onClick to start a new ArtWorkDetailActivity to show the detailed view of the artwork
+        //  Intent intent = ArtWorkDetailActivity.newIntent(getActivity(), mArtWork.getId());
+        //  startActivity(intent);
     }
 }
