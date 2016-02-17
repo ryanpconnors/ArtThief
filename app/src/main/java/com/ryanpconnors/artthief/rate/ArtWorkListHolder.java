@@ -13,7 +13,7 @@ import com.ryanpconnors.artthief.rate.ArtWorkListFragment.OnArtWorkListFragmentI
 /**
  * Created by Ryan Connors on 2/17/16.
  */
-public class ArtWorkHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ArtWorkListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ImageView mArtWorkImageView;
     private TextView mShowIdTextView;
@@ -25,7 +25,7 @@ public class ArtWorkHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     private ArtWork mArtWork;
 
-    public ArtWorkHolder(View itemView) {
+    public ArtWorkListHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 

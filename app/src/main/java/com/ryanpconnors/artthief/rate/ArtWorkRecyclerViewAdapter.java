@@ -15,7 +15,7 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link ArtWork} and makes a call to the
  * specified {@link OnArtWorkListFragmentInteractionListener}.
  */
-public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkHolder> {
+public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkListHolder> {
 
     private final List<ArtWork> mArtWorks;
     private final OnArtWorkListFragmentInteractionListener mListener;
@@ -26,10 +26,10 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkHold
     }
 
     @Override
-    public ArtWorkHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArtWorkListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_artwork_list_item, parent, false);
-        return new ArtWorkHolder(view);
+        return new ArtWorkListHolder(view);
     }
 
     /**
@@ -38,7 +38,7 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkHold
      * @param position
      */
     @Override
-    public void onBindViewHolder(ArtWorkHolder holder, int position) {
+    public void onBindViewHolder(ArtWorkListHolder holder, int position) {
 
         ArtWork artWork = mArtWorks.get(position);
         holder.bindArtWork(artWork, mListener);
