@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
+    private List<ArtWork> mDummyArtWorks;
+
     private static final int ARTWORK_LIST_COLUMN_COUNT = 1;
 
     @Override
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity
 
         setupTabIcons();
 
+        mDummyArtWorks = Gallery.get(this).getArtWorks();
     }
 
     private void setupViewPager(ViewPager viewPager) {

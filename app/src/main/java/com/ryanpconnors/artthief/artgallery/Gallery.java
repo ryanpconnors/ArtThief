@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
 import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
@@ -27,18 +28,13 @@ public class Gallery {
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new ArtWorkBaseHelper(mContext).getWritableDatabase();
-
-        //TODO remove call to this test method
-        addDummyArtWork();
     }
 
     //TODO remove this test method
     public void addDummyArtWork() {
 
         for (int i = 0; i < 25; i++) {
-
             ArtWork dummyArtWork = new ArtWork();
-
             dummyArtWork.setArtThiefID(i);
             dummyArtWork.setShowId(i + 100);
             dummyArtWork.setTitle("Title" + i);
@@ -51,9 +47,9 @@ public class Gallery {
             dummyArtWork.setLargeImage(null);
             dummyArtWork.setTaken(false);
             dummyArtWork.setStars(i % 5);
-
             addArtWork(dummyArtWork);
         }
+        Log.d("addDummyArtWork()", "SIZE: " + getArtWorks().size());
     }
 
     public static Gallery get(Context context) {
