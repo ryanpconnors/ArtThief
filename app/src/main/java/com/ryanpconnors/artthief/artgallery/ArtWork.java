@@ -146,7 +146,7 @@ public class ArtWork {
 
     public void setStars(int stars) {
 
-        if (stars > 0 || stars > 5) {
+        if (stars < 0 || stars > 5) {
             throw new RuntimeException("Invalid number of ArtWork stars [ " + stars + " ]");
         }
         else {
