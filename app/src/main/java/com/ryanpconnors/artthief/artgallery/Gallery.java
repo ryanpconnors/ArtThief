@@ -59,10 +59,6 @@ public class Gallery {
         return sGallery;
     }
 
-    public void addArtWork(ArtWork artWork) {
-        ContentValues values = getContentValues(artWork);
-        mDatabase.insert(ArtWorkTable.NAME, null, values);
-    }
 
     public ArtWork getArtWork(UUID id) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
@@ -83,6 +79,27 @@ public class Gallery {
         }
     }
 
+    public void addArtWork(ArtWork artWork) {
+        ContentValues values = getContentValues(artWork);
+        mDatabase.insert(ArtWorkTable.NAME, null, values);
+    }
+
+    public void updateArtWork(ArtWork artWork) {
+        String uuidString = artWork.getId().toString();
+        ContentValues values = getContentValues(artWork);
+        mDatabase.update(ArtWorkTable.NAME, values,
+                ArtWorkTable.Cols.UUID + " = ?",
+                new String[]{uuidString});
+    }
+
+    public boolean deleteArtWork(ArtWork artWork) {
+        return mDatabase.delete(
+                ArtWorkTable.Cols.UUID,
+                ArtWorkTable.Cols.UUID + "= ?",
+                new String[] { artWork.getId().toString() }
+        ) > 0;
+    }
+
     public List<ArtWork> getArtWorks() {
         List<ArtWork> artWorks = new ArrayList<>();
 
@@ -99,14 +116,6 @@ public class Gallery {
             cursor.close();
         }
         return artWorks;
-    }
-
-    public void updateArtWork(ArtWork artWork) {
-        String uuidString = artWork.getId().toString();
-        ContentValues values = getContentValues(artWork);
-        mDatabase.update(ArtWorkTable.NAME, values,
-                ArtWorkTable.Cols.UUID + " = ?",
-                new String[] { uuidString });
     }
 
     public static ContentValues getContentValues(ArtWork artWork) {
