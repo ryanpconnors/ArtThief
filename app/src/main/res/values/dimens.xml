@@ -9,10 +9,14 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="artwork_fragment_artwork_large_image_padding">24dp</dimen>
-    <dimen name="artwork_fragment_ratingbar_padding">14dp</dimen>
+    <dimen name="artwork_fragment_rating_bar_padding">14dp</dimen>
     <dimen name="artwork_fragment_artwork_title_text_size">24sp</dimen>
     <dimen name="artwork_fragment_artwork_info_text_size">18sp</dimen>
     <dimen name="artwork_fragment_info_margin_left">14dp</dimen>
     <dimen name="artwork_fragment_info_padding_bottom">14dp</dimen>
+    <dimen name="artwork_small_image_width">80dp</dimen>
+    <dimen name="artwork_small_image_height">80dp</dimen>
+    <dimen name="artwork_list_item_number_title_margin">4dp</dimen>
+    <dimen name="artwork_list_item_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 </resources>

@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/artwork_list_item_margin">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/artwork_list_item_artwork_image"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/thief"/>-->
+    <ImageView
+        android:id="@+id/artwork_list_item_artwork_image"
+        android:layout_width="@dimen/artwork_small_image_height"
+        android:layout_height="@dimen/artwork_small_image_width"
+        android:scaleType="centerInside"
+        android:background="@android:color/darker_gray"
+        android:cropToPadding="true"
+        android:src="@drawable/thief"
+        android:foregroundGravity="center"/>
 
     <TextView
         android:id="@+id/artwork_list_item_show_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"/>
-        <!--android:layout_toRightOf="@id/artwork_list_item_artwork_image"/>-->
+        android:text="(###)"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_toRightOf="@id/artwork_list_item_artwork_image"/>
 
     <TextView
         android:id="@+id/artwork_list_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:text="Title"
+        android:layout_marginLeft="@dimen/artwork_list_item_number_title_margin"
         android:layout_toRightOf="@id/artwork_list_item_show_id"/>
 
     <TextView
         android:id="@+id/artwork_list_item_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/artwork_list_item_show_id"/>
+        android:text="Artist Name"
+        android:layout_below="@id/artwork_list_item_show_id"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_toRightOf="@id/artwork_list_item_artwork_image"/>
 
     <TextView
         android:id="@+id/artwork_list_item_media"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/artwork_list_item_artist"/>
+        android:text="Media"
+        android:layout_below="@id/artwork_list_item_artist"
+        android:layout_toRightOf="@id/artwork_list_item_artwork_image"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_toEndOf="@id/artwork_list_item_artwork_image"
+        />
 
 </RelativeLayout>

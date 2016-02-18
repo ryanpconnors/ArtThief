@@ -22,7 +22,7 @@
         android:isIndicator="false"
         android:layout_above="@+id/artwork_title"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/artwork_fragment_ratingbar_padding"/>
+        android:padding="@dimen/artwork_fragment_rating_bar_padding"/>
 
     <TextView
         android:id="@id/artwork_title"
