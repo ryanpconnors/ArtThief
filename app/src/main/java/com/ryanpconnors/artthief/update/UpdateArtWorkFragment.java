@@ -13,12 +13,12 @@ import com.ryanpconnors.artthief.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link UpdateArtFragment.OnUpdateArtFragmentInteractionListener} interface
+ * {@link UpdateArtWorkFragment.OnUpdateArtWorkFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link UpdateArtFragment#newInstance} factory method to
+ * Use the {@link UpdateArtWorkFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpdateArtFragment extends Fragment {
+public class UpdateArtWorkFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,9 +30,9 @@ public class UpdateArtFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnUpdateArtFragmentInteractionListener mListener;
+    private OnUpdateArtWorkFragmentInteractionListener mListener;
 
-    public UpdateArtFragment() {
+    public UpdateArtWorkFragment() {
         // Required empty public constructor
     }
 
@@ -40,10 +40,10 @@ public class UpdateArtFragment extends Fragment {
      * Create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment UpdateArtFragment.
+     * @return A new instance of fragment UpdateArtWorkFragment.
      */
-    public static UpdateArtFragment newInstance() {
-        UpdateArtFragment fragment = new UpdateArtFragment();
+    public static UpdateArtWorkFragment newInstance() {
+        UpdateArtWorkFragment fragment = new UpdateArtWorkFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
@@ -70,15 +70,15 @@ public class UpdateArtFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onUpdateArtFragmentInteraction(uri);
+            mListener.onUpdateArtWorkFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnUpdateArtFragmentInteractionListener) {
-            mListener = (OnUpdateArtFragmentInteractionListener) context;
+        if (context instanceof OnUpdateArtWorkFragmentInteractionListener) {
+            mListener = (OnUpdateArtWorkFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -101,8 +101,8 @@ public class UpdateArtFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnUpdateArtFragmentInteractionListener {
+    public interface OnUpdateArtWorkFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onUpdateArtFragmentInteraction(Uri uri);
+        void onUpdateArtWorkFragmentInteraction(Uri uri);
     }
 }

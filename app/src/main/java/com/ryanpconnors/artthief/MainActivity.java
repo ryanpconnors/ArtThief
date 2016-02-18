@@ -21,14 +21,14 @@ import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
 import com.ryanpconnors.artthief.show.ShowFragment;
-import com.ryanpconnors.artthief.update.UpdateArtFragment;
+import com.ryanpconnors.artthief.update.UpdateArtWorkFragment;
 import com.ryanpconnors.artthief.vote.VoteFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements UpdateArtFragment.OnUpdateArtFragmentInteractionListener,
+        implements UpdateArtWorkFragment.OnUpdateArtWorkFragmentInteractionListener,
         CompareArtFragment.OnCompareArtFragmentInteractionListener,
         ShowFragment.OnShowFragmentInteractionListener,
         VoteFragment.OnVoteFragmentInteractionListener,
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         // Create the adapter that will return a fragment for each of the sections of the activity.
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(UpdateArtFragment.newInstance(), getString(R.string.update_art_title));
+        adapter.addFragment(UpdateArtWorkFragment.newInstance(), getString(R.string.update_art_title));
         adapter.addFragment(ArtWorkListFragment.newInstance(ARTWORK_LIST_COLUMN_COUNT), getString(R.string.rate_art_title));
         adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
         adapter.addFragment(ShowFragment.newInstance(), getString(R.string.the_show_title));
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity
      * http://developer.android.com/training/basics/fragments/communicating.html
      ****************************************************************************/
 
-    public void onUpdateArtFragmentInteraction(Uri uri) {
-        // communication from the UpdateArtFragment
+    public void onUpdateArtWorkFragmentInteraction(Uri uri) {
+        // communication from the UpdateArtWorkFragment
     }
 
     public void onCompareArtFragmentInteraction(Uri uri) {
