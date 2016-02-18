@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.ryanpconnors.artthief.artgallery.ArtWork;
-import com.ryanpconnors.artthief.database.ArtWorkDbSchema.ArtWorkTable;
+import com.ryanpconnors.artthief.database.ArtWorkDbSchema.*;
+
 
 /**
  * Created by Ryan Connors on 2/12/16.
@@ -21,25 +21,38 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table " + ArtWorkTable.NAME + "(" +
-                    " _id integer primary key autoincrement, " +
-                    ArtWorkTable.Cols.UUID + ", " +
-                    ArtWorkTable.Cols.ART_THIEF_ID + "," +
-                    ArtWorkTable.Cols.SHOW_ID + ", " +
-                    ArtWorkTable.Cols.TITLE + ", " +
-                    ArtWorkTable.Cols.ARTIST + ", " +
-                    ArtWorkTable.Cols.MEDIA + ", " +
-                    ArtWorkTable.Cols.TAGS + ", " +
-                    ArtWorkTable.Cols.SMALL_IMAGE_URL + ", " +
-                    ArtWorkTable.Cols.SMALL_IMAGE_PATH + ", " +
-                    ArtWorkTable.Cols.SMALL_IMAGE_BLOB + "," +
-                    ArtWorkTable.Cols.LARGE_IMAGE_URL + ", " +
-                    ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
-                    ArtWorkTable.Cols.LARGE_IMAGE_BLOB + "," +
-                    ArtWorkTable.Cols.STARS + ", " +
-                    ArtWorkTable.Cols.TAKEN +
-                    ")"
+
+        // Create the Info Table
+        db.execSQL("create table" + InfoTable.NAME + "(" +
+            " _id integer primary key autoincrement, " +
+            InfoTable.Cols.UUID + ", " +
+            InfoTable.Cols.DATA_VERSION + ", " +
+            InfoTable.Cols.SHOW_YEAR + ", " +
+            InfoTable.Cols.DATE_LAST_UPDATED +
+            ")"
         );
+
+        // Create the ArtWork Table
+        db.execSQL("create table " + ArtWorkTable.NAME + "(" +
+            " _id integer primary key autoincrement, " +
+            ArtWorkTable.Cols.UUID + ", " +
+            ArtWorkTable.Cols.ART_THIEF_ID + "," +
+            ArtWorkTable.Cols.SHOW_ID + ", " +
+            ArtWorkTable.Cols.TITLE + ", " +
+            ArtWorkTable.Cols.ARTIST + ", " +
+            ArtWorkTable.Cols.MEDIA + ", " +
+            ArtWorkTable.Cols.TAGS + ", " +
+            ArtWorkTable.Cols.SMALL_IMAGE_URL + ", " +
+            ArtWorkTable.Cols.SMALL_IMAGE_PATH + ", " +
+            ArtWorkTable.Cols.SMALL_IMAGE_BLOB + "," +
+            ArtWorkTable.Cols.LARGE_IMAGE_URL + ", " +
+            ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
+            ArtWorkTable.Cols.LARGE_IMAGE_BLOB + "," +
+            ArtWorkTable.Cols.STARS + ", " +
+            ArtWorkTable.Cols.TAKEN +
+            ")"
+        );
+
     }
 
     @Override

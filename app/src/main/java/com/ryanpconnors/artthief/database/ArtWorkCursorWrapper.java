@@ -5,7 +5,6 @@ import android.database.CursorWrapper;
 
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 
-import java.sql.Blob;
 import java.util.UUID;
 
 /**
