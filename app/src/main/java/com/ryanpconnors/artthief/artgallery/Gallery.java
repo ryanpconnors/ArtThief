@@ -3,7 +3,9 @@ package com.ryanpconnors.artthief.artgallery;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
 import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
@@ -38,7 +40,37 @@ public class Gallery {
         return sGallery;
     }
 
+    /**
+     *
+     * @param artThiefId the artThiefId used to identify the artWork
+     *
+     * @return the ArtWork in this database that has the corresponding artThiefId,
+     * if not ArtWork exists in the database with the artThiefId, null is returned.
+     */
+    public ArtWork getArtWork(int artThiefId) {
+        ArtWorkCursorWrapper cursor = queryArtWorks(
+                ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
+                new String[]{ String.valueOf(artThiefId) }
+        );
 
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getArtWork();
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ArtWork getArtWork(UUID id) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
                 ArtWorkTable.Cols.UUID + " = ?",
@@ -60,22 +92,28 @@ public class Gallery {
 
     public void addArtWork(ArtWork artWork) {
         ContentValues values = getContentValues(artWork);
-        mDatabase.insert(ArtWorkTable.NAME, null, values);
+        try {
+            mDatabase.insert(ArtWorkTable.NAME, null, values);
+        }
+        catch (SQLiteConstraintException sce) {
+            Log.e(TAG, "Failed to add ArtWork to database", sce);
+        }
     }
 
     public void updateArtWork(ArtWork artWork) {
-        String uuidString = artWork.getId().toString();
+        String artThiefIdString = String.valueOf(artWork.getArtThiefID());
         ContentValues values = getContentValues(artWork);
         mDatabase.update(ArtWorkTable.NAME, values,
-                ArtWorkTable.Cols.UUID + " = ?",
-                new String[]{uuidString});
+                ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
+                new String[]{ artThiefIdString });
     }
 
     public boolean deleteArtWork(ArtWork artWork) {
+        String artThiefIdString = Integer.toString(artWork.getArtThiefID());
         return mDatabase.delete(
-                ArtWorkTable.Cols.UUID,
-                ArtWorkTable.Cols.UUID + "= ?",
-                new String[] { artWork.getId().toString() }
+                ArtWorkTable.Cols.ART_THIEF_ID,
+                ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
+                new String[] { artThiefIdString }
         ) > 0;
     }
 
@@ -111,11 +149,9 @@ public class Gallery {
 
         values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
         values.put(ArtWorkTable.Cols.SMALL_IMAGE_PATH, artWork.getSmallImagePath());
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE_BLOB, artWork.getSmallImage());
 
         values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
         values.put(ArtWorkTable.Cols.LARGE_IMAGE_PATH, artWork.getLargeImagePath());
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE_BLOB, artWork.getLargeImage());
 
         values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
         values.put(ArtWorkTable.Cols.TAKEN, artWork.isTaken() ? 1 : 0);
@@ -126,14 +162,13 @@ public class Gallery {
     private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                ArtWorkTable.NAME,
-                null,                   // Columns : [null] selects from all columns
+                null,                   // Columns : [null] selects all columns
                 whereClause,            // where [clause]
                 whereArgs,              // where [args]
                 null,                   // groupBy
                 null,                   // having
                 null                    // orderBy
         );
-
         return new ArtWorkCursorWrapper(cursor);
     }
 }

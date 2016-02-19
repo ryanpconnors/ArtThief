@@ -40,12 +40,6 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         mArtWork = artWork;
 
         //TODO implement proper imageView here
-        byte[] artWorkSmallImage = artWork.getSmallImage();
-        if (artWorkSmallImage != null) {
-            mArtWorkImageView.setImageBitmap(
-                    BitmapFactory.decodeByteArray(
-                            artWorkSmallImage, 0, artWorkSmallImage.length));
-        }
 
         mShowIdTextView.setText("(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());

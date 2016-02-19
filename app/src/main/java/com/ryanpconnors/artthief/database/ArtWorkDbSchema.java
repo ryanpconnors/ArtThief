@@ -48,10 +48,8 @@ public class ArtWorkDbSchema {
             public static final String TAGS = "tags";
             public static final String SMALL_IMAGE_URL = "small_image_url";
             public static final String SMALL_IMAGE_PATH = "small_image_path";
-            public static final String SMALL_IMAGE_BLOB = "small_image_blob";
             public static final String LARGE_IMAGE_URL = "large_image_url";
             public static final String LARGE_IMAGE_PATH = "large_image_path";
-            public static final String LARGE_IMAGE_BLOB = "large_image_blob";
             public static final String STARS = "stars";
             public static final String TAKEN = "taken";
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,10 +56,12 @@ public class UpdateArtWorkFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Retain this fragment to ensure that the asynchronous UpdateArtWorksTask completes
         setRetainInstance(true);
 
         if (getArguments() != null) {
-            // store arguments in this class instance
+            // store given arguments in this class instance
         }
     }
 
@@ -74,7 +77,7 @@ public class UpdateArtWorkFragment extends Fragment {
         mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FetchArtWorksTask().execute();
+                new UpdateArtWorksTask().execute();
             }
         });
 
@@ -100,15 +103,52 @@ public class UpdateArtWorkFragment extends Fragment {
         mArtWorkUpdateListener = null;
     }
 
-    private class FetchArtWorksTask extends AsyncTask<Void,Void,Void> {
+    private class UpdateArtWorksTask extends AsyncTask<Void,Void,Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
-            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
 
-            for (ArtWork artWork : artWorksFromJson) {
-                Gallery.get(getActivity()).addArtWork(artWork);
+            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
+            List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
+
+            int inserted = 0;
+            int updated = 0;
+            int removed = 0;
+
+            //TODO Only update the artWorks that have changed
+            for (ArtWork newArtWork : artWorksFromJson) {
+
+                ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(newArtWork.getArtThiefID());
+
+                if (existingArtWork == null) {
+
+                    // insert the newArtWork into the Gallery database
+                    Gallery.get(getActivity()).addArtWork(newArtWork);
+                    inserted++;
+                }
+                else {
+
+                    // update the existing artwork if it is not equal to newArtWork
+                    if (!newArtWork.equals(existingArtWork)) {
+                        Gallery.get(getActivity()).updateArtWork(newArtWork);
+                        updated++;
+                    }
+                    // otherwise do nothing, the artwork does not need to be updated
+                }
             }
+
+            //TODO Remove existing artWork from the database if it is not longer in loot.json
+            for (ArtWork existingArtWork : existingArtWorks) {
+                if (!artWorksFromJson.contains(existingArtWork)) {
+                    Gallery.get(getActivity()).deleteArtWork(existingArtWork);
+                    removed++;
+                }
+            }
+
+            Log.d(TAG, "Inserted: " + inserted);
+            Log.d(TAG, "Updated: " + updated);
+            Log.d(TAG, "Removed: " + removed);
+
             return null;
         }
 

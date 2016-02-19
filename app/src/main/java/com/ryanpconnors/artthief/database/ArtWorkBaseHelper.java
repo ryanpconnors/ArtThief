@@ -25,7 +25,7 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         // Create the Info Table
         db.execSQL("create table " + InfoTable.NAME + "(" +
             " _id integer primary key autoincrement, " +
-            InfoTable.Cols.UUID + ", " +
+            InfoTable.Cols.UUID + " not null unique, " +
             InfoTable.Cols.DATA_VERSION + ", " +
             InfoTable.Cols.SHOW_YEAR + ", " +
             InfoTable.Cols.DATE_LAST_UPDATED +
@@ -33,23 +33,21 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         );
 
         // Create the ArtWork Table
-        db.execSQL("create table " + ArtWorkTable.NAME + "(" +
-            " _id integer primary key autoincrement, " +
-            ArtWorkTable.Cols.UUID + ", " +
-            ArtWorkTable.Cols.ART_THIEF_ID + "," +
-            ArtWorkTable.Cols.SHOW_ID + ", " +
-            ArtWorkTable.Cols.TITLE + ", " +
-            ArtWorkTable.Cols.ARTIST + ", " +
-            ArtWorkTable.Cols.MEDIA + ", " +
-            ArtWorkTable.Cols.TAGS + ", " +
-            ArtWorkTable.Cols.SMALL_IMAGE_URL + ", " +
-            ArtWorkTable.Cols.SMALL_IMAGE_PATH + ", " +
-            ArtWorkTable.Cols.SMALL_IMAGE_BLOB + "," +
-            ArtWorkTable.Cols.LARGE_IMAGE_URL + ", " +
+        db.execSQL("CREATE TABLE " + ArtWorkTable.NAME + "(" +
+            " _ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ArtWorkTable.Cols.UUID + " INTEGER NOT NULL UNIQUE, " +
+            ArtWorkTable.Cols.ART_THIEF_ID + " INTEGER NOT NULL UNIQUE," +
+            ArtWorkTable.Cols.SHOW_ID + " TEXT, " +
+            ArtWorkTable.Cols.TITLE + " TEXT, " +
+            ArtWorkTable.Cols.ARTIST + " TEXT, " +
+            ArtWorkTable.Cols.MEDIA + " TEXT, " +
+            ArtWorkTable.Cols.TAGS + " TEXT, " +
+            ArtWorkTable.Cols.SMALL_IMAGE_URL + " TEXT, " +
+            ArtWorkTable.Cols.SMALL_IMAGE_PATH + " TEXT, " +
+            ArtWorkTable.Cols.LARGE_IMAGE_URL + " TEXT, " +
             ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
-            ArtWorkTable.Cols.LARGE_IMAGE_BLOB + "," +
-            ArtWorkTable.Cols.STARS + ", " +
-            ArtWorkTable.Cols.TAKEN +
+            ArtWorkTable.Cols.STARS + " INTEGER, " +
+            ArtWorkTable.Cols.TAKEN + " BOOLEAN" +
             ")"
         );
 

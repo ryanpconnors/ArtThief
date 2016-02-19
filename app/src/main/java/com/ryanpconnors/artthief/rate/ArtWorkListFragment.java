@@ -14,8 +14,6 @@ import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>

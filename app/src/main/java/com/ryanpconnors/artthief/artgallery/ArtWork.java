@@ -1,5 +1,6 @@
 package com.ryanpconnors.artthief.artgallery;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -17,14 +18,11 @@ public class ArtWork {
     private String mMedia;
     private String mTags;
 
-    private String mLargeImageUrl;
     private String mSmallImageUrl;
+    private String mLargeImageUrl;
 
     private String mSmallImagePath;
-    private byte[] mSmallImage;
-
     private String mLargeImagePath;
-    private byte[] mLargeImage;
 
     private int mStars;
     private boolean mTaken;
@@ -87,14 +85,6 @@ public class ArtWork {
         return mLargeImagePath;
     }
 
-    public byte[] getLargeImage() {
-        return mLargeImage;
-    }
-
-    public byte[] getSmallImage() {
-        return mSmallImage;
-    }
-
     public int getStars() {
         return mStars;
     }
@@ -147,14 +137,6 @@ public class ArtWork {
         mLargeImagePath = largeImagePath;
     }
 
-    public void setLargeImage(byte[] largeImage) {
-        mLargeImage = largeImage;
-    }
-
-    public void setSmallImage(byte[] smallImage) {
-        mSmallImage = smallImage;
-    }
-
     public void setTaken(boolean taken) {
         mTaken = taken;
     }
@@ -165,6 +147,41 @@ public class ArtWork {
         }
         else {
             mStars = stars;
+        }
+    }
+
+
+    /**
+     *
+     * @param obj Object to compare to this ArtWork object for equality.
+     *
+     * @return false if obj is not an instance of the class ArtWork.
+     * Returns true iff the given object shares the same artThiefId, showId,
+     * title, artist, media, tags, smallImageUrl and largeImageUrl.
+     * Otherwise returns false.
+     *
+     * Note: The method does not take into account the uuid, smallImagePath, largeImagePath,
+     * stars and taken fields.
+     *
+     */
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof ArtWork)) {
+            return false;
+        }
+        ArtWork artWork = (ArtWork) obj;
+        if (this.mArtThiefID == artWork.getArtThiefID() &&
+                this.mShowId.equals(artWork.getShowId()) &&
+                this.mTitle.equals(artWork.getTitle()) &&
+                this.mArtist.equals(artWork.getArtist()) &&
+                this.mMedia.equals((artWork.getMedia())) &&
+                this.mTags.equals(artWork.getTags()) &&
+                this.mSmallImageUrl.equals(artWork.getSmallImageUrl()) &&
+                this.mLargeImageUrl.equals(artWork.getLargeImageUrl())
+            ) { return true; }
+        else {
+            return false;
         }
     }
 

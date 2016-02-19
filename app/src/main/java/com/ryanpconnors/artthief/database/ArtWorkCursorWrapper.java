@@ -40,9 +40,6 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
         String smallImagePath = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_PATH));
         String largeImagePath = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_PATH));
 
-        byte[] smallImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_BLOB));
-        byte[] largeImage = getBlob(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_BLOB));
-
         int stars = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.STARS));
         int taken = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TAKEN));
 
@@ -60,10 +57,6 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
 
         artWork.setSmallImageUrl(smallImageUrl);
         artWork.setLargeImageUrl(largeImageUrl);
-
-        //TODO determine conversion of BLOB to image and/or obtaining image from storage
-        artWork.setSmallImage(smallImage);
-        artWork.setLargeImage(largeImage);
 
         artWork.setStars(stars);
         artWork.setTaken(taken != 0);
