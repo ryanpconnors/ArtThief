@@ -23,7 +23,7 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create the Info Table
-        db.execSQL("create table" + InfoTable.NAME + "(" +
+        db.execSQL("create table " + InfoTable.NAME + "(" +
             " _id integer primary key autoincrement, " +
             InfoTable.Cols.UUID + ", " +
             InfoTable.Cols.DATA_VERSION + ", " +
