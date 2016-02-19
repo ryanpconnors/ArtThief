@@ -27,7 +27,7 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
     public ArtWork getArtWork() {
         String uuidString = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.UUID));
         int artThiefId = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.ART_THIEF_ID));
-        int showId = getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SHOW_ID));
+        String showId = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SHOW_ID));
 
         String title = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TITLE));
         String artist = getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.ARTIST));

@@ -10,8 +10,7 @@ public class ArtWork {
     private final UUID mId;
 
     private int mArtThiefID;
-
-    private int mShowId;
+    private String mShowId;
 
     private String mTitle;
     private String mArtist;
@@ -37,8 +36,6 @@ public class ArtWork {
 
     public ArtWork(UUID id) {
         mId = id;
-
-        //TODO set default values for class members
     }
 
 
@@ -54,7 +51,7 @@ public class ArtWork {
         return mArtThiefID;
     }
 
-    public int getShowId() {
+    public String getShowId() {
         return mShowId;
     }
 
@@ -114,7 +111,7 @@ public class ArtWork {
         mArtThiefID = artThiefID;
     }
 
-    public void setShowId(int showId) {
+    public void setShowId(String showId) {
         mShowId = showId;
     }
 
