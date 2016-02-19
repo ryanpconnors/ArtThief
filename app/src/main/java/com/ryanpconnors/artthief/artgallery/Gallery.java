@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import android.os.AsyncTask;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
 import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
@@ -25,38 +25,15 @@ public class Gallery {
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
+    private static String TAG = "Gallery";
+
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new ArtWorkBaseHelper(mContext).getWritableDatabase();
     }
 
-    //TODO remove this test method
-    public void addDummyArtWork() {
-
-        for (int i = 0; i < 25; i++) {
-            ArtWork dummyArtWork = new ArtWork();
-            dummyArtWork.setArtThiefID(i);
-
-            dummyArtWork.setShowId(i + 100);
-            dummyArtWork.setTitle("Title" + i);
-            dummyArtWork.setArtist("Artist" + i);
-            dummyArtWork.setMedia("Media" + i);
-            dummyArtWork.setTags("Tags" + i);
-
-            dummyArtWork.setSmallImagePath("SmallImagePath" + i);
-            dummyArtWork.setSmallImageUrl("SmallImageUrl" + i);
-            dummyArtWork.setSmallImage(null);
-
-            dummyArtWork.setLargeImagePath("LargeImagePath" + i);
-            dummyArtWork.setLargeImageUrl("LargeImageUrl" + i);
-            dummyArtWork.setLargeImage(null);
-
-            dummyArtWork.setTaken(false);
-            dummyArtWork.setStars(i % 5);
-
-            addArtWork(dummyArtWork);
-        }
-        Log.d("addDummyArtWork()", "SIZE: " + getArtWorks().size());
+    public void updateArtwork() {
+        new FetchArtWorksTask().execute();
     }
 
     public static Gallery get(Context context) {
@@ -163,6 +140,22 @@ public class Gallery {
         );
 
         return new ArtWorkCursorWrapper(cursor);
+    }
+
+
+    private class FetchArtWorksTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
+
+            for (ArtWork artWork : artWorksFromJson) {
+                addArtWork(artWork);
+            }
+
+            return null;
+        }
     }
 
 }

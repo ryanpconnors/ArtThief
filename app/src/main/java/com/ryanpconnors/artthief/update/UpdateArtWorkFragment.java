@@ -1,14 +1,16 @@
 package com.ryanpconnors.artthief.update;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,15 +22,9 @@ import com.ryanpconnors.artthief.R;
  */
 public class UpdateArtWorkFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "UpdateArtWorkFragment";
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button mUpdateArtWorksButton;
 
     private OnUpdateArtWorkFragmentInteractionListener mListener;
 
@@ -43,6 +39,7 @@ public class UpdateArtWorkFragment extends Fragment {
      * @return A new instance of fragment UpdateArtWorkFragment.
      */
     public static UpdateArtWorkFragment newInstance() {
+
         UpdateArtWorkFragment fragment = new UpdateArtWorkFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -53,25 +50,39 @@ public class UpdateArtWorkFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // store arguments in this class instance
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_art, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onUpdateArtWorkFragmentInteraction(uri);
-        }
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_update_art, container, false);
+
+        // Setup the Update ArtWorks Button
+        mUpdateArtWorksButton = (Button) v.findViewById(R.id.update_artworks_button);
+        mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Communicate with the fragment interaction listener
+                if (mListener != null) {
+                    mListener.onUpdateArtWorkFragmentInteraction();
+                }
+
+                Gallery.get(getActivity()).updateArtwork();
+                Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+
+                //TODO notify ArtWorkListFragment to update data for RecyclerView
+            }
+        });
+
+        return v;
     }
 
     @Override
@@ -102,7 +113,8 @@ public class UpdateArtWorkFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnUpdateArtWorkFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onUpdateArtWorkFragmentInteraction(Uri uri);
+
+        void onUpdateArtWorkFragmentInteraction();
     }
+
 }

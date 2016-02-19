@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements UpdateArtWorkFragment.OnUpdateArtWorkFragmentInteractionListener,
+        implements
+        UpdateArtWorkFragment.OnUpdateArtWorkFragmentInteractionListener,
         CompareArtFragment.OnCompareArtFragmentInteractionListener,
         ShowFragment.OnShowFragmentInteractionListener,
         VoteFragment.OnVoteFragmentInteractionListener,
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity
      * http://developer.android.com/training/basics/fragments/communicating.html
      ****************************************************************************/
 
-    public void onUpdateArtWorkFragmentInteraction(Uri uri) {
+    public void onUpdateArtWorkFragmentInteraction() {
         // communication from the UpdateArtWorkFragment
     }
 
@@ -187,9 +188,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onArtWorkListFragmentInteraction(ArtWork artWork) {
-
         // communication from the ArtWorkListFragment
-
     }
-
 }
