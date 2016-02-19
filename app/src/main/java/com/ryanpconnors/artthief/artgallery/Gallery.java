@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
 import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
@@ -30,10 +29,6 @@ public class Gallery {
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new ArtWorkBaseHelper(mContext).getWritableDatabase();
-    }
-
-    public void updateArtwork() {
-        new FetchArtWorksTask().execute();
     }
 
     public static Gallery get(Context context) {
@@ -141,21 +136,4 @@ public class Gallery {
 
         return new ArtWorkCursorWrapper(cursor);
     }
-
-
-    private class FetchArtWorksTask extends AsyncTask<Void,Void,Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
-
-            for (ArtWork artWork : artWorksFromJson) {
-                addArtWork(artWork);
-            }
-
-            return null;
-        }
-    }
-
 }

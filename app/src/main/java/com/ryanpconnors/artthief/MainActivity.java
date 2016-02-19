@@ -167,27 +167,38 @@ public class MainActivity extends AppCompatActivity
      * http://developer.android.com/training/basics/fragments/communicating.html
      ****************************************************************************/
 
-    public void onUpdateArtWorkFragmentInteraction() {
-        // communication from the UpdateArtWorkFragment
-    }
-
+    // communication from the CompareArtFragment
     public void onCompareArtFragmentInteraction(Uri uri) {
-        // communication from the CompareArtFragment
+
     }
 
+    // communication from the ShowFragment
     public void onShowFragmentInteraction(Uri uri) {
-        // communication from the ShowFragment
+
     }
 
+    // communication from the VoteFragment
     public void onVoteFragmentInteraction(Uri uri) {
-        // communication from the VoteFragment
+
     }
 
+    // communication from the ArtWorkFragment
     public void onArtWorkFragmentInteraction(Uri uri) {
-        // communication from the ArtWorkFragment
+
     }
 
+
+    // communication from the ArtWorkListFragment
     public void onArtWorkListFragmentInteraction(ArtWork artWork) {
-        // communication from the ArtWorkListFragment
+
+    }
+
+    // Communication from the UpdateArtWorkFragment
+    public void onArtWorkDataSourceUpdate() {
+
+        // Communicate to the ArtWorkListFragment that the data source has updated
+        SectionsPagerAdapter sectionsPagerAdapter = (SectionsPagerAdapter) mViewPager.getAdapter();
+        ArtWorkListFragment artWorkListFragment = (ArtWorkListFragment) sectionsPagerAdapter.getItem(1);
+        artWorkListFragment.updateUI();
     }
 }

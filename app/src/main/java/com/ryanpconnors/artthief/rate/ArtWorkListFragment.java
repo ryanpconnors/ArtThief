@@ -14,6 +14,8 @@ import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
+import java.util.List;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -58,8 +60,8 @@ public class ArtWorkListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_artwork_list, container, false);
 
         // Set the adapter
@@ -82,6 +84,24 @@ public class ArtWorkListFragment extends Fragment {
         return view;
     }
 
+
+    public void updateUI() {
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.list);
+
+        if (recyclerView != null) {
+            ArtWorkRecyclerViewAdapter recyclerViewAdapter = (ArtWorkRecyclerViewAdapter) recyclerView.getAdapter();
+
+            if (recyclerViewAdapter == null) {
+                recyclerViewAdapter = new ArtWorkRecyclerViewAdapter(
+                        Gallery.get(getActivity()).getArtWorks(),
+                        mListener
+                );
+                recyclerView.setAdapter(recyclerViewAdapter);
+            }
+            recyclerViewAdapter.updateArtWorks(Gallery.get(getActivity()).getArtWorks());
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

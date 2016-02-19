@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkListViewHolder> {
 
-    private final List<ArtWork> mArtWorks;
+    private List<ArtWork> mArtWorks;
     private final OnArtWorkListFragmentInteractionListener mListener;
 
     public ArtWorkRecyclerViewAdapter(List<ArtWork> items, OnArtWorkListFragmentInteractionListener listener) {
@@ -42,6 +42,10 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkList
 
         ArtWork artWork = mArtWorks.get(position);
         holder.bindArtWork(artWork, mListener);
+    }
+
+    public void updateArtWorks(List<ArtWork> artWorks) {
+        mArtWorks = artWorks;
     }
 
     @Override

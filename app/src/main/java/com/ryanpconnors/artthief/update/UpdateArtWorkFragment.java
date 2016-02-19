@@ -1,6 +1,7 @@
 package com.ryanpconnors.artthief.update;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +11,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
+import com.ryanpconnors.artthief.artgallery.GalleryFetcher;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +31,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
     private Button mUpdateArtWorksButton;
 
-    private OnUpdateArtWorkFragmentInteractionListener mListener;
+    private OnUpdateArtWorkFragmentInteractionListener mArtWorkUpdateListener;
 
     public UpdateArtWorkFragment() {
         // Required empty public constructor
@@ -69,16 +74,7 @@ public class UpdateArtWorkFragment extends Fragment {
         mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Communicate with the fragment interaction listener
-                if (mListener != null) {
-                    mListener.onUpdateArtWorkFragmentInteraction();
-                }
-
-                Gallery.get(getActivity()).updateArtwork();
-                Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
-
-                //TODO notify ArtWorkListFragment to update data for RecyclerView
+                new FetchArtWorksTask().execute();
             }
         });
 
@@ -88,9 +84,11 @@ public class UpdateArtWorkFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnUpdateArtWorkFragmentInteractionListener) {
-            mListener = (OnUpdateArtWorkFragmentInteractionListener) context;
-        } else {
+            mArtWorkUpdateListener = (OnUpdateArtWorkFragmentInteractionListener) context;
+        }
+        else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
@@ -99,7 +97,26 @@ public class UpdateArtWorkFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mArtWorkUpdateListener = null;
+    }
+
+    private class FetchArtWorksTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
+
+            for (ArtWork artWork : artWorksFromJson) {
+                Gallery.get(getActivity()).addArtWork(artWork);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
+            Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -114,7 +131,7 @@ public class UpdateArtWorkFragment extends Fragment {
      */
     public interface OnUpdateArtWorkFragmentInteractionListener {
 
-        void onUpdateArtWorkFragmentInteraction();
+        void onArtWorkDataSourceUpdate();
     }
 
 }
