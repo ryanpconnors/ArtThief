@@ -1,6 +1,7 @@
 package com.ryanpconnors.artthief.update;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -114,27 +115,6 @@ public class UpdateArtWorkFragment extends Fragment {
         mArtWorkUpdateListener = null;
     }
 
-    private class UpdateArtWorksTask extends AsyncTask<Void,Void,Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            performArtWorkUpdate();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
-            Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
-
-            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
-                    Gallery.get(getActivity()).getLastUpdateDate());
-
-            mUpdateArtWorksButton.setEnabled(true);
-        }
-    }
-
-
     private void performArtWorkUpdate() {
 
         GalleryFetcher fetcher = new GalleryFetcher();
@@ -152,6 +132,29 @@ public class UpdateArtWorkFragment extends Fragment {
             ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(newArtWork.getArtThiefID());
 
             if (existingArtWork == null) {
+
+                //TODO: perform image downloads in separate async tasks???
+
+                // download image files if they exist and store the paths in newArtWork
+                String smallImageUrl = newArtWork.getSmallImageUrl();
+                if (smallImageUrl != null) {
+                    Bitmap artWorkImage = fetcher.fetchArtWorkImage(smallImageUrl);
+                    String smallImagePath = Gallery.get(getActivity()).saveToInternalStorage(
+                            artWorkImage,
+                            newArtWork.getArtThiefID() + "S.jpg"
+                    );
+                    newArtWork.setSmallImagePath(smallImagePath);
+                }
+
+                String largeImageUrl = newArtWork.getLargeImageUrl();
+                if (largeImageUrl != null) {
+                    Bitmap artWorkImage = fetcher.fetchArtWorkImage(largeImageUrl);
+                    String largeImagePath = Gallery.get(getActivity()).saveToInternalStorage(
+                            artWorkImage,
+                            newArtWork.getArtThiefID() + "L.jpg"
+                    );
+                    newArtWork.setSmallImagePath(largeImagePath);
+                }
 
                 // insert the newArtWork into the Gallery database
                 Gallery.get(getActivity()).addArtWork(newArtWork);
@@ -214,6 +217,27 @@ public class UpdateArtWorkFragment extends Fragment {
     public interface OnUpdateArtWorkFragmentInteractionListener {
 
         void onArtWorkDataSourceUpdate();
+    }
+
+
+    private class UpdateArtWorksTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            performArtWorkUpdate();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
+            Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+
+            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
+                    Gallery.get(getActivity()).getLastUpdateDate());
+
+            mUpdateArtWorksButton.setEnabled(true);
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.ryanpconnors.artthief.artgallery;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -52,10 +54,22 @@ public class GalleryFetcher {
             Log.e(TAG, "Failed to parse JSON", je);
         }
         catch (IOException ioe) {
-            Log.e(TAG, "Failed to fetch artwork loot");
+            Log.e(TAG, "Failed to fetch artwork loot", ioe);
         }
 
         return artWorks;
+    }
+
+    public Bitmap fetchArtWorkImage(String imageUrl) {
+        try {
+            byte[] imageData = getUrlBytes(imageUrl);
+            Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            return imageBitmap;
+        }
+        catch (IOException ioe) {
+            Log.e(TAG, "Failed to fetch artwork image", ioe);
+            return null;
+        }
     }
 
     private byte[] getUrlBytes(String urlSpec) throws IOException {

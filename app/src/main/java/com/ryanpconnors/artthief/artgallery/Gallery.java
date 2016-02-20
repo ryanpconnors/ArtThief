@@ -2,9 +2,13 @@ package com.ryanpconnors.artthief.artgallery;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
@@ -13,6 +17,11 @@ import com.ryanpconnors.artthief.database.ArtWorkDbSchema;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.ArtWorkTable;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.InfoTable;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +38,7 @@ public class Gallery {
     private SQLiteDatabase mDatabase;
 
     private static String TAG = "Gallery";
+    private static final String IMAGE_DIRECTORY_NAME = "artwork_images";
 
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
@@ -91,6 +101,52 @@ public class Gallery {
             cursor.close();
         }
     }
+
+
+    public String saveToInternalStorage(Bitmap bitmapImage, String imageName){
+
+        ContextWrapper cw = new ContextWrapper(mContext);
+
+        // path to /data/data/com.ryanpconnors.artthief/app_data/artwork_images
+        File directory = cw.getDir(IMAGE_DIRECTORY_NAME, Context.MODE_PRIVATE);
+
+        // Create imageDir
+        File imageDirPath = new File(directory, imageName);
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(imageDirPath);
+
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                fos.close();
+            }
+            catch (IOException ioe) {
+                Log.e(TAG, "FileOutputStream close error", ioe);
+            }
+        }
+        return directory.getAbsolutePath() + "/" + imageName;
+    }
+
+
+    public Bitmap getArtWorkImage(String path) {
+        try {
+            return BitmapFactory.decodeStream(new FileInputStream(new File(path)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public void addArtWork(ArtWork artWork) {
         ContentValues values = getContentValues(artWork);
