@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
@@ -16,6 +17,9 @@ import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.artgallery.GalleryFetcher;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +35,7 @@ public class UpdateArtWorkFragment extends Fragment {
     private static final String TAG = "UpdateArtWorkFragment";
 
     private Button mUpdateArtWorksButton;
+    private TextView mLastUpdateTextView;
 
     private OnUpdateArtWorkFragmentInteractionListener mArtWorkUpdateListener;
 
@@ -77,9 +82,15 @@ public class UpdateArtWorkFragment extends Fragment {
         mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUpdateArtWorksButton.setEnabled(false);
                 new UpdateArtWorksTask().execute();
             }
         });
+
+        // Setup the last update date textView
+        mLastUpdateTextView = (TextView) v.findViewById(R.id.last_update_date_text);
+        mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
+                Gallery.get(getActivity()).getLastUpdateDate());
 
         return v;
     }
@@ -107,48 +118,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-
-            List<ArtWork> artWorksFromJson = new GalleryFetcher().fetchArtWorks();
-            List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
-
-            int inserted = 0;
-            int updated = 0;
-            int removed = 0;
-
-            //TODO Only update the artWorks that have changed
-            for (ArtWork newArtWork : artWorksFromJson) {
-
-                ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(newArtWork.getArtThiefID());
-
-                if (existingArtWork == null) {
-
-                    // insert the newArtWork into the Gallery database
-                    Gallery.get(getActivity()).addArtWork(newArtWork);
-                    inserted++;
-                }
-                else {
-
-                    // update the existing artwork if it is not equal to newArtWork
-                    if (!newArtWork.equals(existingArtWork)) {
-                        Gallery.get(getActivity()).updateArtWork(newArtWork);
-                        updated++;
-                    }
-                    // otherwise do nothing, the artwork does not need to be updated
-                }
-            }
-
-            //TODO Remove existing artWork from the database if it is not longer in loot.json
-            for (ArtWork existingArtWork : existingArtWorks) {
-                if (!artWorksFromJson.contains(existingArtWork)) {
-                    Gallery.get(getActivity()).deleteArtWork(existingArtWork);
-                    removed++;
-                }
-            }
-
-            Log.d(TAG, "Inserted: " + inserted);
-            Log.d(TAG, "Updated: " + updated);
-            Log.d(TAG, "Removed: " + removed);
-
+            performArtWorkUpdate();
             return null;
         }
 
@@ -156,7 +126,79 @@ public class UpdateArtWorkFragment extends Fragment {
         protected void onPostExecute(Void result) {
             mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
             Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+
+            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
+                    Gallery.get(getActivity()).getLastUpdateDate());
+
+            mUpdateArtWorksButton.setEnabled(true);
         }
+    }
+
+
+    private void performArtWorkUpdate() {
+
+        GalleryFetcher fetcher = new GalleryFetcher();
+
+        List<ArtWork> artWorksFromJson = fetcher.fetchArtWorks();
+        List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
+
+        int inserted = 0;
+        int updated = 0;
+        int removed = 0;
+
+        //TODO Only update the artWorks that have changed
+        for (ArtWork newArtWork : artWorksFromJson) {
+
+            ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(newArtWork.getArtThiefID());
+
+            if (existingArtWork == null) {
+
+                // insert the newArtWork into the Gallery database
+                Gallery.get(getActivity()).addArtWork(newArtWork);
+                inserted++;
+            }
+            else {
+
+                // update the existing artwork if it is not equal to newArtWork
+                if (!newArtWork.equals(existingArtWork)) {
+                    Gallery.get(getActivity()).updateArtWork(newArtWork);
+                    updated++;
+                }
+                // otherwise do nothing, the artwork does not need to be updated
+            }
+        }
+
+        //TODO Remove existing artWork from the database if it is no longer in loot.json
+        // Note: this most likely does NOT work!
+        for (ArtWork existingArtWork : existingArtWorks) {
+            if (!artWorksFromJson.contains(existingArtWork)) {
+                Gallery.get(getActivity()).deleteArtWork(existingArtWork);
+                removed++;
+            }
+        }
+
+        updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
+
+        Log.d(TAG, "Inserted: " + inserted);
+        Log.d(TAG, "Updated: " + updated);
+        Log.d(TAG, "Removed: " + removed);
+
+    }
+
+    private void updateInfoTable(int showYear, int dataVersion) {
+
+        if (showYear == -1 || dataVersion == -1) {
+            Log.d(TAG, "Error in updateInfoTable() showYear= " + showYear +
+                    " | dataVersion= " + dataVersion);
+        }
+
+        // Update the InfoTable in the database to reflect the current data
+        SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.date_format),
+                getResources().getConfiguration().locale);
+        sdf.setTimeZone(Calendar.getInstance().getTimeZone());
+        String todayDate = sdf.format(new Date());
+        Gallery.get(getActivity()).updateInfo(todayDate, showYear, dataVersion);
+
     }
 
     /**

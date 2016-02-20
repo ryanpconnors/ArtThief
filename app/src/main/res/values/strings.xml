@@ -16,4 +16,6 @@
     <string name="action_settings">Settings</string>
     <string name="update_artworks_button_label">Update Artworks</string>
     <string name="loot_url">http://artthief.zurka.com/loot.json</string>
+    <string name="date_format">EEEE MMM dd, yyyy, hh:mm a </string>
+    <string name="not_available">N/E</string>
 </resources>

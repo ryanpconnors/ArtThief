@@ -9,7 +9,9 @@ import android.util.Log;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
 import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
+import com.ryanpconnors.artthief.database.ArtWorkDbSchema;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.ArtWorkTable;
+import com.ryanpconnors.artthief.database.ArtWorkDbSchema.InfoTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,7 +163,7 @@ public class Gallery {
 
     private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-               ArtWorkTable.NAME,
+               ArtWorkTable.NAME,       // Table name
                 null,                   // Columns : [null] selects all columns
                 whereClause,            // where [clause]
                 whereArgs,              // where [args]
@@ -170,5 +172,59 @@ public class Gallery {
                 null                    // orderBy
         );
         return new ArtWorkCursorWrapper(cursor);
+    }
+
+
+    public void updateInfo(String date, int showYear, int dataVersion) {
+
+        ContentValues values = new ContentValues();
+        values.put(InfoTable.Cols.DATE_LAST_UPDATED, date);
+        values.put(InfoTable.Cols.DATA_VERSION, dataVersion);
+        values.put(InfoTable.Cols.SHOW_YEAR, showYear);
+
+        try {
+
+            String lastDate = getLastUpdateDate();
+
+            if (lastDate.equals("N/A")) {
+                mDatabase.insert(InfoTable.NAME, InfoTable.Cols.DATE_LAST_UPDATED, values);
+            }
+            else {
+                mDatabase.update(
+                        InfoTable.NAME,
+                        values,
+                        InfoTable.Cols.DATE_LAST_UPDATED + " = ?",
+                        new String[] { lastDate }
+                );
+            }
+        }
+        catch (SQLiteConstraintException sce) {
+            Log.e(TAG, "Failed to add ArtWork to database", sce);
+        }
+    }
+
+    public String getLastUpdateDate() {
+
+        Cursor cursor = mDatabase.query(
+                ArtWorkDbSchema.InfoTable.NAME,                     // String table
+                new String[] { InfoTable.Cols.DATE_LAST_UPDATED },  // String[] columns,
+                null,                                               // String selection,
+                null,                                               // String[] selectionArgs,
+                null,                                               // String groupBy,
+                null,                                               // String having,
+                null                                                // String orderBy)
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return "N/A";
+            }
+            cursor.moveToFirst();
+            return cursor.getString(cursor.getColumnIndex(InfoTable.Cols.DATE_LAST_UPDATED));
+        }
+        finally {
+            cursor.close();
+        }
+
     }
 }

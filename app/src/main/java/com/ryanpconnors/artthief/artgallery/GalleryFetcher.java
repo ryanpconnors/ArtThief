@@ -22,6 +22,21 @@ public class GalleryFetcher {
     private static final String TAG = "GalleryFetcher";
     public static final String LOOT_URL = "http://artthief.zurka.com/loot.json";
 
+    private int mDataVersion = -1;
+    private int mShowYear = -1;
+
+    public GalleryFetcher() {
+
+    }
+
+    public int getDataVersion() {
+        return mDataVersion;
+    }
+
+    public int getShowYear() {
+        return mShowYear;
+    }
+
     public List<ArtWork> fetchArtWorks() {
 
         List<ArtWork> artWorks = new ArrayList<>();
@@ -78,8 +93,8 @@ public class GalleryFetcher {
         JSONArray artWorksJsonArray = jsonBody.getJSONArray("artWorks");
 
         //TODO utilize the showYear and dataVersion JSON objects
-        int showYear = jsonBody.getInt("showYear");
-        int dataVersion = jsonBody.getInt("dataVersion");
+        mShowYear = jsonBody.getInt("showYear");
+        mDataVersion = jsonBody.getInt("dataVersion");
 
         for (int i = 0; i < artWorksJsonArray.length(); i++) {
             try {

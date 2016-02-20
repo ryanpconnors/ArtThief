@@ -20,7 +20,6 @@ public class ArtWorkDbSchema {
          * Columns in the database table Info
          */
         public static final class Cols {
-            public static final String UUID = "uuid";
             public static final String DATE_LAST_UPDATED = "date_last_updated";
             public static final String SHOW_YEAR = "show_year";
             public static final String DATA_VERSION = "data_version";

@@ -25,10 +25,9 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         // Create the Info Table
         db.execSQL("create table " + InfoTable.NAME + "(" +
             " _id integer primary key autoincrement, " +
-            InfoTable.Cols.UUID + " not null unique, " +
-            InfoTable.Cols.DATA_VERSION + ", " +
-            InfoTable.Cols.SHOW_YEAR + ", " +
-            InfoTable.Cols.DATE_LAST_UPDATED +
+            InfoTable.Cols.DATA_VERSION + " INTEGER, " +
+            InfoTable.Cols.SHOW_YEAR + " INTEGER, " +
+            InfoTable.Cols.DATE_LAST_UPDATED + " TEXT " +
             ")"
         );
 
@@ -50,7 +49,6 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
             ArtWorkTable.Cols.TAKEN + " BOOLEAN" +
             ")"
         );
-
     }
 
     @Override
