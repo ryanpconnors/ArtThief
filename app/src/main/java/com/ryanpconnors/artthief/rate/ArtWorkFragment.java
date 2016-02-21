@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
+
+import java.util.UUID;
 
 import static android.widget.RatingBar.*;
 
@@ -32,6 +35,8 @@ public class ArtWorkFragment extends Fragment{
 
     private OnArtWorkFragmentInteractionListener mListener;
 
+    private static final String ARG_ARTWORK_ID = "artwork_id";
+
     public ArtWorkFragment() {
         // Required empty public constructor
     }
@@ -42,28 +47,20 @@ public class ArtWorkFragment extends Fragment{
      *
      * @return A new instance of fragment ArtWorkFragment.
      */
-    public static ArtWorkFragment newInstance() {
-        ArtWorkFragment fragment = new ArtWorkFragment();
+    public static ArtWorkFragment newInstance(UUID artWorkId) {
 
-        // For arguments passed into the new instance
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-
-        return fragment;
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_ARTWORK_ID, artWorkId);
+        ArtWorkFragment artWorkFragment = new ArtWorkFragment();
+        artWorkFragment.setArguments(args);
+        return artWorkFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
-
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        mArtwork = new ArtWork();
+        UUID artWorkId = (UUID) getArguments().getSerializable(ARG_ARTWORK_ID);
+        mArtwork = Gallery.get(getActivity()).getArtWork(artWorkId);
     }
 
     @Override
@@ -73,7 +70,6 @@ public class ArtWorkFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_artwork, container, false);
 
         mArtworkLargeImageView = (ImageView) v.findViewById(R.id.artwork_large_image_view);
-
         mArtworkRatingBar = (RatingBar) v.findViewById(R.id.artwork_rating_bar);
 
         mArtworkRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
@@ -84,20 +80,10 @@ public class ArtWorkFragment extends Fragment{
         });
 
         mArtWorkTitleTextView = (TextView) v.findViewById(R.id.artwork_title);
-
         mArtWorkArtistTextView = (TextView) v.findViewById(R.id.artwork_artist);
-
         mArtworkMediaTextView = (TextView) v.findViewById(R.id.artwork_media);
 
         return v;
-    }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onArtWorkFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -109,6 +95,12 @@ public class ArtWorkFragment extends Fragment{
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Gallery.get(getActivity()).updateArtWork(mArtwork);
     }
 
     /**
