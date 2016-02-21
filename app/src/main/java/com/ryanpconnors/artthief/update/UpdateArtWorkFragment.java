@@ -115,6 +115,7 @@ public class UpdateArtWorkFragment extends Fragment {
         mArtWorkUpdateListener = null;
     }
 
+    // TODO: provide some sort of progress indicator to the user
     private void performArtWorkUpdate() {
 
         GalleryFetcher fetcher = new GalleryFetcher();
@@ -133,28 +134,8 @@ public class UpdateArtWorkFragment extends Fragment {
 
             if (existingArtWork == null) {
 
-                //TODO: perform image downloads in separate async tasks???
-
                 // download image files if they exist and store the paths in newArtWork
-                String smallImageUrl = newArtWork.getSmallImageUrl();
-                if (smallImageUrl != null) {
-                    Bitmap artWorkImage = fetcher.fetchArtWorkImage(smallImageUrl);
-                    String smallImagePath = Gallery.get(getActivity()).saveToInternalStorage(
-                            artWorkImage,
-                            newArtWork.getArtThiefID() + "S.jpg"
-                    );
-                    newArtWork.setSmallImagePath(smallImagePath);
-                }
-
-                String largeImageUrl = newArtWork.getLargeImageUrl();
-                if (largeImageUrl != null) {
-                    Bitmap artWorkImage = fetcher.fetchArtWorkImage(largeImageUrl);
-                    String largeImagePath = Gallery.get(getActivity()).saveToInternalStorage(
-                            artWorkImage,
-                            newArtWork.getArtThiefID() + "L.jpg"
-                    );
-                    newArtWork.setSmallImagePath(largeImagePath);
-                }
+                downloadImageFiles(fetcher, newArtWork);
 
                 // insert the newArtWork into the Gallery database
                 Gallery.get(getActivity()).addArtWork(newArtWork);
@@ -186,6 +167,32 @@ public class UpdateArtWorkFragment extends Fragment {
         Log.d(TAG, "Updated: " + updated);
         Log.d(TAG, "Removed: " + removed);
 
+    }
+
+    //TODO: perform image downloads in separate async tasks???
+    private void downloadImageFiles(GalleryFetcher fetcher, ArtWork artWork) {
+
+        // Obtain the small ArtWork image
+        String smallImageUrl = artWork.getSmallImageUrl();
+        if (smallImageUrl != null) {
+            Bitmap artWorkImage = fetcher.fetchArtWorkImage(smallImageUrl);
+            String smallImagePath = Gallery.get(getActivity()).saveToInternalStorage(
+                    artWorkImage,
+                    artWork.getArtThiefID() + "S.jpg"
+            );
+            artWork.setSmallImagePath(smallImagePath);
+        }
+
+        // Obtain the large ArtWork image
+        String largeImageUrl = artWork.getLargeImageUrl();
+        if (largeImageUrl != null) {
+            Bitmap artWorkImage = fetcher.fetchArtWorkImage(largeImageUrl);
+            String largeImagePath = Gallery.get(getActivity()).saveToInternalStorage(
+                    artWorkImage,
+                    artWork.getArtThiefID() + "L.jpg"
+            );
+            artWork.setLargeImagePath(largeImagePath);
+        }
     }
 
     private void updateInfoTable(int showYear, int dataVersion) {

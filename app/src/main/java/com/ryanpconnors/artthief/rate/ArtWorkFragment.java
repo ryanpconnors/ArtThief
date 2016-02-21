@@ -1,6 +1,7 @@
 package com.ryanpconnors.artthief.rate;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,9 +26,9 @@ import static android.widget.RatingBar.*;
  */
 public class ArtWorkFragment extends Fragment{
 
-    private ArtWork mArtwork;
+    private ArtWork mArtWork;
 
-    private ImageView mArtworkLargeImageView;
+    private ImageView mArtWorkLargeImageView;
     private RatingBar mArtworkRatingBar;
     private TextView mArtWorkTitleTextView;
     private TextView mArtWorkArtistTextView;
@@ -60,7 +61,7 @@ public class ArtWorkFragment extends Fragment{
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
         UUID artWorkId = (UUID) getArguments().getSerializable(ARG_ARTWORK_ID);
-        mArtwork = Gallery.get(getActivity()).getArtWork(artWorkId);
+        mArtWork = Gallery.get(getActivity()).getArtWork(artWorkId);
     }
 
     @Override
@@ -69,9 +70,16 @@ public class ArtWorkFragment extends Fragment{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_artwork, container, false);
 
-        mArtworkLargeImageView = (ImageView) v.findViewById(R.id.artwork_large_image_view);
-        mArtworkRatingBar = (RatingBar) v.findViewById(R.id.artwork_rating_bar);
+        //TODO: The application may be doing too much work on its main thread.
+        mArtWorkLargeImageView = (ImageView) v.findViewById(R.id.artwork_large_image_view);
+        String largeImagePath = mArtWork.getLargeImagePath();
+        if (largeImagePath != null) {
+            Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
+            mArtWorkLargeImageView.setImageBitmap(largeArtWorkImage);
+        }
 
+        mArtworkRatingBar = (RatingBar) v.findViewById(R.id.artwork_rating_bar);
+        mArtworkRatingBar.setRating(mArtWork.getStars());
         mArtworkRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -80,8 +88,13 @@ public class ArtWorkFragment extends Fragment{
         });
 
         mArtWorkTitleTextView = (TextView) v.findViewById(R.id.artwork_title);
+        mArtWorkTitleTextView.setText(mArtWork.getTitle());
+
         mArtWorkArtistTextView = (TextView) v.findViewById(R.id.artwork_artist);
+        mArtWorkArtistTextView.setText(mArtWork.getArtist());
+
         mArtworkMediaTextView = (TextView) v.findViewById(R.id.artwork_media);
+        mArtworkMediaTextView.setText(mArtWork.getMedia());
 
         return v;
     }
@@ -100,7 +113,7 @@ public class ArtWorkFragment extends Fragment{
     @Override
     public void onPause() {
         super.onPause();
-        Gallery.get(getActivity()).updateArtWork(mArtwork);
+        Gallery.get(getActivity()).updateArtWork(mArtWork);
     }
 
     /**

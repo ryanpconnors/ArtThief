@@ -1,5 +1,6 @@
 package com.ryanpconnors.artthief;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,7 @@ import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.compare.CompareArtFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
+import com.ryanpconnors.artthief.rate.ArtWorkPagerActivity;
 import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtWorkFragment;
 import com.ryanpconnors.artthief.vote.VoteFragment;
@@ -190,7 +192,8 @@ public class MainActivity extends AppCompatActivity
 
     // communication from the ArtWorkListFragment
     public void onArtWorkListFragmentInteraction(ArtWork artWork) {
-
+        Intent intent = ArtWorkPagerActivity.newIntent(this, artWork.getId());
+        startActivity(intent);
     }
 
     // Communication from the UpdateArtWorkFragment

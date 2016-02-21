@@ -7,7 +7,6 @@
         android:id="@+id/artwork_large_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/thief"
         android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/artwork_rating_bar"/>

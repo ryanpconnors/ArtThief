@@ -1,6 +1,5 @@
 package com.ryanpconnors.artthief.rate;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -60,6 +59,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         mListener = listener;
     }
 
+    @Override
     public void onClick(View view) {
 
         if (mListener != null) {
@@ -68,9 +68,5 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
             // fragment is attached to one) that an item has been selected.
             mListener.onArtWorkListFragmentInteraction(mArtWork);
         }
-
-        // TODO implement onClick to start a new ArtWorkDetailActivity to show the detailed view of the artwork
-//        Intent intent = ArtWorkDetailActivity.newIntent(getActivity(), mArtWork.getId());
-//        startActivity(intent);
     }
 }

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
 import com.ryanpconnors.artthief.database.ArtWorkBaseHelper;
