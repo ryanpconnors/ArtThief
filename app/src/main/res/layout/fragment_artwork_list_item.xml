@@ -13,7 +13,6 @@
         android:scaleType="centerInside"
         android:background="@android:color/darker_gray"
         android:cropToPadding="true"
-        android:src="@drawable/thief"
         android:foregroundGravity="center"/>
 
     <TextView

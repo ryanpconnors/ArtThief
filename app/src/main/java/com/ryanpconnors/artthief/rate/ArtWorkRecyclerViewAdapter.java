@@ -1,5 +1,6 @@
 package com.ryanpconnors.artthief.rate;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkList
     private List<ArtWork> mArtWorks;
     private final OnArtWorkListFragmentInteractionListener mListener;
 
+    private Context mContext;
+
     public ArtWorkRecyclerViewAdapter(List<ArtWork> items, OnArtWorkListFragmentInteractionListener listener) {
         mArtWorks = items;
         mListener = listener;
@@ -29,6 +32,7 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkList
     public ArtWorkListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_artwork_list_item, parent, false);
+        mContext = parent.getContext();
         return new ArtWorkListViewHolder(view);
     }
 
@@ -41,7 +45,7 @@ public class ArtWorkRecyclerViewAdapter extends RecyclerView.Adapter<ArtWorkList
     public void onBindViewHolder(ArtWorkListViewHolder holder, int position) {
 
         ArtWork artWork = mArtWorks.get(position);
-        holder.bindArtWork(artWork, mListener);
+        holder.bindArtWork(artWork, mListener, mContext);
     }
 
     public void updateArtWorks(List<ArtWork> artWorks) {

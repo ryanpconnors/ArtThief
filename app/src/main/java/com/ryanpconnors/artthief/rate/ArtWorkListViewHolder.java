@@ -1,5 +1,9 @@
 package com.ryanpconnors.artthief.rate;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +11,7 @@ import android.widget.TextView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment.OnArtWorkListFragmentInteractionListener;
 
 /**
@@ -28,17 +33,24 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         super(itemView);
         itemView.setOnClickListener(this);
 
-//        mArtWorkImageView = (ImageView) itemView.findViewById(R.id.artwork_list_item_artwork_image);
+        mArtWorkImageView = (ImageView) itemView.findViewById(R.id.artwork_list_item_artwork_image);
         mShowIdTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_show_id);
         mTitleTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_title);
         mArtistTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_artist);
         mMediaTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_media);
     }
 
-    public void bindArtWork(ArtWork artWork, OnArtWorkListFragmentInteractionListener listener) {
+    public void bindArtWork(ArtWork artWork,
+                            OnArtWorkListFragmentInteractionListener listener,
+                            Context context) {
         mArtWork = artWork;
 
-        //TODO implement proper imageView here
+        //TODO: The application may be doing too much work on its main thread.
+        String smallImagePath = mArtWork.getSmallImagePath();
+        if (smallImagePath != null) {
+            Bitmap smallArtWorkImage = Gallery.get(context).getArtWorkImage(smallImagePath);
+            mArtWorkImageView.setImageBitmap(smallArtWorkImage);
+        }
 
         mShowIdTextView.setText("(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());
@@ -58,7 +70,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         }
 
         // TODO implement onClick to start a new ArtWorkDetailActivity to show the detailed view of the artwork
-        //  Intent intent = ArtWorkDetailActivity.newIntent(getActivity(), mArtWork.getId());
-        //  startActivity(intent);
+//        Intent intent = ArtWorkDetailActivity.newIntent(getActivity(), mArtWork.getId());
+//        startActivity(intent);
     }
 }
