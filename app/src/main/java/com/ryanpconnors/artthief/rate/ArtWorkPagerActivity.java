@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWorkFragmentInteractionListener {
 
     private static final String EXTRA_ARTWORK_ID = "com.ryanpconnors.artthief.artwork_id";
-    private static final int PAGING_LIMIT = 10;
+    private static final int PAGING_LIMIT = 4;
 
     private ViewPager mViewPager;
     private List<ArtWork> mArtWorks;
