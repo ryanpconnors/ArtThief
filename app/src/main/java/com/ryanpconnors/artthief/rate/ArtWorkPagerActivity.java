@@ -44,6 +44,9 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
         mViewPager = (ViewPager) findViewById(R.id.activity_art_work_pager_view_pager);
         mArtWorks = Gallery.get(this).getArtWorks();
 
+        // Enables up arrow in actionbar (not needed as it is set in AndroidManifest.xml)
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
