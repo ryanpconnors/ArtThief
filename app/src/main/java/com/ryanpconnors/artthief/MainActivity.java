@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         TextView voteTab = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         voteTab.setText(R.string.vote_tab_label);
-        voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_rate_artwork, 0, 0);
+        voteTab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_poll_white_24dp, 0, 0);
         mTabLayout.getTabAt(4).setCustomView(voteTab);
     }
 
