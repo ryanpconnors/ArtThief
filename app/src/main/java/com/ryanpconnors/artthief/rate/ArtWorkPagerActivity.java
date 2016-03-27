@@ -3,17 +3,20 @@ package com.ryanpconnors.artthief.rate;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
-
 import com.ryanpconnors.artthief.rate.ArtWorkFragment.OnArtWorkFragmentInteractionListener;
 
 import java.util.List;
@@ -27,6 +30,7 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
     private ViewPager mViewPager;
     private List<ArtWork> mArtWorks;
 
+    private ShareActionProvider mShareActionProvider;
 
     public static Intent newIntent(Context packageContext, UUID artWorkId) {
         Intent intent = new Intent(packageContext, ArtWorkPagerActivity.class);
@@ -43,9 +47,6 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
 
         mViewPager = (ViewPager) findViewById(R.id.activity_art_work_pager_view_pager);
         mArtWorks = Gallery.get(this).getArtWorks();
-
-        // Enables up arrow in actionbar (not needed as it is set in AndroidManifest.xml)
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
@@ -69,6 +70,29 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
                 mViewPager.setCurrentItem(i);
                 break;
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // TODO is it best to handle this here in the ArtWorkPagerActivity or in the ArtWorkFragment
+        getMenuInflater().inflate(R.menu.fragment_artwork, menu);
+        MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO implement sharing feature
+        return true;
+    }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
         }
     }
 

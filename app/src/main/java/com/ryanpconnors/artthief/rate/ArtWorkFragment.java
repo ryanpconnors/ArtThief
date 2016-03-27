@@ -18,13 +18,13 @@ import com.ryanpconnors.artthief.artgallery.Gallery;
 
 import java.util.UUID;
 
-import static android.widget.RatingBar.*;
+import static android.widget.RatingBar.OnRatingBarChangeListener;
 
 
 /**
  * Created by Ryan Connors on 2/14/16.
  */
-public class ArtWorkFragment extends Fragment{
+public class ArtWorkFragment extends Fragment {
 
     private ArtWork mArtWork;
 
