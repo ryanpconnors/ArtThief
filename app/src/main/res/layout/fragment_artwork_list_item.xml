@@ -11,7 +11,7 @@
         android:layout_width="@dimen/artwork_small_image_height"
         android:layout_height="@dimen/artwork_small_image_width"
         android:scaleType="centerInside"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/transparent"
         android:cropToPadding="true"
         android:foregroundGravity="center"/>
 
