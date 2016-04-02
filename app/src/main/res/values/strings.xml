@@ -18,4 +18,6 @@
     <string name="loot_url">http://artthief.zurka.com/loot.json</string>
     <string name="date_format">EEEE MMM dd, yyyy, hh:mm a </string>
     <string name="not_available">N/E</string>
+    <string name="share_subject">Patrons\' Show Artwork</string>
+    <string name="share_text">I really like this piece from the Art League\'s Patron\'s Show. #PatronsShow</string>
 </resources>

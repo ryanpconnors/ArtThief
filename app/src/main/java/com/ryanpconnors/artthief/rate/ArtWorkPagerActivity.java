@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -29,8 +26,6 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
 
     private ViewPager mViewPager;
     private List<ArtWork> mArtWorks;
-
-    private ShareActionProvider mShareActionProvider;
 
     public static Intent newIntent(Context packageContext, UUID artWorkId) {
         Intent intent = new Intent(packageContext, ArtWorkPagerActivity.class);
@@ -75,39 +70,9 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        // TODO is it best to handle this here in the ArtWorkPagerActivity or in the ArtWorkFragment
-        getMenuInflater().inflate(R.menu.fragment_artwork, menu);
-        MenuItem shareItem = menu.findItem(R.id.menu_item_share);
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
-                // if this doesn't work as desired, another possibility is to call `finish()` here.
-                this.onBackPressed();
-                return true;
-
-            case R.id.menu_item_share:
-                // TODO implement sharing feature
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
 
     // TODO
     public void onArtWorkFragmentInteraction(Uri uri) {
