@@ -85,8 +85,21 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO implement sharing feature
-        return true;
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
+                // if this doesn't work as desired, another possibility is to call `finish()` here.
+                this.onBackPressed();
+                return true;
+
+            case R.id.menu_item_share:
+                // TODO implement sharing feature
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     // Call to update the share intent
