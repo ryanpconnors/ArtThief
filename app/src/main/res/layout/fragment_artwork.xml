@@ -14,14 +14,15 @@
     <RatingBar
         android:id="@id/artwork_rating_bar"
         style="?android:attr/ratingBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/artwork_title"
-        android:layout_centerHorizontal="true"
         android:isIndicator="false"
         android:numStars="5"
         android:padding="@dimen/artwork_fragment_rating_bar_padding"
-        android:stepSize="1.0"/>
+        android:rating="0.0"
+        android:stepSize="1.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/artwork_title"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@id/artwork_title"
