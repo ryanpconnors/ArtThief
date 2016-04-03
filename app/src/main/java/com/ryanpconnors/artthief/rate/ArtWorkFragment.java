@@ -3,8 +3,11 @@ package com.ryanpconnors.artthief.rate;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
@@ -25,6 +28,8 @@ import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 
@@ -109,8 +114,6 @@ public class ArtWorkFragment extends Fragment {
         mArtworkMediaTextView = (TextView) v.findViewById(R.id.artwork_media);
         mArtworkMediaTextView.setText(mArtWork.getMedia());
 
-        setShareIntent();
-
         return v;
     }
 
@@ -122,8 +125,9 @@ public class ArtWorkFragment extends Fragment {
 
         // Setup ShareActionProvider menu item
         MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-        setShareIntent();
+        new setShareIntentTask().execute();
         mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
             @Override
             public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
@@ -144,26 +148,47 @@ public class ArtWorkFragment extends Fragment {
                 return true;
 
             case R.id.menu_item_share:
-                // TODO why does this not show up here?
+                // Share menu item not accessible here?
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    // Call to update the share intent
-    private void setShareIntent() {
-        if (mShareActionProvider != null) {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("image/*");
 
-            File file = new File(mArtWork.getLargeImagePath());
-            Uri imageUri = Uri.fromFile(file);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
-            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text)  + " : " +  mArtWork.getTitle());
-            mShareActionProvider.setShareIntent(shareIntent);
+    /**
+     *
+     * @return
+     */
+    private Intent getShareIntent() {
+        Bitmap bitmap;
+        File imgFile = new File(mArtWork.getLargeImagePath());
+        if (imgFile.exists()) {
+            bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        } else {
+            mShareActionProvider = null;
+            return null;
         }
+
+        Uri imageUri;
+        try {
+            File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), mArtWork.getTitle() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            imageUri = Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            mShareActionProvider = null;
+            return null;
+        }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + " : " + mArtWork.getTitle());
+        return shareIntent;
     }
 
     @Override
@@ -184,6 +209,26 @@ public class ArtWorkFragment extends Fragment {
     }
 
     /**
+     * Asynchronous task for setting this ArtWorkFragments share intent
+     */
+    private class setShareIntentTask extends AsyncTask<Void, Void, Void> {
+
+        Intent shareIntent;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            shareIntent = getShareIntent();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mShareActionProvider.setShareIntent(shareIntent);
+            Toast.makeText(getActivity(), "Set Share Intent", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -198,4 +243,5 @@ public class ArtWorkFragment extends Fragment {
         // TODO: Update argument type and name
         void onArtWorkFragmentInteraction(Uri uri);
     }
+
 }
