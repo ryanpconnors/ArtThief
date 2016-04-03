@@ -224,7 +224,6 @@ public class ArtWorkFragment extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             mShareActionProvider.setShareIntent(shareIntent);
-            Toast.makeText(getActivity(), "Set Share Intent", Toast.LENGTH_SHORT).show();
         }
     }
 
