@@ -157,7 +157,6 @@ public class ArtWorkFragment extends Fragment {
 
 
     /**
-     *
      * @return
      */
     private Intent getShareIntent() {
@@ -181,14 +180,22 @@ public class ArtWorkFragment extends Fragment {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            mShareActionProvider = null;
+            return null;
         }
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("image/*");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
-        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + " : " + mArtWork.getTitle());
-        return shareIntent;
+        if (isAdded()) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/*");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + " : " + mArtWork.getTitle());
+            return shareIntent;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -223,7 +230,9 @@ public class ArtWorkFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            mShareActionProvider.setShareIntent(shareIntent);
+            if (isAdded() && mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(shareIntent);
+            }
         }
     }
 
