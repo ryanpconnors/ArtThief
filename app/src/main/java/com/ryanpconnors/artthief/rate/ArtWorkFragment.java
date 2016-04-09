@@ -82,17 +82,17 @@ public class ArtWorkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_artwork, container, false);
+        View view = inflater.inflate(R.layout.fragment_artwork, container, false);
 
         //TODO: The application may be doing too much work on its main thread.
-        mArtWorkLargeImageView = (ImageView) v.findViewById(R.id.artwork_large_image_view);
+        mArtWorkLargeImageView = (ImageView) view.findViewById(R.id.artwork_large_image_view);
         String largeImagePath = mArtWork.getLargeImagePath();
         if (largeImagePath != null) {
             Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
             mArtWorkLargeImageView.setImageBitmap(largeArtWorkImage);
         }
 
-        mArtworkRatingBar = (RatingBar) v.findViewById(R.id.artwork_rating_bar);
+        mArtworkRatingBar = (RatingBar) view.findViewById(R.id.artwork_rating_bar);
         mArtworkRatingBar.setRating(mArtWork.getStars());
         mArtworkRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
@@ -102,16 +102,16 @@ public class ArtWorkFragment extends Fragment {
             }
         });
 
-        mArtWorkTitleTextView = (TextView) v.findViewById(R.id.artwork_title);
+        mArtWorkTitleTextView = (TextView) view.findViewById(R.id.artwork_title);
         mArtWorkTitleTextView.setText(mArtWork.getTitle());
 
-        mArtWorkArtistTextView = (TextView) v.findViewById(R.id.artwork_artist);
+        mArtWorkArtistTextView = (TextView) view.findViewById(R.id.artwork_artist);
         mArtWorkArtistTextView.setText(mArtWork.getArtist());
 
-        mArtworkMediaTextView = (TextView) v.findViewById(R.id.artwork_media);
+        mArtworkMediaTextView = (TextView) view.findViewById(R.id.artwork_media);
         mArtworkMediaTextView.setText(mArtWork.getMedia());
 
-        return v;
+        return view;
     }
 
     @Override

@@ -23,6 +23,8 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
     private TextView mTitleTextView;
     private TextView mArtistTextView;
     private TextView mMediaTextView;
+    private ImageView mArtWorkRatingStarImageView;
+    private TextView mArtWorkRatingTextView;
 
     private OnArtWorkListFragmentInteractionListener mListener;
 
@@ -37,6 +39,8 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         mTitleTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_title);
         mArtistTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_artist);
         mMediaTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_media);
+        mArtWorkRatingStarImageView = (ImageView) itemView.findViewById(R.id.artwork_list_item_rating_star_image);
+        mArtWorkRatingTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_rating_text_view);
     }
 
     public void bindArtWork(ArtWork artWork,
@@ -55,6 +59,15 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
         mMediaTextView.setText(artWork.getMedia());
+
+        if (mArtWork.getStars() > 0) {
+            mArtWorkRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp);
+            mArtWorkRatingTextView.setText(Integer.toString(mArtWork.getStars()));
+        }
+        else {
+            mArtWorkRatingStarImageView.setVisibility(View.GONE);
+            mArtWorkRatingTextView.setVisibility(View.GONE);
+        }
 
         mListener = listener;
     }
