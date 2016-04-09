@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -98,10 +97,8 @@ public class ArtWorkFragment extends Fragment {
         mArtworkRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                //TODO: implement changing of the rating for the current ArtWork
-                Toast.makeText(getActivity(),
-                        String.valueOf(ratingBar.getRating()),
-                        Toast.LENGTH_SHORT).show();
+                mArtWork.setStars(Math.round(rating));
+                Gallery.get(getActivity()).updateArtWork(mArtWork);
             }
         });
 
@@ -241,7 +238,7 @@ public class ArtWorkFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
