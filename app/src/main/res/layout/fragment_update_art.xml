@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/update_art_header"
         android:textSize="40dp"
+        android:padding="16dp"
         android:textStyle="normal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
