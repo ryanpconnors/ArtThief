@@ -54,4 +54,11 @@
         android:layout_below="@id/last_update_date_text"
         android:layout_centerHorizontal="true"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/thief_half_background"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/update_artworks_button"/>
+
 </RelativeLayout>
