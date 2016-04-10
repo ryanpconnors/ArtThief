@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/artwork_artist"
         android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
-        android:text="(#) Artwork Title"
+        android:text="@string/artwork_title_text"
         android:textSize="@dimen/artwork_fragment_artwork_title_text_size"
         android:textStyle="bold"/>
 
