@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/artwork_large_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/thief"
-        android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
+        android:layout_above="@+id/artwork_rating_bar"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/artwork_rating_bar"/>
+        android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
+        android:src="@drawable/thief"/>
 
     <RatingBar
-        style="?android:attr/ratingBarStyle"
         android:id="@id/artwork_rating_bar"
+        style="?android:attr/ratingBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="1.0"
-        android:isIndicator="false"
         android:layout_above="@+id/artwork_title"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/artwork_fragment_rating_bar_padding"/>
+        android:isIndicator="false"
+        android:numStars="5"
+        android:stepSize="1.0"/>
 
     <TextView
         android:id="@id/artwork_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_above="@+id/artwork_artist"
+        android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
         android:text="(#) Artwork Title"
         android:textSize="@dimen/artwork_fragment_artwork_title_text_size"
-        android:layout_above="@+id/artwork_artist"
-        android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"/>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@id/artwork_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="normal"
+        android:layout_above="@+id/artwork_media"
+        android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
         android:text="Artist Name"
         android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
-        android:layout_above="@+id/artwork_media"
-        android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"/>
+        android:textStyle="normal"/>
 
     <TextView
         android:id="@id/artwork_media"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Media"
-        android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
         android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
-        android:paddingBottom="@dimen/artwork_fragment_info_padding_bottom"/>
+        android:paddingBottom="@dimen/artwork_fragment_info_padding_bottom"
+        android:text="Media"
+        android:textSize="@dimen/artwork_fragment_artwork_info_text_size"/>
 
 </RelativeLayout>
