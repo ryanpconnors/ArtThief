@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -18,7 +16,7 @@ import com.ryanpconnors.artthief.artgallery.Gallery;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <p>
  * Activities containing this fragment MUST implement the {@link OnArtWorkListFragmentInteractionListener}
  * interface.
  */
@@ -37,7 +35,6 @@ public class ArtWorkListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Customize parameter initialization
     public static ArtWorkListFragment newInstance(int columnCount) {
         ArtWorkListFragment fragment = new ArtWorkListFragment();
 
@@ -57,6 +54,11 @@ public class ArtWorkListFragment extends Fragment {
         }
     }
 
+    @Override public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -69,8 +71,7 @@ public class ArtWorkListFragment extends Fragment {
 
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            }
-            else {
+            } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
@@ -123,7 +124,7 @@ public class ArtWorkListFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

@@ -63,6 +63,8 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         if (mArtWork.getStars() > 0) {
             mArtWorkRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp);
             mArtWorkRatingTextView.setText(Integer.toString(mArtWork.getStars()));
+            mArtWorkRatingStarImageView.setVisibility(View.VISIBLE);
+            mArtWorkRatingTextView.setVisibility(View.VISIBLE);
         }
         else {
             mArtWorkRatingStarImageView.setVisibility(View.GONE);
