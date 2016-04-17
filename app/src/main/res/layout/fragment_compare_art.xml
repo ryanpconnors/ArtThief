@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimaryDark"
-                tools:context="com.ryanpconnors.artthief.compare.CompareArtFragment">
+                tools:context=".compare.CompareArtWorkFragment">
 
     <TextView
         android:id="@+id/compare_artwork_header"
