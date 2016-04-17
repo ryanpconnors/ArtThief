@@ -1,17 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.ryanpconnors.artthief.compare.CompareArtFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
+                tools:context="com.ryanpconnors.artthief.compare.CompareArtFragment">
 
     <TextView
+        android:id="@+id/compare_artwork_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/compare_art_title"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/compare_artwork_header_padding_bottom"
+        android:paddingLeft="@dimen/compare_artwork_header_padding_left"
+        android:paddingRight="@dimen/compare_artwork_header_padding_right"
+        android:paddingTop="@dimen/compare_artwork_header_padding_top"
+        android:text="@string/compare_art_header"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="30dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/compare_artwork_sub_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/compare_artwork_header"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/compare_artwork_sub_header_padding_bottom"
+        android:paddingLeft="@dimen/compare_artwork_sub_header_padding_left"
+        android:paddingRight="@dimen/compare_artwork_header_padding_right"
+        android:paddingTop="@dimen/compare_artwork_sub_header_padding_top"
+        android:text="@string/compare_art_sub_header"
+        android:textColor="@color/textColorThirdly"
+        android:textSize="16dp"
+        android:textStyle="normal"/>
+
+    <Button
+        android:id="@+id/compare_artwork_five_star_button"
+        android:layout_width="@dimen/compare_artwork_star_button_width"
+        android:layout_height="@dimen/compare_artwork_star_button_height"
+        android:layout_below="@id/compare_artwork_sub_header"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/compate_artwork_button_layout_margin"
+        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/compare_artwork_star_button_padding"
+        android:text="@string/compare_five_star_button_label"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"/>
+
+    <Button
+        android:id="@+id/compare_artwork_four_star_button"
+        android:layout_width="@dimen/compare_artwork_star_button_width"
+        android:layout_height="@dimen/compare_artwork_star_button_height"
+        android:layout_below="@id/compare_artwork_five_star_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/compate_artwork_button_layout_margin"        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/compare_artwork_star_button_padding"
+        android:text="@string/compare_four_star_button_label"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"/>
+
+    <Button
+        android:id="@+id/compare_artwork_three_star_button"
+        android:layout_width="@dimen/compare_artwork_star_button_width"
+        android:layout_height="@dimen/compare_artwork_star_button_height"
+        android:layout_below="@id/compare_artwork_four_star_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/compate_artwork_button_layout_margin"        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/compare_artwork_star_button_padding"
+        android:text="@string/compare_three_star_button_label"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"/>
+
+    <Button
+        android:id="@+id/compare_artwork_two_star_button"
+        android:layout_width="@dimen/compare_artwork_star_button_width"
+        android:layout_height="@dimen/compare_artwork_star_button_height"
+        android:layout_below="@id/compare_artwork_three_star_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/compate_artwork_button_layout_margin"        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/compare_artwork_star_button_padding"
+        android:text="@string/compare_two_star_button_label"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"/>
+
+    <Button
+        android:id="@+id/compare_artwork_one_star_button"
+        android:layout_width="@dimen/compare_artwork_star_button_width"
+        android:layout_height="@dimen/compare_artwork_star_button_height"
+        android:layout_below="@id/compare_artwork_two_star_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/compate_artwork_button_layout_margin"        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/compare_artwork_star_button_padding"
+        android:text="@string/compare_one_star_button_label"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"/>
 
 </RelativeLayout>

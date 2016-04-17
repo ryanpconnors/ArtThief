@@ -1,13 +1,15 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="tab_max_width">264dp</dimen>
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
+
     <dimen name="custom_tab_layout_height">72dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
     <dimen name="artwork_fragment_artwork_large_image_padding">24dp</dimen>
     <dimen name="artwork_fragment_rating_bar_padding">14dp</dimen>
     <dimen name="artwork_fragment_artwork_title_text_size">24sp</dimen>
@@ -20,4 +22,22 @@
     <dimen name="artwork_list_item_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="artwork_list_item_rating_padding">16dp</dimen>
+
+    <!--Compare ArtWork-->
+    <dimen name="compare_artwork_header_padding_left">16dp</dimen>
+    <dimen name="compare_artwork_header_padding_right">16dp</dimen>
+    <dimen name="compare_artwork_header_padding_top">8dp</dimen>
+    <dimen name="compare_artwork_header_padding_bottom">4dp</dimen>
+
+    <dimen name="compare_artwork_sub_header_padding_left">16dp</dimen>
+    <dimen name="compare_artwork_sub_header_padding_right">16dp</dimen>
+    <dimen name="compare_artwork_sub_header_padding_top">4dp</dimen>
+    <dimen name="compare_artwork_sub_header_padding_bottom">8dp</dimen>
+
+    <dimen name="compare_artwork_star_button_width">200dp</dimen>
+    <dimen name="compare_artwork_star_button_height">40dp</dimen>
+    <dimen name="compare_artwork_star_button_padding">5dp</dimen>
+    <dimen name="compate_artwork_button_layout_margin">8dp</dimen>
+
+
 </resources>
