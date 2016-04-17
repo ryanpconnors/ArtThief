@@ -52,16 +52,14 @@ public class Gallery {
     }
 
     /**
-     *
      * @param artThiefId the artThiefId used to identify the artWork
-     *
      * @return the ArtWork in this database that has the corresponding artThiefId,
      * if not ArtWork exists in the database with the artThiefId, null is returned.
      */
     public ArtWork getArtWork(int artThiefId) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
-                new String[]{ String.valueOf(artThiefId) }
+                new String[]{String.valueOf(artThiefId)}
         );
 
         try {
@@ -70,15 +68,13 @@ public class Gallery {
             }
             cursor.moveToFirst();
             return cursor.getArtWork();
-        }
-        finally {
+        } finally {
             cursor.close();
         }
     }
 
 
     /**
-     *
      * @param id
      * @return
      */
@@ -95,14 +91,13 @@ public class Gallery {
 
             cursor.moveToFirst();
             return cursor.getArtWork();
-        }
-        finally {
+        } finally {
             cursor.close();
         }
     }
 
 
-    public String saveToInternalStorage(Bitmap bitmapImage, String imageName){
+    public String saveToInternalStorage(Bitmap bitmapImage, String imageName) {
 
         ContextWrapper cw = new ContextWrapper(mContext);
 
@@ -119,15 +114,12 @@ public class Gallery {
 
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 fos.close();
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 Log.e(TAG, "FileOutputStream close error", ioe);
             }
         }
@@ -138,9 +130,7 @@ public class Gallery {
     public Bitmap getArtWorkImage(String path) {
         try {
             return BitmapFactory.decodeStream(new FileInputStream(new File(path)));
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -151,8 +141,7 @@ public class Gallery {
         ContentValues values = getContentValues(artWork);
         try {
             mDatabase.insert(ArtWorkTable.NAME, null, values);
-        }
-        catch (SQLiteConstraintException sce) {
+        } catch (SQLiteConstraintException sce) {
             Log.e(TAG, "Failed to add ArtWork to database", sce);
         }
     }
@@ -162,7 +151,7 @@ public class Gallery {
         ContentValues values = getContentValues(artWork);
         mDatabase.update(ArtWorkTable.NAME, values,
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
-                new String[]{ artThiefIdString });
+                new String[]{artThiefIdString});
     }
 
     public boolean deleteArtWork(ArtWork artWork) {
@@ -170,7 +159,7 @@ public class Gallery {
         return mDatabase.delete(
                 ArtWorkTable.Cols.ART_THIEF_ID,
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
-                new String[] { artThiefIdString }
+                new String[]{artThiefIdString}
         ) > 0;
     }
 
@@ -185,8 +174,7 @@ public class Gallery {
                 artWorks.add(cursor.getArtWork());
                 cursor.moveToNext();
             }
-        }
-        finally {
+        } finally {
             cursor.close();
         }
         return artWorks;
@@ -218,7 +206,7 @@ public class Gallery {
 
     private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-               ArtWorkTable.NAME,       // Table name
+                ArtWorkTable.NAME,       // Table name
                 null,                   // Columns : [null] selects all columns
                 whereClause,            // where [clause]
                 whereArgs,              // where [args]
@@ -227,6 +215,28 @@ public class Gallery {
                 null                    // orderBy
         );
         return new ArtWorkCursorWrapper(cursor);
+    }
+
+    public int getStarCount(String numStars) {
+
+        Cursor cursor = mDatabase.query(
+                ArtWorkTable.NAME,
+                new String[]{"count(*)"},
+                ArtWorkTable.Cols.STARS + " = ?",
+                new String[]{numStars},
+                null,
+                null,
+                null
+        );
+        try {
+            if (cursor.getCount() == 0) {
+                return 0;
+            }
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        } finally {
+            cursor.close();
+        }
     }
 
 
@@ -243,17 +253,15 @@ public class Gallery {
 
             if (lastDate.equals("N/A")) {
                 mDatabase.insert(InfoTable.NAME, InfoTable.Cols.DATE_LAST_UPDATED, values);
-            }
-            else {
+            } else {
                 mDatabase.update(
                         InfoTable.NAME,
                         values,
                         InfoTable.Cols.DATE_LAST_UPDATED + " = ?",
-                        new String[] { lastDate }
+                        new String[]{lastDate}
                 );
             }
-        }
-        catch (SQLiteConstraintException sce) {
+        } catch (SQLiteConstraintException sce) {
             Log.e(TAG, "Failed to add ArtWork to database", sce);
         }
     }
@@ -262,7 +270,7 @@ public class Gallery {
 
         Cursor cursor = mDatabase.query(
                 ArtWorkDbSchema.InfoTable.NAME,                     // String table
-                new String[] { InfoTable.Cols.DATE_LAST_UPDATED },  // String[] columns,
+                new String[]{InfoTable.Cols.DATE_LAST_UPDATED},     // String[] columns,
                 null,                                               // String selection,
                 null,                                               // String[] selectionArgs,
                 null,                                               // String groupBy,
@@ -276,8 +284,7 @@ public class Gallery {
             }
             cursor.moveToFirst();
             return cursor.getString(cursor.getColumnIndex(InfoTable.Cols.DATE_LAST_UPDATED));
-        }
-        finally {
+        } finally {
             cursor.close();
         }
 
