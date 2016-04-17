@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
-import com.ryanpconnors.artthief.compare.CompareArtFragment;
+import com.ryanpconnors.artthief.compare.CompareArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkPagerActivity;
@@ -32,7 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements
         UpdateArtWorkFragment.OnUpdateArtWorkFragmentInteractionListener,
-        CompareArtFragment.OnCompareArtFragmentInteractionListener,
+        CompareArtWorkFragment.OnCompareArtFragmentInteractionListener,
         ShowFragment.OnShowFragmentInteractionListener,
         VoteFragment.OnVoteFragmentInteractionListener,
         ArtWorkFragment.OnArtWorkFragmentInteractionListener,
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         adapter.addFragment(UpdateArtWorkFragment.newInstance(), getString(R.string.update_art_title));
         adapter.addFragment(ArtWorkListFragment.newInstance(ARTWORK_LIST_COLUMN_COUNT), getString(R.string.rate_art_title));
-        adapter.addFragment(CompareArtFragment.newInstance(), getString(R.string.compare_art_title));
+        adapter.addFragment(CompareArtWorkFragment.newInstance(), getString(R.string.compare_art_title));
         adapter.addFragment(ShowFragment.newInstance(), getString(R.string.the_show_title));
         adapter.addFragment(VoteFragment.newInstance(), getString(R.string.vote_title));
         viewPager.setAdapter(adapter);
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
      * http://developer.android.com/training/basics/fragments/communicating.html
      ****************************************************************************/
 
-    // communication from the CompareArtFragment
+    // communication from the CompareArtWorkFragment
     public void onCompareArtFragmentInteraction(Uri uri) {
 
     }
