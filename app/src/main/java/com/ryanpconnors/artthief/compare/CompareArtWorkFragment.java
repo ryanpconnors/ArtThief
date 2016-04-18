@@ -77,8 +77,10 @@ public class CompareArtWorkFragment extends Fragment {
 
         if (fiveStarCount > 0) {
             mFiveStarButton.setActivated(true);
+            mFiveStarButton.setClickable(true);
         } else {
             mFiveStarButton.setActivated(false);
+            mFiveStarButton.setClickable(false);
         }
         mFiveStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
