@@ -58,6 +58,7 @@ public class CompareArtWorkFragment extends Fragment {
 
         // Retain this fragment to ensure that the asynchronous UpdateArtWorksTask completes
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             //TODO: store given arguments in this class instance
         }
@@ -119,8 +120,13 @@ public class CompareArtWorkFragment extends Fragment {
             }
         });
 
-        refreshStarButtons();
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshStarButtons();
     }
 
     private void refreshStarButtons() {
@@ -185,6 +191,7 @@ public class CompareArtWorkFragment extends Fragment {
             starButton.setEnabled(starCount > 0);
             starButton.setAlpha(.5f);
         }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
