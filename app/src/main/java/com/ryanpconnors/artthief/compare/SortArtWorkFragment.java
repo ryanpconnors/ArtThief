@@ -1,15 +1,19 @@
 package com.ryanpconnors.artthief.compare;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 
 import java.util.List;
 
@@ -28,6 +32,11 @@ public class SortArtWorkFragment extends Fragment {
     private int mNumberOfStars;
 
     private List<ArtWork> mArtWorks;
+
+    private ImageView mArtworkImageViewAlpha;
+    private ImageView mArtworkImageViewBeta;
+
+    private ShareActionProvider mShareActionProvider;
 
     private OnSortArtworkFragmentInteractionListener mListener;
 
@@ -48,7 +57,7 @@ public class SortArtWorkFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mNumberOfStars = getArguments().getInt(ARG_NUMBER_OF_STARS);
-            // TODO: get all the artworks with the number of stars given that also have photos available
+            mArtWorks = Gallery.get(getActivity()).getArtWorks(mNumberOfStars);
             setHasOptionsMenu(true);
         }
     }
@@ -57,7 +66,23 @@ public class SortArtWorkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sort_art_work, container, false);
+        View v = inflater.inflate(R.layout.fragment_sort_art_work, container, false);
+
+        mArtworkImageViewAlpha = (ImageView) v.findViewById(R.id.artwork_large_image_view_alpha);
+        String largeImagePathAlpha = mArtWorks.get(0).getLargeImagePath();
+        if (largeImagePathAlpha != null) {
+            Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePathAlpha);
+            mArtworkImageViewAlpha.setImageBitmap(largeArtWorkImage);
+        }
+
+        mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
+        String largeImagePathBeta = mArtWorks.get(1).getLargeImagePath();
+        if (largeImagePathBeta != null) {
+            Bitmap largeArtWorkImageBeta = Gallery.get(getActivity()).getArtWorkImage(largeImagePathBeta);
+            mArtworkImageViewBeta.setImageBitmap(largeArtWorkImageBeta);
+        }
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
