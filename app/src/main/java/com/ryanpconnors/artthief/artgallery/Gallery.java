@@ -180,6 +180,33 @@ public class Gallery {
         return artWorks;
     }
 
+
+    public List<ArtWork> getArtWorks(int stars) {
+        List<ArtWork> artWorks = new ArrayList<>();
+
+        String whereClause = "";
+        whereClause += ArtWorkTable.Cols.STARS + "=?";
+        whereClause += " AND " + ArtWorkTable.Cols.LARGE_IMAGE_PATH + " IS NOT NULL";
+
+        String[] whereArgs = new String[]{Integer.toString(stars)};
+
+        ArtWorkCursorWrapper cursor = queryArtWorks(
+                whereClause,
+                whereArgs
+        );
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                artWorks.add(cursor.getArtWork());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return artWorks;
+    }
+
     public static ContentValues getContentValues(ArtWork artWork) {
         ContentValues values = new ContentValues();
         values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
