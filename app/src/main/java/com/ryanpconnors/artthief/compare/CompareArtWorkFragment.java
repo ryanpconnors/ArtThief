@@ -1,6 +1,7 @@
 package com.ryanpconnors.artthief.compare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,13 +27,15 @@ import java.util.logging.Logger;
 public class CompareArtWorkFragment extends Fragment {
 
     private static final String TAG = "CompareArtWorkFragment";
+
     private static final Logger LOG = Logger.getLogger(CompareArtWorkFragment.TAG);
+
+    private OnCompareArtFragmentInteractionListener mCompareArtWorkListener;
     private Button mFiveStarButton;
     private Button mFourStarButton;
     private Button mThreeStarButton;
     private Button mTwoStarButton;
     private Button mOneStarButton;
-    private OnCompareArtFragmentInteractionListener mCompareArtWorkListener;
 
     public CompareArtWorkFragment() {
         // Required empty public constructor
@@ -74,9 +77,12 @@ public class CompareArtWorkFragment extends Fragment {
         mOneStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Toast.makeText(getActivity().getApplicationContext(), "One Star:" +
                                 Gallery.get(getActivity()).getStarCount(getString(R.string.one_star)),
                         Toast.LENGTH_LONG).show();
+
+                startSortArtWorkActivity(1);
             }
         });
 
@@ -87,6 +93,8 @@ public class CompareArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Two Star:" +
                                 Gallery.get(getActivity()).getStarCount(getString(R.string.two_stars)),
                         Toast.LENGTH_LONG).show();
+
+                startSortArtWorkActivity(2);
             }
         });
 
@@ -97,6 +105,8 @@ public class CompareArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Three Star:" +
                                 Gallery.get(getActivity()).getStarCount(getString(R.string.three_stars)),
                         Toast.LENGTH_LONG).show();
+
+                startSortArtWorkActivity(3);
             }
         });
 
@@ -107,6 +117,8 @@ public class CompareArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Four Star:" +
                                 Gallery.get(getActivity()).getStarCount(getString(R.string.four_stars)),
                         Toast.LENGTH_LONG).show();
+
+                startSortArtWorkActivity(4);
             }
         });
 
@@ -117,10 +129,19 @@ public class CompareArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Five Star:" +
                                 Gallery.get(getActivity()).getStarCount(getString(R.string.five_stars)),
                         Toast.LENGTH_LONG).show();
+
+                startSortArtWorkActivity(5);
             }
         });
 
         return v;
+    }
+
+    private void startSortArtWorkActivity(int starCount) {
+
+        Intent intent = new Intent(getActivity(), SortArtWorkActivity.class);
+        intent.putExtra(SortArtWorkActivity.EXTRA_STAR_COUNT, starCount);
+        startActivity(intent);
     }
 
     @Override
