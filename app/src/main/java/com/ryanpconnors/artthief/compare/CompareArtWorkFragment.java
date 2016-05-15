@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.Gallery;
@@ -77,11 +76,6 @@ public class CompareArtWorkFragment extends Fragment {
         mOneStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(getActivity().getApplicationContext(), "One Star:" +
-                                Gallery.get(getActivity()).getStarCount(getString(R.string.one_star)),
-                        Toast.LENGTH_LONG).show();
-
                 startSortArtWorkActivity(1);
             }
         });
@@ -90,10 +84,6 @@ public class CompareArtWorkFragment extends Fragment {
         mTwoStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Two Star:" +
-                                Gallery.get(getActivity()).getStarCount(getString(R.string.two_stars)),
-                        Toast.LENGTH_LONG).show();
-
                 startSortArtWorkActivity(2);
             }
         });
@@ -102,10 +92,6 @@ public class CompareArtWorkFragment extends Fragment {
         mThreeStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Three Star:" +
-                                Gallery.get(getActivity()).getStarCount(getString(R.string.three_stars)),
-                        Toast.LENGTH_LONG).show();
-
                 startSortArtWorkActivity(3);
             }
         });
@@ -114,10 +100,6 @@ public class CompareArtWorkFragment extends Fragment {
         mFourStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Four Star:" +
-                                Gallery.get(getActivity()).getStarCount(getString(R.string.four_stars)),
-                        Toast.LENGTH_LONG).show();
-
                 startSortArtWorkActivity(4);
             }
         });
@@ -126,10 +108,6 @@ public class CompareArtWorkFragment extends Fragment {
         mFiveStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Five Star:" +
-                                Gallery.get(getActivity()).getStarCount(getString(R.string.five_stars)),
-                        Toast.LENGTH_LONG).show();
-
                 startSortArtWorkActivity(5);
             }
         });

@@ -7,6 +7,7 @@
         android:id="@+id/artwork_large_image_view_alpha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="@integer/sort_artwork_weight"
         android:padding="@dimen/sort_artwork_image_padding"
         android:src="@drawable/thief"/>
@@ -15,6 +16,7 @@
         android:id="@+id/artwork_large_image_view_beta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="@integer/sort_artwork_weight"
         android:padding="@dimen/sort_artwork_image_padding"
         android:src="@drawable/thief"/>

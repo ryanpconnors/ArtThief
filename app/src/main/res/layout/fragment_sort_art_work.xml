@@ -8,7 +8,9 @@
         android:id="@+id/artwork_large_image_view_alpha"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
+        android:contextClickable="false"
         android:padding="@dimen/sort_artwork_image_padding"
         android:src="@drawable/thief"/>
 
@@ -16,7 +18,9 @@
         android:id="@+id/artwork_large_image_view_beta"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
+        android:contextClickable="false"
         android:padding="@dimen/sort_artwork_image_padding"
         android:src="@drawable/thief"/>
 
