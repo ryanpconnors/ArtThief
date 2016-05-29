@@ -4,6 +4,15 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:subtitle="@string/artwork_title_text"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
     <ImageView
         android:id="@+id/artwork_large_image_view_alpha"
         android:layout_width="match_parent"

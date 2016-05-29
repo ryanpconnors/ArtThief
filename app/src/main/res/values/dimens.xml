@@ -42,6 +42,7 @@
     <dimen name="compare_artwork_button_layout_margin">8dp</dimen>
 
     <dimen name="sort_artwork_image_padding">16dp</dimen>
+    <dimen name="compare_artwork_land_image_margin_top">10dp</dimen>
     <integer name="sort_artwork_weight">1</integer>
 
 </resources>

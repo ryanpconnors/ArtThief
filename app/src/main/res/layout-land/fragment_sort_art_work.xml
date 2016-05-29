@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/artwork_large_image_view_alpha"
-        android:layout_width="0dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="@integer/sort_artwork_weight"
-        android:padding="@dimen/sort_artwork_image_padding"
-        android:src="@drawable/thief"/>
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:subtitle="@string/artwork_title_text"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <ImageView
-        android:id="@+id/artwork_large_image_view_beta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="@integer/sort_artwork_weight"
-        android:padding="@dimen/sort_artwork_image_padding"
-        android:src="@drawable/thief"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_centerInParent="true"
+                  android:orientation="horizontal">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/artwork_large_image_view_alpha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
+            android:layout_weight="@integer/sort_artwork_weight"
+            android:padding="@dimen/sort_artwork_image_padding"
+            android:src="@drawable/thief"/>
+
+        <ImageView
+            android:id="@+id/artwork_large_image_view_beta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
+            android:layout_weight="@integer/sort_artwork_weight"
+            android:padding="@dimen/sort_artwork_image_padding"
+            android:src="@drawable/thief"/>
+    </LinearLayout>
+
+</RelativeLayout>

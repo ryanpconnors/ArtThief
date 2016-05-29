@@ -43,6 +43,9 @@
     <string name="compare_two_star_button_label">Two Stars (%d)</string>
     <string name="compare_one_star_button_label">One Star (%d)</string>
 
+    <!--Sort Art-->
+    <string name="sort_artwork_title">Which do you prefer?</string>
+
     <!--Star Integer Strings-->
     <string name="one_star">1</string>
     <string name="two_stars">2</string>
