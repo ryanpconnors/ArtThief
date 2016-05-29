@@ -19,7 +19,7 @@
         android:paddingTop="@dimen/compare_artwork_header_padding_top"
         android:text="@string/compare_art_header"
         android:textColor="@color/textColorPrimary"
-        android:textSize="30dp"
+        android:textSize="@dimen/compare_artwork_header_text_size"
         android:textStyle="bold"/>
 
     <TextView
@@ -34,7 +34,7 @@
         android:paddingTop="@dimen/compare_artwork_sub_header_padding_top"
         android:text="@string/compare_art_sub_header"
         android:textColor="@color/textColorThirdly"
-        android:textSize="16dp"
+        android:textSize="@dimen/compare_artwork_sub_header_text_size"
         android:textStyle="normal"/>
 
     <Button
