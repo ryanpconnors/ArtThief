@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -69,8 +71,20 @@ public class SortArtWorkFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sort_art_work, container, false);
 
+        // Add toolbar and up button navigation
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.sort_artwork_title));
+        ((SortArtWorkActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((SortArtWorkActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(getActivity());
+            }
+        });
 
         mArtworkImageViewAlpha = (ImageView) v.findViewById(R.id.artwork_large_image_view_alpha);
         String largeImagePathAlpha = mArtWorks.get(0).getLargeImagePath();
@@ -85,7 +99,6 @@ public class SortArtWorkFragment extends Fragment {
             Bitmap largeArtWorkImageBeta = Gallery.get(getActivity()).getArtWorkImage(largeImagePathBeta);
             mArtworkImageViewBeta.setImageBitmap(largeArtWorkImageBeta);
         }
-
         return v;
     }
 
