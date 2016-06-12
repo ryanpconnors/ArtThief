@@ -73,10 +73,11 @@ public class SortArtWorkFragment extends Fragment {
 
         // Add toolbar and up button navigation
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.sort_artwork_title));
         ((SortArtWorkActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((SortArtWorkActivity) getActivity()).getSupportActionBar();
+
         if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

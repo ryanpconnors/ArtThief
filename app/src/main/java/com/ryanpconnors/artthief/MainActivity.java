@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity
         mDummyArtWorks = Gallery.get(this).getArtWorks();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
 
         // Create the adapter that will return a fragment for each of the sections of the activity.
