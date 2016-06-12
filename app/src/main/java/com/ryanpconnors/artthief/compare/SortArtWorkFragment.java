@@ -1,15 +1,23 @@
 package com.ryanpconnors.artthief.compare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +26,10 @@ import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +50,9 @@ public class SortArtWorkFragment extends Fragment {
 
     private ImageView mArtworkImageViewAlpha;
     private ImageView mArtworkImageViewBeta;
+
+    private int mCurrentAlphaArtWorkIndex = 0;
+    private int mCurrentBetaArtWorkIndex = 1;
 
     private ShareActionProvider mShareActionProvider;
 
@@ -88,20 +103,124 @@ public class SortArtWorkFragment extends Fragment {
         });
 
         mArtworkImageViewAlpha = (ImageView) v.findViewById(R.id.artwork_large_image_view_alpha);
-        String largeImagePathAlpha = mArtWorks.get(0).getLargeImagePath();
+        String largeImagePathAlpha = mArtWorks.get(mCurrentAlphaArtWorkIndex).getLargeImagePath();
         if (largeImagePathAlpha != null) {
             Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePathAlpha);
             mArtworkImageViewAlpha.setImageBitmap(largeArtWorkImage);
         }
 
         mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
-        String largeImagePathBeta = mArtWorks.get(1).getLargeImagePath();
+        String largeImagePathBeta = mArtWorks.get(mCurrentBetaArtWorkIndex).getLargeImagePath();
         if (largeImagePathBeta != null) {
             Bitmap largeArtWorkImageBeta = Gallery.get(getActivity()).getArtWorkImage(largeImagePathBeta);
             mArtworkImageViewBeta.setImageBitmap(largeArtWorkImageBeta);
         }
         return v;
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+
+        super.onCreateOptionsMenu(menu, menuInflater);
+        menuInflater.inflate(R.menu.fragment_artwork, menu);
+
+        // Setup ShareActionProvider menu item
+        MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        new setShareIntentTask().execute();
+        mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
+            @Override
+            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+                startActivity(intent);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * Asynchronous task for setting this ArtWorkFragments share intent
+     */
+    private class setShareIntentTask extends AsyncTask<Void, Void, Void> {
+
+        Intent shareIntent;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            shareIntent = getShareIntent();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (isAdded() && mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(shareIntent);
+            }
+        }
+    }
+
+    /**
+     * @return
+     */
+    private Intent getShareIntent() {
+        Bitmap bitmapAlpha;
+        Bitmap bitmapBeta;
+
+        ArtWork artWorkAlpha = mArtWorks.get(mCurrentAlphaArtWorkIndex);
+        ArtWork artWorkBeta = mArtWorks.get(mCurrentBetaArtWorkIndex);
+        File imgFileAlpha = new File(artWorkAlpha.getLargeImagePath());
+        File imgFileBeta = new File(artWorkBeta.getLargeImagePath());
+
+        if (imgFileAlpha.exists() && imgFileBeta.exists()) {
+            bitmapAlpha = BitmapFactory.decodeFile(imgFileAlpha.getAbsolutePath());
+            bitmapBeta = BitmapFactory.decodeFile(imgFileBeta.getAbsolutePath());
+        } else {
+            mShareActionProvider = null;
+            return null;
+        }
+
+        try {
+            File fileAlpha = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), artWorkAlpha.getTitle() + ".png");
+            File fileBeta = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), artWorkBeta.getTitle() + ".png");
+            FileOutputStream outAlpha = new FileOutputStream(fileAlpha);
+            FileOutputStream outBeta = new FileOutputStream(fileBeta);
+            bitmapAlpha.compress(Bitmap.CompressFormat.PNG, 90, outAlpha);
+            bitmapBeta.compress(Bitmap.CompressFormat.PNG, 90, outBeta);
+            outAlpha.close();
+            outBeta.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mShareActionProvider = null;
+            return null;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mShareActionProvider = null;
+            return null;
+        }
+
+        if (isAdded()) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+            shareIntent.setType("image/*");
+
+            ArrayList<Uri> uris = new ArrayList<>();
+            uris.add(Uri.fromFile(imgFileAlpha));
+            uris.add(Uri.fromFile(imgFileBeta));
+
+            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.prefer_text));
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            return shareIntent;
+
+        } else {
+            return null;
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
