@@ -12,6 +12,7 @@ public class ArtWork {
 
     private int mArtThiefID;
     private String mShowId;
+    private int order;
 
     private String mTitle;
     private String mArtist;
@@ -51,6 +52,14 @@ public class ArtWork {
 
     public String getShowId() {
         return mShowId;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getTitle() {
@@ -144,25 +153,21 @@ public class ArtWork {
     public void setStars(int stars) {
         if (stars < 0 || stars > 5) {
             throw new RuntimeException("Invalid number of ArtWork stars [ " + stars + " ]");
-        }
-        else {
+        } else {
             mStars = stars;
         }
     }
 
 
     /**
-     *
      * @param obj Object to compare to this ArtWork object for equality.
-     *
      * @return false if obj is not an instance of the class ArtWork.
      * Returns true iff the given object shares the same artThiefId, showId,
      * title, artist, media, tags, smallImageUrl and largeImageUrl.
      * Otherwise returns false.
-     *
-     * Note: The method does not take into account the uuid, smallImagePath, largeImagePath,
-     * stars and taken fields.
-     *
+     * <p>
+     * Note: The method does not take into account the 'uuid', 'smallImagePath', 'largeImagePath',
+     * 'stars', 'taken' and 'order' fields.
      */
     @Override
     public boolean equals(Object obj) {
@@ -179,8 +184,9 @@ public class ArtWork {
                 this.mTags.equals(artWork.getTags()) &&
                 this.mSmallImageUrl.equals(artWork.getSmallImageUrl()) &&
                 this.mLargeImageUrl.equals(artWork.getLargeImageUrl())
-            ) { return true; }
-        else {
+                ) {
+            return true;
+        } else {
             return false;
         }
     }

@@ -48,7 +48,7 @@ public class GalleryFetcher {
             JSONObject jsonBody = new JSONObject(jsonString);
             Log.i(TAG, "Received Loot JSON: " + jsonString);
 
-            parseJson(artWorks, jsonBody);
+            addArtworks(jsonBody, artWorks);
         }
         catch (JSONException je) {
             Log.e(TAG, "Failed to parse JSON", je);
@@ -101,7 +101,7 @@ public class GalleryFetcher {
         return new String(getUrlBytes(urlSpec));
     }
 
-    private void parseJson(List<ArtWork> artWorks, JSONObject jsonBody)
+    private void addArtworks(JSONObject jsonBody, List<ArtWork> artWorks)
             throws IOException, JSONException {
 
         JSONArray artWorksJsonArray = jsonBody.getJSONArray("artWorks");

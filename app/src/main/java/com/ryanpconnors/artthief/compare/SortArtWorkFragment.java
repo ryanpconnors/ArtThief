@@ -58,6 +58,15 @@ public class SortArtWorkFragment extends Fragment {
 
     private OnSortArtworkFragmentInteractionListener mListener;
 
+    /**
+     * Artwork enumerated type used for identifying the user's choice
+     * of which artwork they prefer for sorting purposes
+     */
+    private enum Artwork {
+        ALPHA,
+        BETA
+    }
+
     public SortArtWorkFragment() {
         // Required empty public constructor
     }
@@ -103,6 +112,12 @@ public class SortArtWorkFragment extends Fragment {
         });
 
         mArtworkImageViewAlpha = (ImageView) v.findViewById(R.id.artwork_large_image_view_alpha);
+        mArtworkImageViewAlpha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortArtwork(Artwork.ALPHA);
+            }
+        });
         String largeImagePathAlpha = mArtWorks.get(mCurrentAlphaArtWorkIndex).getLargeImagePath();
         if (largeImagePathAlpha != null) {
             Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePathAlpha);
@@ -110,12 +125,27 @@ public class SortArtWorkFragment extends Fragment {
         }
 
         mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
+        mArtworkImageViewBeta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortArtwork(Artwork.BETA);
+            }
+        });
         String largeImagePathBeta = mArtWorks.get(mCurrentBetaArtWorkIndex).getLargeImagePath();
         if (largeImagePathBeta != null) {
             Bitmap largeArtWorkImageBeta = Gallery.get(getActivity()).getArtWorkImage(largeImagePathBeta);
             mArtworkImageViewBeta.setImageBitmap(largeArtWorkImageBeta);
         }
         return v;
+    }
+
+    private void sortArtwork(Artwork artwork) {
+        if (artwork.equals(artwork.ALPHA)) {
+            //
+        }
+        else {
+
+        }
     }
 
 
@@ -235,8 +265,7 @@ public class SortArtWorkFragment extends Fragment {
         if (context instanceof OnSortArtworkFragmentInteractionListener) {
             mListener = (OnSortArtworkFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(String.format("%s must implement OnFragmentInteractionListener", context.toString()));
         }
     }
 

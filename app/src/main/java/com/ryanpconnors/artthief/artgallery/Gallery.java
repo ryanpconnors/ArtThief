@@ -233,7 +233,7 @@ public class Gallery {
 
     private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                ArtWorkTable.NAME,       // Table name
+                ArtWorkTable.NAME,      // Table name
                 null,                   // Columns : [null] selects all columns
                 whereClause,            // where [clause]
                 whereArgs,              // where [args]
