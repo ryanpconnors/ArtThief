@@ -52,11 +52,12 @@ public class GalleryFetcher {
         }
         catch (JSONException je) {
             Log.e(TAG, "Failed to parse JSON", je);
+            return null;
         }
         catch (IOException ioe) {
             Log.e(TAG, "Failed to fetch artwork loot", ioe);
+            return null;
         }
-
         return artWorks;
     }
 

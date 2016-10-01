@@ -1,5 +1,6 @@
 package com.ryanpconnors.artthief.update;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -37,6 +38,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
     private Button mUpdateArtWorksButton;
     private TextView mLastUpdateTextView;
+    private ProgressDialog mProgressDialog;
 
     private OnUpdateArtWorkFragmentInteractionListener mArtWorkUpdateListener;
 
@@ -83,6 +85,7 @@ public class UpdateArtWorkFragment extends Fragment {
         mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadDownloadProgressDialog();
                 mUpdateArtWorksButton.setEnabled(false);
                 mUpdateArtWorksButton.setAlpha(.5f);
                 new UpdateArtWorksTask().execute();
@@ -177,6 +180,14 @@ public class UpdateArtWorkFragment extends Fragment {
         Log.d(TAG, "Removed Artwork : " + removed);
     }
 
+    private void loadDownloadProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setTitle("Updating Artwork");
+        mProgressDialog.setMessage("Download in progress...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.show();
+    }
+
     //TODO: perform image downloads in separate async tasks???
     private void downloadImageFiles(GalleryFetcher fetcher, ArtWork artWork) {
 
@@ -253,6 +264,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
             mUpdateArtWorksButton.setEnabled(true);
             mUpdateArtWorksButton.setAlpha(1.0f);
+            mProgressDialog.dismiss();
         }
     }
 
