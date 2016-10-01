@@ -90,8 +90,9 @@ public class UpdateArtWorkFragment extends Fragment {
 
         // Setup the last update date textView
         mLastUpdateTextView = (TextView) v.findViewById(R.id.last_update_date_text);
-        mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
-                Gallery.get(getActivity()).getLastUpdateDate());
+        mLastUpdateTextView.setText(String.format("%s %s",
+                getString(R.string.update_art_last_update),
+                Gallery.get(getActivity()).getLastUpdateDate()));
 
         return v;
     }
@@ -102,8 +103,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
         if (context instanceof OnUpdateArtWorkFragmentInteractionListener) {
             mArtWorkUpdateListener = (OnUpdateArtWorkFragmentInteractionListener) context;
-        }
-        else {
+        } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
@@ -140,8 +140,7 @@ public class UpdateArtWorkFragment extends Fragment {
                 // insert the newArtWork into the Gallery database
                 Gallery.get(getActivity()).addArtWork(newArtWork);
                 inserted++;
-            }
-            else {
+            } else {
 
                 // update the existing artwork if it is not equal to newArtWork
                 if (!newArtWork.equals(existingArtWork)) {
@@ -163,10 +162,9 @@ public class UpdateArtWorkFragment extends Fragment {
 
         updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
 
-        Log.d(TAG, "Inserted: " + inserted);
-        Log.d(TAG, "Updated: " + updated);
-        Log.d(TAG, "Removed: " + removed);
-
+        Log.d(TAG, "Inserted Artwork : " + inserted);
+        Log.d(TAG, "Updated Artwork : " + updated);
+        Log.d(TAG, "Removed Artwork : " + removed);
     }
 
     //TODO: perform image downloads in separate async tasks???
@@ -227,7 +225,7 @@ public class UpdateArtWorkFragment extends Fragment {
     }
 
 
-    private class UpdateArtWorksTask extends AsyncTask<Void,Void,Void> {
+    private class UpdateArtWorksTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
