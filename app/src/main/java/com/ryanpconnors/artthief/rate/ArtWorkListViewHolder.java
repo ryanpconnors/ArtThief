@@ -1,7 +1,6 @@
 package com.ryanpconnors.artthief.rate;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -55,7 +54,8 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
             mArtWorkImageView.setImageBitmap(smallArtWorkImage);
         }
 
-        mShowIdTextView.setText("(" + artWork.getShowId() + ")");
+        // mShowIdTextView.setText("(" + artWork.getShowId() + ")");
+        mShowIdTextView.setText("(" + artWork.getOrdering() + ")");
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
         mMediaTextView.setText(artWork.getMedia());

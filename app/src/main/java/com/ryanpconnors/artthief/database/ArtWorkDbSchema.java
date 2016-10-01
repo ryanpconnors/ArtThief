@@ -24,7 +24,6 @@ public class ArtWorkDbSchema {
             public static final String SHOW_YEAR = "show_year";
             public static final String DATA_VERSION = "data_version";
         }
-
     }
 
     /**
@@ -37,10 +36,14 @@ public class ArtWorkDbSchema {
          */
         public static final String NAME = "artWorks";
 
+        /**
+         * Database column identifiers - artworks
+         */
         public static final class Cols {
             public static final String UUID = "uuid";
             public static final String ART_THIEF_ID = "art_thief_id";
             public static final String SHOW_ID = "show_id";
+            public static final String ORDERING = "ordering";
             public static final String TITLE = "title";
             public static final String ARTIST = "artist";
             public static final String MEDIA = "media";

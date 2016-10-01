@@ -84,6 +84,7 @@ public class UpdateArtWorkFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mUpdateArtWorksButton.setEnabled(false);
+                mUpdateArtWorksButton.setAlpha(.5f);
                 new UpdateArtWorksTask().execute();
             }
         });
@@ -103,7 +104,8 @@ public class UpdateArtWorkFragment extends Fragment {
 
         if (context instanceof OnUpdateArtWorkFragmentInteractionListener) {
             mArtWorkUpdateListener = (OnUpdateArtWorkFragmentInteractionListener) context;
-        } else {
+        }
+        else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
@@ -123,6 +125,7 @@ public class UpdateArtWorkFragment extends Fragment {
         List<ArtWork> artWorksFromJson = fetcher.fetchArtWorks();
         List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
 
+        int gallerySize = existingArtWorks.size();
         int inserted = 0;
         int updated = 0;
         int removed = 0;
@@ -137,11 +140,15 @@ public class UpdateArtWorkFragment extends Fragment {
                 // download image files if they exist and store the paths in newArtWork
                 downloadImageFiles(fetcher, newArtWork);
 
+                // Set the order of the new artwork to the current size of the gallery
+                newArtWork.setOrdering(gallerySize);
+
                 // insert the newArtWork into the Gallery database
                 Gallery.get(getActivity()).addArtWork(newArtWork);
                 inserted++;
-            } else {
-
+                gallerySize++;
+            }
+            else {
                 // update the existing artwork if it is not equal to newArtWork
                 if (!newArtWork.equals(existingArtWork)) {
                     Gallery.get(getActivity()).updateArtWork(newArtWork);
@@ -151,12 +158,15 @@ public class UpdateArtWorkFragment extends Fragment {
             }
         }
 
-        //TODO Remove existing artWork from the database if it is no longer in loot.json
-        // Note: this most likely does NOT work!
+        // Remove existing artWork from the database if it is no longer in loot.json
+        // TODO: this most likely does NOT work. Verify.
         for (ArtWork existingArtWork : existingArtWorks) {
             if (!artWorksFromJson.contains(existingArtWork)) {
                 Gallery.get(getActivity()).deleteArtWork(existingArtWork);
                 removed++;
+                gallerySize--;
+
+                // TODO : Reorder ALL artwork >= the one deleted to maintain order
             }
         }
 
@@ -242,6 +252,7 @@ public class UpdateArtWorkFragment extends Fragment {
                     Gallery.get(getActivity()).getLastUpdateDate());
 
             mUpdateArtWorksButton.setEnabled(true);
+            mUpdateArtWorksButton.setAlpha(1.0f);
         }
     }
 

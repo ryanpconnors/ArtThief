@@ -1,6 +1,5 @@
 package com.ryanpconnors.artthief.artgallery;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -12,7 +11,7 @@ public class ArtWork {
 
     private int mArtThiefID;
     private String mShowId;
-    private int order;
+    private int ordering;
 
     private String mTitle;
     private String mArtist;
@@ -54,12 +53,12 @@ public class ArtWork {
         return mShowId;
     }
 
-    public int getOrder() {
-        return order;
+    public int getOrdering() {
+        return ordering;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setOrdering(int ordering) {
+        this.ordering = ordering;
     }
 
     public String getTitle() {
@@ -153,9 +152,16 @@ public class ArtWork {
     public void setStars(int stars) {
         if (stars < 0 || stars > 5) {
             throw new RuntimeException("Invalid number of ArtWork stars [ " + stars + " ]");
-        } else {
+        }
+        else {
             mStars = stars;
         }
+    }
+
+    public void swapOrder(ArtWork artWork) {
+        int order = this.ordering;
+        this.ordering = artWork.getOrdering();
+        artWork.setOrdering(order);
     }
 
 
@@ -167,7 +173,7 @@ public class ArtWork {
      * Otherwise returns false.
      * <p>
      * Note: The method does not take into account the 'uuid', 'smallImagePath', 'largeImagePath',
-     * 'stars', 'taken' and 'order' fields.
+     * 'stars', 'taken' and 'ordering' fields.
      */
     @Override
     public boolean equals(Object obj) {
@@ -186,7 +192,8 @@ public class ArtWork {
                 this.mLargeImageUrl.equals(artWork.getLargeImageUrl())
                 ) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }

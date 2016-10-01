@@ -213,6 +213,7 @@ public class Gallery {
 
         values.put(ArtWorkTable.Cols.ART_THIEF_ID, artWork.getArtThiefID());
         values.put(ArtWorkTable.Cols.SHOW_ID, artWork.getShowId());
+        values.put(ArtWorkTable.Cols.ORDERING, artWork.getOrdering());
 
         values.put(ArtWorkTable.Cols.TITLE, artWork.getTitle());
         values.put(ArtWorkTable.Cols.ARTIST, artWork.getArtist());
@@ -311,7 +312,8 @@ public class Gallery {
             }
             cursor.moveToFirst();
             return cursor.getString(cursor.getColumnIndex(InfoTable.Cols.DATE_LAST_UPDATED));
-        } finally {
+        }
+        finally {
             cursor.close();
         }
 

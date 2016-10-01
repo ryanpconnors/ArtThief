@@ -54,7 +54,8 @@ public class ArtWorkListFragment extends Fragment {
         }
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
         updateUI();
     }
@@ -71,7 +72,8 @@ public class ArtWorkListFragment extends Fragment {
 
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
+            }
+            else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
@@ -107,9 +109,9 @@ public class ArtWorkListFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnArtWorkListFragmentInteractionListener) {
             mListener = (OnArtWorkListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnArtWorkListFragmentInteractionListener");
+        }
+        else {
+            throw new RuntimeException(context.toString() + " must implement OnArtWorkListFragmentInteractionListener");
         }
     }
 
