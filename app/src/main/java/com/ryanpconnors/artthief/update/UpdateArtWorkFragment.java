@@ -1,7 +1,9 @@
 package com.ryanpconnors.artthief.update;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.artgallery.GalleryFetcher;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +42,6 @@ public class UpdateArtWorkFragment extends Fragment {
 
     private Button mUpdateArtWorksButton;
     private TextView mLastUpdateTextView;
-    private ProgressDialog mProgressDialog;
 
     private OnUpdateArtWorkFragmentInteractionListener mArtWorkUpdateListener;
 
@@ -65,7 +68,7 @@ public class UpdateArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Retain this fragment to ensure that the asynchronous UpdateArtWorksTask completes
+        // Retain this fragment to ensure that the asynchronous DownloadArtWorksTask completes
         setRetainInstance(true);
 
         if (getArguments() != null) {
@@ -85,7 +88,6 @@ public class UpdateArtWorkFragment extends Fragment {
         mUpdateArtWorksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadDownloadProgressDialog();
                 mUpdateArtWorksButton.setEnabled(false);
                 mUpdateArtWorksButton.setAlpha(.5f);
                 new UpdateArtWorksTask().execute();
@@ -118,74 +120,6 @@ public class UpdateArtWorkFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mArtWorkUpdateListener = null;
-    }
-
-    // TODO: provide some sort of progress indicator to the user
-    private void performArtWorkUpdate() {
-
-        GalleryFetcher fetcher = new GalleryFetcher();
-
-        List<ArtWork> artWorksFromJson = fetcher.fetchArtWorks();
-        List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
-
-        int gallerySize = existingArtWorks.size();
-        int inserted = 0;
-        int updated = 0;
-        int removed = 0;
-
-        //TODO Only update the artWorks that have changed
-        for (ArtWork newArtWork : artWorksFromJson) {
-
-            ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(newArtWork.getArtThiefID());
-
-            if (existingArtWork == null) {
-
-                // download image files if they exist and store the paths in newArtWork
-                downloadImageFiles(fetcher, newArtWork);
-
-                // Set the order of the new artwork to the current size of the gallery
-                newArtWork.setOrdering(gallerySize);
-
-                // insert the newArtWork into the Gallery database
-                Gallery.get(getActivity()).addArtWork(newArtWork);
-                inserted++;
-                gallerySize++;
-            }
-            else {
-                // update the existing artwork if it is not equal to newArtWork
-                if (!newArtWork.equals(existingArtWork)) {
-                    Gallery.get(getActivity()).updateArtWork(newArtWork);
-                    updated++;
-                }
-                // otherwise do nothing, the artwork does not need to be updated
-            }
-        }
-
-        // Remove existing artWork from the database if it is no longer in loot.json
-        // TODO: this most likely does NOT work. Verify.
-        for (ArtWork existingArtWork : existingArtWorks) {
-            if (!artWorksFromJson.contains(existingArtWork)) {
-                Gallery.get(getActivity()).deleteArtWork(existingArtWork);
-                removed++;
-                gallerySize--;
-
-                // TODO : Reorder ALL artwork >= the one deleted to maintain order
-            }
-        }
-
-        updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
-
-        Log.d(TAG, "Inserted Artwork : " + inserted);
-        Log.d(TAG, "Updated Artwork : " + updated);
-        Log.d(TAG, "Removed Artwork : " + removed);
-    }
-
-    private void loadDownloadProgressDialog() {
-        mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setTitle("Updating Artwork");
-        mProgressDialog.setMessage("Download in progress...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.show();
     }
 
     //TODO: perform image downloads in separate async tasks???
@@ -245,26 +179,111 @@ public class UpdateArtWorkFragment extends Fragment {
         void onArtWorkDataSourceUpdate();
     }
 
-
-    private class UpdateArtWorksTask extends AsyncTask<Void, Void, Void> {
+    /**
+     *
+     */
+    private class UpdateArtWorksTask extends AsyncTask<Void, String, Void> {
+        private ProgressDialog progressDialog;
 
         @Override
-        protected Void doInBackground(Void... params) {
-            performArtWorkUpdate();
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Updating Artworks");
+            progressDialog.setMessage("Download in progress...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... args) {
+
+            GalleryFetcher fetcher = new GalleryFetcher();
+            List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
+            List<ArtWork> newArtwork = fetcher.fetchArtWorks();
+
+            int gallerySize = existingArtWorks.size();
+            int inserted = 0;
+            int updated = 0;
+            int removed = 0;
+
+            //TODO Only update the artWorks that have changed
+            for (ArtWork artWork : newArtwork) {
+
+                ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(artWork.getArtThiefID());
+
+                if (existingArtWork == null) {
+
+                    // download image files if they exist and store the paths in newArtWork
+                    downloadImageFiles(fetcher, artWork);
+
+                    // Set the order of the new artwork to the current size of the gallery
+                    artWork.setOrdering(gallerySize);
+
+                    // insert the newArtWork into the Gallery database
+                    Gallery.get(getActivity()).addArtWork(artWork);
+                    inserted++;
+                    gallerySize++;
+                }
+                else {
+                    // update the existing artwork if it is not equal to newArtWork
+                    if (!artWork.equals(existingArtWork)) {
+                        Gallery.get(getActivity()).updateArtWork(artWork);
+                        updated++;
+                    }
+                    // otherwise do nothing, the artwork does not need to be updated
+                }
+                publishProgress(artWork.getTitle());
+            }
+
+            //TODO: Remove existing artWork from the database if it is no longer in loot.json
+            for (ArtWork existingArtWork : existingArtWorks) {
+                if (!newArtwork.contains(existingArtWork)) {
+                    Gallery.get(getActivity()).deleteArtWork(existingArtWork);
+                    removed++;
+                    gallerySize--;
+
+                    // TODO : Reorder ALL artwork >= the one deleted to maintain order
+                }
+            }
+            updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
+            Log.d(TAG, "Inserted Artwork : " + inserted);
+            Log.d(TAG, "Updated Artwork : " + updated);
+            Log.d(TAG, "Removed Artwork : " + removed);
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onProgressUpdate(String... args) {
+            System.out.println("onProgressUpdate");
+            for (String s : args) {
+                progressDialog.setMessage("Updating : " + s);
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(Void arg) {
             mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
-            Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
-            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " +
-                    Gallery.get(getActivity()).getLastUpdateDate());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("ArtWorks Updated!")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
 
+            // Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
+
+            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " + Gallery.get(getActivity()).getLastUpdateDate());
             mUpdateArtWorksButton.setEnabled(true);
             mUpdateArtWorksButton.setAlpha(1.0f);
-            mProgressDialog.dismiss();
         }
     }
 
