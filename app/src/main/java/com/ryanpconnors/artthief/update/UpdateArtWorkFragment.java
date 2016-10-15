@@ -209,9 +209,6 @@ public class UpdateArtWorkFragment extends Fragment {
             List<ArtWork> newArtwork = fetcher.fetchArtWorks();
 
             int gallerySize = existingArtWorks.size();
-            int inserted = 0;
-            int updated = 0;
-            int removed = 0;
 
             //TODO Only update the artWorks that have changed
             for (ArtWork artWork : newArtwork) {
@@ -228,14 +225,12 @@ public class UpdateArtWorkFragment extends Fragment {
 
                     // insert the newArtWork into the Gallery database
                     Gallery.get(getActivity()).addArtWork(artWork);
-                    inserted++;
                     gallerySize++;
                 }
                 else {
                     // update the existing artwork if it is not equal to newArtWork
                     if (!artWork.equals(existingArtWork)) {
                         Gallery.get(getActivity()).updateArtWork(artWork);
-                        updated++;
                     }
                     // otherwise do nothing, the artwork does not need to be updated
                 }
@@ -246,16 +241,12 @@ public class UpdateArtWorkFragment extends Fragment {
             for (ArtWork existingArtWork : existingArtWorks) {
                 if (!newArtwork.contains(existingArtWork)) {
                     Gallery.get(getActivity()).deleteArtWork(existingArtWork);
-                    removed++;
                     gallerySize--;
 
                     // TODO : Reorder ALL artwork >= the one deleted to maintain order
                 }
             }
             updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
-            Log.d(TAG, "Inserted Artwork : " + inserted);
-            Log.d(TAG, "Updated Artwork : " + updated);
-            Log.d(TAG, "Removed Artwork : " + removed);
             return null;
         }
 
