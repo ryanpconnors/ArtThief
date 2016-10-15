@@ -39,8 +39,9 @@ public class UpdateArtWorkFragment extends Fragment {
 
     private Button mUpdateArtWorksButton;
     private TextView mLastUpdateTextView;
-
+    private ProgressDialog mProgressDialog;
     private OnUpdateArtWorkFragmentInteractionListener mArtWorkUpdateListener;
+
 
     public UpdateArtWorkFragment() {
         // Required empty public constructor
@@ -119,6 +120,15 @@ public class UpdateArtWorkFragment extends Fragment {
         mArtWorkUpdateListener = null;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+
     //TODO: perform image downloads in separate async tasks???
     private void downloadImageFiles(GalleryFetcher fetcher, ArtWork artWork) {
 
@@ -180,16 +190,15 @@ public class UpdateArtWorkFragment extends Fragment {
      *
      */
     private class UpdateArtWorksTask extends AsyncTask<Void, String, Void> {
-        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Updating Artworks");
-            progressDialog.setMessage("Download in progress...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setTitle("Updating Artworks");
+            mProgressDialog.setMessage("Download in progress...");
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.show();
         }
 
         @Override
@@ -252,9 +261,11 @@ public class UpdateArtWorkFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(String... args) {
-            System.out.println("onProgressUpdate");
             for (String s : args) {
-                progressDialog.setMessage("Updating : " + s);
+                if (!mProgressDialog.isShowing()) {
+                    mProgressDialog.show();
+                }
+                mProgressDialog.setMessage("Updating : " + s);
             }
         }
 
@@ -262,8 +273,8 @@ public class UpdateArtWorkFragment extends Fragment {
         @Override
         protected void onPostExecute(Void arg) {
             mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

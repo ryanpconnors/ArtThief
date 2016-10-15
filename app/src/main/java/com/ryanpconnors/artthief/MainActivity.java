@@ -207,6 +207,9 @@ public class MainActivity extends AppCompatActivity
         // Communicate to the ArtWorkListFragment that the data source has updated
         SectionsPagerAdapter sectionsPagerAdapter = (SectionsPagerAdapter) mViewPager.getAdapter();
         ArtWorkListFragment artWorkListFragment = (ArtWorkListFragment) sectionsPagerAdapter.getItem(1);
-        artWorkListFragment.updateUI();
+
+        if (artWorkListFragment != null) {
+            artWorkListFragment.updateUI();
+        }
     }
 }

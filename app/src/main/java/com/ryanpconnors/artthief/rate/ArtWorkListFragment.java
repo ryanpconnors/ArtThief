@@ -87,6 +87,10 @@ public class ArtWorkListFragment extends Fragment {
 
 
     public void updateUI() {
+        if (getView()== null) {
+            return;
+        }
+
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.list);
 
         if (recyclerView != null) {
