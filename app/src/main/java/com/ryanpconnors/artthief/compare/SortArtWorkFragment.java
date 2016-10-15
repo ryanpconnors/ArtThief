@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -90,8 +91,7 @@ public class SortArtWorkFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sort_art_work, container, false);
 
@@ -141,10 +141,10 @@ public class SortArtWorkFragment extends Fragment {
 
     private void sortArtwork(Artwork artwork) {
         if (artwork.equals(artwork.ALPHA)) {
-            //
+            Toast.makeText(getActivity(), "Alpha", Toast.LENGTH_SHORT).show();
         }
         else {
-
+            Toast.makeText(getActivity(), "Beta", Toast.LENGTH_SHORT).show();
         }
     }
 

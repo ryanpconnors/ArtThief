@@ -206,12 +206,12 @@ public class UpdateArtWorkFragment extends Fragment {
 
             GalleryFetcher fetcher = new GalleryFetcher();
             List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
-            List<ArtWork> newArtwork = fetcher.fetchArtWorks();
+            List<ArtWork> newArtworks = fetcher.fetchArtWorks();
 
             int gallerySize = existingArtWorks.size();
 
             //TODO Only update the artWorks that have changed
-            for (ArtWork artWork : newArtwork) {
+            for (ArtWork artWork : newArtworks) {
 
                 ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(artWork.getArtThiefID());
 
@@ -239,7 +239,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
             //TODO: Remove existing artWork from the database if it is no longer in loot.json
             for (ArtWork existingArtWork : existingArtWorks) {
-                if (!newArtwork.contains(existingArtWork)) {
+                if (!newArtworks.contains(existingArtWork)) {
                     Gallery.get(getActivity()).deleteArtWork(existingArtWork);
                     gallerySize--;
 
@@ -277,8 +277,6 @@ public class UpdateArtWorkFragment extends Fragment {
                     });
             AlertDialog alert = builder.create();
             alert.show();
-
-            // Toast.makeText(getActivity(), "Updated ArtWorks", Toast.LENGTH_SHORT).show();
 
             mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " + Gallery.get(getActivity()).getLastUpdateDate());
             mUpdateArtWorksButton.setEnabled(true);

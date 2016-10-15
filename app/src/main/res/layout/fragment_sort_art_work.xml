@@ -15,8 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
         android:contextClickable="false"
-        android:padding="@dimen/sort_artwork_image_padding"
-        android:src="@drawable/thief"/>
+        android:padding="@dimen/sort_artwork_image_padding"/>
 
     <ImageView
         android:id="@+id/artwork_large_image_view_beta"
@@ -25,7 +24,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
         android:contextClickable="false"
-        android:padding="@dimen/sort_artwork_image_padding"
-        android:src="@drawable/thief"/>
+        android:padding="@dimen/sort_artwork_image_padding"/>
 
 </LinearLayout>
