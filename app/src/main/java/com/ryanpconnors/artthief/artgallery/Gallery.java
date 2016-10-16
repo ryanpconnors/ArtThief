@@ -59,7 +59,8 @@ public class Gallery {
     public ArtWork getArtWork(int artThiefId) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
-                new String[]{String.valueOf(artThiefId)}
+                new String[]{String.valueOf(artThiefId)},
+                null
         );
 
         try {
@@ -68,7 +69,8 @@ public class Gallery {
             }
             cursor.moveToFirst();
             return cursor.getArtWork();
-        } finally {
+        }
+        finally {
             cursor.close();
         }
     }
@@ -81,7 +83,8 @@ public class Gallery {
     public ArtWork getArtWork(UUID id) {
         ArtWorkCursorWrapper cursor = queryArtWorks(
                 ArtWorkTable.Cols.UUID + " = ?",
-                new String[]{id.toString()}
+                new String[]{id.toString()},
+                null
         );
 
         try {
@@ -91,7 +94,8 @@ public class Gallery {
 
             cursor.moveToFirst();
             return cursor.getArtWork();
-        } finally {
+        }
+        finally {
             cursor.close();
         }
     }
@@ -114,12 +118,15 @@ public class Gallery {
 
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 fos.close();
-            } catch (IOException ioe) {
+            }
+            catch (IOException ioe) {
                 Log.e(TAG, "FileOutputStream close error", ioe);
             }
         }
@@ -130,7 +137,8 @@ public class Gallery {
     public Bitmap getArtWorkImage(String path) {
         try {
             return BitmapFactory.decodeStream(new FileInputStream(new File(path)));
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -141,7 +149,8 @@ public class Gallery {
         ContentValues values = getContentValues(artWork);
         try {
             mDatabase.insert(ArtWorkTable.NAME, null, values);
-        } catch (SQLiteConstraintException sce) {
+        }
+        catch (SQLiteConstraintException sce) {
             Log.e(TAG, "Failed to add ArtWork to database", sce);
         }
     }
@@ -166,7 +175,7 @@ public class Gallery {
     public List<ArtWork> getArtWorks() {
         List<ArtWork> artWorks = new ArrayList<>();
 
-        ArtWorkCursorWrapper cursor = queryArtWorks(null, null);
+        ArtWorkCursorWrapper cursor = queryArtWorks(null, null, null);
 
         try {
             cursor.moveToFirst();
@@ -174,13 +183,21 @@ public class Gallery {
                 artWorks.add(cursor.getArtWork());
                 cursor.moveToNext();
             }
-        } finally {
+        }
+        finally {
             cursor.close();
         }
         return artWorks;
     }
 
 
+    /**
+     * Returns all artworks with th given number of stars,
+     * ordered by 'ORDERING' in ascending order.
+     *
+     * @param stars
+     * @return
+     */
     public List<ArtWork> getArtWorks(int stars) {
         List<ArtWork> artWorks = new ArrayList<>();
 
@@ -190,10 +207,8 @@ public class Gallery {
 
         String[] whereArgs = new String[]{Integer.toString(stars)};
 
-        ArtWorkCursorWrapper cursor = queryArtWorks(
-                whereClause,
-                whereArgs
-        );
+        String orderBy = "ORDERING ASC";
+        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs, orderBy);
 
         try {
             cursor.moveToFirst();
@@ -201,7 +216,8 @@ public class Gallery {
                 artWorks.add(cursor.getArtWork());
                 cursor.moveToNext();
             }
-        } finally {
+        }
+        finally {
             cursor.close();
         }
         return artWorks;
@@ -232,7 +248,8 @@ public class Gallery {
         return values;
     }
 
-    private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs) {
+    private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs, String orderBy) {
+
         Cursor cursor = mDatabase.query(
                 ArtWorkTable.NAME,      // Table name
                 null,                   // Columns : [null] selects all columns
@@ -240,7 +257,7 @@ public class Gallery {
                 whereArgs,              // where [args]
                 null,                   // groupBy
                 null,                   // having
-                null                    // orderBy
+                orderBy                 // orderBy
         );
         return new ArtWorkCursorWrapper(cursor);
     }
@@ -262,7 +279,8 @@ public class Gallery {
             }
             cursor.moveToFirst();
             return cursor.getInt(0);
-        } finally {
+        }
+        finally {
             cursor.close();
         }
     }
@@ -281,7 +299,8 @@ public class Gallery {
 
             if (lastDate.equals("N/A")) {
                 mDatabase.insert(InfoTable.NAME, InfoTable.Cols.DATE_LAST_UPDATED, values);
-            } else {
+            }
+            else {
                 mDatabase.update(
                         InfoTable.NAME,
                         values,
@@ -289,7 +308,8 @@ public class Gallery {
                         new String[]{lastDate}
                 );
             }
-        } catch (SQLiteConstraintException sce) {
+        }
+        catch (SQLiteConstraintException sce) {
             Log.e(TAG, "Failed to add ArtWork to database", sce);
         }
     }
