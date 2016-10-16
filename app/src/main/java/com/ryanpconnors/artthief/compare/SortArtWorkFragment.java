@@ -14,6 +14,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ryanpconnors.artthief.compare.SortArtWorkFragment.ArtworkChoice.ALPHA;
+import static com.ryanpconnors.artthief.compare.SortArtWorkFragment.ArtworkChoice.BETA;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -43,27 +47,24 @@ import java.util.List;
  */
 public class SortArtWorkFragment extends Fragment {
 
+    private static final String TAG = "SortArtWorkFragment";
     private static final String ARG_NUMBER_OF_STARS = "number_of_stars";
 
-    private int mNumberOfStars;
-
     private List<ArtWork> mArtWorks;
+
+    private int mCurrentIndex = 0;
 
     private ImageView mArtworkImageViewAlpha;
     private ImageView mArtworkImageViewBeta;
 
-    private int mCurrentAlphaArtWorkIndex = 0;
-    private int mCurrentBetaArtWorkIndex = 1;
-
     private ShareActionProvider mShareActionProvider;
-
     private OnSortArtworkFragmentInteractionListener mListener;
 
     /**
-     * Artwork enumerated type used for identifying the user's choice
+     * ArtworkChoice enumerated type used for identifying the user's choice
      * of which artwork they prefer for sorting purposes
      */
-    private enum Artwork {
+    protected enum ArtworkChoice {
         ALPHA,
         BETA
     }
@@ -84,8 +85,7 @@ public class SortArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mNumberOfStars = getArguments().getInt(ARG_NUMBER_OF_STARS);
-            mArtWorks = Gallery.get(getActivity()).getArtWorks(mNumberOfStars);
+            mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS));
             setHasOptionsMenu(true);
         }
     }
@@ -111,40 +111,81 @@ public class SortArtWorkFragment extends Fragment {
             }
         });
 
+        // Initialize ArtWork Image Views
         mArtworkImageViewAlpha = (ImageView) v.findViewById(R.id.artwork_large_image_view_alpha);
         mArtworkImageViewAlpha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sortArtwork(Artwork.ALPHA);
+                sortArtwork(ALPHA);
             }
         });
-        String largeImagePathAlpha = mArtWorks.get(mCurrentAlphaArtWorkIndex).getLargeImagePath();
-        if (largeImagePathAlpha != null) {
-            Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePathAlpha);
-            mArtworkImageViewAlpha.setImageBitmap(largeArtWorkImage);
-        }
-
         mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
         mArtworkImageViewBeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sortArtwork(Artwork.BETA);
+                sortArtwork(BETA);
             }
         });
-        String largeImagePathBeta = mArtWorks.get(mCurrentBetaArtWorkIndex).getLargeImagePath();
-        if (largeImagePathBeta != null) {
-            Bitmap largeArtWorkImageBeta = Gallery.get(getActivity()).getArtWorkImage(largeImagePathBeta);
-            mArtworkImageViewBeta.setImageBitmap(largeArtWorkImageBeta);
-        }
+        displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
+        displayArtwork(mArtworkImageViewBeta, mCurrentIndex + 1);
+
         return v;
     }
 
-    private void sortArtwork(Artwork artwork) {
-        if (artwork.equals(artwork.ALPHA)) {
-            Toast.makeText(getActivity(), "Alpha", Toast.LENGTH_SHORT).show();
+    /**
+     *
+     * @param choice
+     */
+    private void sortArtwork(ArtworkChoice choice) {
+        if (choice.equals(ALPHA)) {
+            if (mCurrentIndex >= mArtWorks.size() - 2) {
+                Toast.makeText(getActivity(), "EXIT", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
+            mCurrentIndex = mCurrentIndex  + 1;
+        }
+        else if (choice.equals(BETA)) {
+            swapOrderingAlphaBeta();
+            if (mCurrentIndex > 0) {
+                mCurrentIndex -= 1;
+            }
+            else if (mCurrentIndex < mArtWorks.size() - 2) {
+                mCurrentIndex += 1;
+            }
+            else {
+                Toast.makeText(getActivity(), "EXIT", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
+        }
+        displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
+        displayArtwork(mArtworkImageViewAlpha, mCurrentIndex + 1);
+    }
+
+    /**
+     * Swaps the ORDERING field of the current alpha and beta artworks
+     * and updates the changes in the database
+     */
+    private void swapOrderingAlphaBeta() {
+        ArtWork artWorkAlpha = mArtWorks.get(mCurrentIndex);
+        ArtWork artWorkBeta = mArtWorks.get(mCurrentIndex + 1);
+        artWorkAlpha.swapOrder(artWorkBeta);
+        Gallery.get(getActivity()).updateArtWork(artWorkAlpha);
+        Gallery.get(getActivity()).updateArtWork(artWorkBeta);
+    }
+
+
+    private void displayArtwork(ImageView imageView, int index) {
+        if (index < 0 || index >= mArtWorks.size()) {
+            Log.d(TAG, "loadArtwork called with invalid index : " + index);
+            throw new IndexOutOfBoundsException();
+        }
+        String largeImagePath = mArtWorks.get(index).getLargeImagePath();
+        if (largeImagePath != null) {
+            Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
+            imageView.setImageBitmap(largeArtWorkImage);
         }
         else {
-            Toast.makeText(getActivity(), "Beta", Toast.LENGTH_SHORT).show();
+            // TODO: Handle the case where the artwork has no image
         }
     }
 
@@ -197,8 +238,8 @@ public class SortArtWorkFragment extends Fragment {
         Bitmap bitmapAlpha;
         Bitmap bitmapBeta;
 
-        ArtWork artWorkAlpha = mArtWorks.get(mCurrentAlphaArtWorkIndex);
-        ArtWork artWorkBeta = mArtWorks.get(mCurrentBetaArtWorkIndex);
+        ArtWork artWorkAlpha = mArtWorks.get(mCurrentIndex);
+        ArtWork artWorkBeta = mArtWorks.get(mCurrentIndex + 1);
         File imgFileAlpha = new File(artWorkAlpha.getLargeImagePath());
         File imgFileBeta = new File(artWorkBeta.getLargeImagePath());
 
