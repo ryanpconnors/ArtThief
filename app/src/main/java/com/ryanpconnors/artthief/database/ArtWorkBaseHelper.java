@@ -37,7 +37,7 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
             ArtWorkTable.Cols.UUID + " INTEGER NOT NULL UNIQUE, " +
             ArtWorkTable.Cols.ART_THIEF_ID + " INTEGER NOT NULL UNIQUE, " +
             ArtWorkTable.Cols.SHOW_ID + " TEXT, " +
-            ArtWorkTable.Cols.ORDERING + " INTEGER NOT NULL UNIQUE, " +
+            ArtWorkTable.Cols.ORDERING + " INTEGER NOT NULL, " +
             ArtWorkTable.Cols.TITLE + " TEXT, " +
             ArtWorkTable.Cols.ARTIST + " TEXT, " +
             ArtWorkTable.Cols.MEDIA + " TEXT, " +
