@@ -133,7 +133,6 @@ public class SortArtWorkFragment extends Fragment {
     }
 
     /**
-     *
      * @param choice
      */
     private void sortArtwork(ArtworkChoice choice) {
@@ -142,10 +141,10 @@ public class SortArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity(), "EXIT", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
-            mCurrentIndex = mCurrentIndex  + 1;
+            mCurrentIndex = mCurrentIndex + 1;
         }
         else if (choice.equals(BETA)) {
-            swapOrderingAlphaBeta();
+            swapOrderingAlphaBeta(mCurrentIndex, mCurrentIndex + 1);
             if (mCurrentIndex > 0) {
                 mCurrentIndex -= 1;
             }
@@ -162,18 +161,27 @@ public class SortArtWorkFragment extends Fragment {
     }
 
     /**
-     * Swaps the ORDERING field of the current alpha and beta artworks
-     * and updates the changes in the database
+     * Swaps the ORDERING field of the alpha and beta artworks
+     * Swaps the two artworks in the local mArtWorks
+     * Updates the changes in the database
      */
-    private void swapOrderingAlphaBeta() {
-        ArtWork artWorkAlpha = mArtWorks.get(mCurrentIndex);
-        ArtWork artWorkBeta = mArtWorks.get(mCurrentIndex + 1);
+    private void swapOrderingAlphaBeta(int alpha, int beta) {
+        ArtWork artWorkAlpha = mArtWorks.get(alpha);
+        ArtWork artWorkBeta = mArtWorks.get(beta);
+
+        mArtWorks.add(alpha, artWorkBeta);
+        mArtWorks.add(beta, artWorkAlpha);
         artWorkAlpha.swapOrder(artWorkBeta);
+
         Gallery.get(getActivity()).updateArtWork(artWorkAlpha);
         Gallery.get(getActivity()).updateArtWork(artWorkBeta);
     }
 
 
+    /**
+     * @param imageView
+     * @param index
+     */
     private void displayArtwork(ImageView imageView, int index) {
         if (index < 0 || index >= mArtWorks.size()) {
             Log.d(TAG, "loadArtwork called with invalid index : " + index);
@@ -232,7 +240,11 @@ public class SortArtWorkFragment extends Fragment {
     }
 
     /**
-     * @return
+     * Create a ShareIntent of both ArtWorks
+     *
+     * @return ShareIntent for both artworks to send to another application
+     * to allow the user to share the two current artworks to get another option on which
+     * one they prefer.
      */
     private Intent getShareIntent() {
         Bitmap bitmapAlpha;
@@ -246,11 +258,11 @@ public class SortArtWorkFragment extends Fragment {
         if (imgFileAlpha.exists() && imgFileBeta.exists()) {
             bitmapAlpha = BitmapFactory.decodeFile(imgFileAlpha.getAbsolutePath());
             bitmapBeta = BitmapFactory.decodeFile(imgFileBeta.getAbsolutePath());
-        } else {
+        }
+        else {
             mShareActionProvider = null;
             return null;
         }
-
         try {
             File fileAlpha = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), artWorkAlpha.getTitle() + ".png");
             File fileBeta = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), artWorkBeta.getTitle() + ".png");
@@ -260,13 +272,13 @@ public class SortArtWorkFragment extends Fragment {
             bitmapBeta.compress(Bitmap.CompressFormat.PNG, 90, outBeta);
             outAlpha.close();
             outBeta.close();
-
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
@@ -286,8 +298,8 @@ public class SortArtWorkFragment extends Fragment {
             shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.prefer_text));
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             return shareIntent;
-
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -305,7 +317,8 @@ public class SortArtWorkFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnSortArtworkFragmentInteractionListener) {
             mListener = (OnSortArtworkFragmentInteractionListener) context;
-        } else {
+        }
+        else {
             throw new RuntimeException(String.format("%s must implement OnFragmentInteractionListener", context.toString()));
         }
     }
