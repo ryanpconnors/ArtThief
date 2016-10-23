@@ -140,7 +140,7 @@ public class SortArtWorkFragment extends Fragment {
     private void sortArtwork(ArtworkChoice choice) {
         if (choice.equals(ALPHA)) {
             if (mCurrentIndex >= mArtWorks.size() - 2) {
-                Toast.makeText(getActivity(), "EXIT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Artworks Sorted", Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
             else {
