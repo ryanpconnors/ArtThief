@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.ryanpconnors.artthief.compare.SortArtWorkFragment.ArtworkChoice.ALPHA;
@@ -119,6 +120,7 @@ public class SortArtWorkFragment extends Fragment {
                 sortArtwork(ALPHA);
             }
         });
+
         mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
         mArtworkImageViewBeta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +128,9 @@ public class SortArtWorkFragment extends Fragment {
                 sortArtwork(BETA);
             }
         });
+
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
         displayArtwork(mArtworkImageViewBeta, mCurrentIndex + 1);
-
         return v;
     }
 
@@ -141,7 +143,9 @@ public class SortArtWorkFragment extends Fragment {
                 Toast.makeText(getActivity(), "EXIT", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
-            mCurrentIndex = mCurrentIndex + 1;
+            else {
+                mCurrentIndex += 1;
+            }
         }
         else if (choice.equals(BETA)) {
             swapOrderingAlphaBeta(mCurrentIndex, mCurrentIndex + 1);
@@ -157,7 +161,7 @@ public class SortArtWorkFragment extends Fragment {
             }
         }
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
-        displayArtwork(mArtworkImageViewAlpha, mCurrentIndex + 1);
+        displayArtwork(mArtworkImageViewBeta, mCurrentIndex + 1);
     }
 
     /**
@@ -169,9 +173,8 @@ public class SortArtWorkFragment extends Fragment {
         ArtWork artWorkAlpha = mArtWorks.get(alpha);
         ArtWork artWorkBeta = mArtWorks.get(beta);
 
-        mArtWorks.add(alpha, artWorkBeta);
-        mArtWorks.add(beta, artWorkAlpha);
         artWorkAlpha.swapOrder(artWorkBeta);
+        Collections.swap(mArtWorks, alpha, beta);
 
         Gallery.get(getActivity()).updateArtWork(artWorkAlpha);
         Gallery.get(getActivity()).updateArtWork(artWorkBeta);
