@@ -31,8 +31,6 @@ import java.util.List;
  */
 public class ShowFragment extends Fragment {
 
-    private List<ArtWork> mArtWorks;
-
     private ImageView mTopPickArtworkImageView;
     private TextView mTopPickShowIdTextView;
     private TextView mTopPickTitleTextView;
@@ -81,10 +79,6 @@ public class ShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_the_show, container, false);
 
-        // Get sorted Artworks from the Gallery
-        mArtWorks = Gallery.get(getActivity()).getArtWorks();
-        Collections.sort(mArtWorks);
-
         // Initialize top rated Artwork view objects
         mTopPickArtworkImageView = (ImageView) view.findViewById(R.id.top_pick_artwork_image);
         mTopPickShowIdTextView = (TextView) view.findViewById(R.id.top_pick_show_id);
@@ -98,11 +92,14 @@ public class ShowFragment extends Fragment {
         mIdEditText = (EditText) view.findViewById(R.id.id_edit_text);
         mTakenButton = (Button) view.findViewById(R.id.mark_as_taken_button);
 
-        setTopRatedArtwork();
-
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        setTopRatedArtwork();
+    }
 
     private void setTopRatedArtwork() {
         ArtWork topRatedArtwork = Gallery.get(getActivity()).getTopPickArtwork();
