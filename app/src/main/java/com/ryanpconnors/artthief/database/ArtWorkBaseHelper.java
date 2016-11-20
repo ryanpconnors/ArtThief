@@ -46,7 +46,7 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
             ArtWorkTable.Cols.SMALL_IMAGE_PATH + " TEXT, " +
             ArtWorkTable.Cols.LARGE_IMAGE_URL + " TEXT, " +
             ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
-            ArtWorkTable.Cols.STARS + " INTEGER, " +
+            ArtWorkTable.Cols.STARS + " INTEGER NOT NULL DEFAULT 0, " +
             ArtWorkTable.Cols.TAKEN + " BOOLEAN " +
             ")"
         );

@@ -201,6 +201,12 @@ public class UpdateArtWorkFragment extends Fragment {
             mProgressDialog.show();
         }
 
+        /**
+         * Fetch new artworks and update the gallery accordingly.
+         *
+         * @param args
+         * @return
+         */
         @Override
         protected Void doInBackground(Void... args) {
 
@@ -222,6 +228,9 @@ public class UpdateArtWorkFragment extends Fragment {
 
                     // Set the order of the new artwork to the current size of the gallery
                     artWork.setOrdering(gallerySize);
+
+                    // Initialize the number of stars to Zero
+                    artWork.setStars(0);
 
                     // insert the newArtWork into the Gallery database
                     Gallery.get(getActivity()).addArtWork(artWork);
