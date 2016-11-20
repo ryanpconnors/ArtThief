@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/artwork_list_item_number_title_margin"
         android:layout_toRightOf="@id/artwork_list_item_show_id"
-        android:singleLine="true"
+        android:maxLines="1"
         android:text="Title"
         android:textStyle="bold"/>
 
