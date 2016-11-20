@@ -192,7 +192,7 @@ public class Gallery {
 
 
     /**
-     * Returns all artworks with th given number of stars,
+     * Returns all artworks with the given number of stars,
      * ordered by 'ORDERING' in ascending order.
      *
      * @param stars
@@ -222,6 +222,7 @@ public class Gallery {
         }
         return artWorks;
     }
+
 
     public static ContentValues getContentValues(ArtWork artWork) {
         ContentValues values = new ContentValues();

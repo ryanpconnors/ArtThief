@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Created by Ryan Connors on 2/9/16.
  */
-public class ArtWork {
+public class ArtWork implements Comparable {
 
     private final UUID mId;
 
@@ -198,4 +198,21 @@ public class ArtWork {
         }
     }
 
+    /**
+     * Determines whether this ArtWork object is ordered before or after the given ArtWork.
+     *
+     * @param obj an ArtWork object.
+     * @return the difference between this ArtWorks stars and obj
+     * or in the case that the number of stars is equal, return the difference in ordering.
+     */
+    @Override
+    public int compareTo(Object obj) {
+        ArtWork that = (ArtWork) obj;
+        if (this.getStars() == that.getStars()) {
+            return this.getOrdering() - that.getOrdering();
+        }
+        else {
+            return this.getStars() - that.getStars();
+        }
+    }
 }

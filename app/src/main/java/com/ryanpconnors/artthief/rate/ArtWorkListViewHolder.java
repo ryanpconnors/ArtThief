@@ -54,8 +54,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
             mArtWorkImageView.setImageBitmap(smallArtWorkImage);
         }
 
-        // mShowIdTextView.setText("(" + artWork.getShowId() + ")");
-        mShowIdTextView.setText("(" + artWork.getOrdering() + ")");
+        mShowIdTextView.setText("(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
         mMediaTextView.setText(artWork.getMedia());
