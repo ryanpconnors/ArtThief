@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -196,19 +197,28 @@ public class Gallery {
      * ordered by 'ORDERING' in ascending order.
      *
      * @param stars
+     * @param taken
      * @return
      */
-    public List<ArtWork> getArtWorks(int stars) {
+    public List<ArtWork> getArtWorks(int stars, boolean taken) {
         List<ArtWork> artWorks = new ArrayList<>();
 
-        String whereClause = "";
-        whereClause += ArtWorkTable.Cols.STARS + "=?";
-        whereClause += " AND " + ArtWorkTable.Cols.LARGE_IMAGE_PATH + " IS NOT NULL";
+        String whereClause = String.format("%s=? AND %s=? AND %s IS NOT NULL",
+                ArtWorkTable.Cols.STARS,
+                ArtWorkTable.Cols.TAKEN,
+                ArtWorkTable.Cols.LARGE_IMAGE_PATH);
 
-        String[] whereArgs = new String[]{Integer.toString(stars)};
+        List<String> whereArgs = new ArrayList<>();
+        whereArgs.add(Integer.toString(stars));
+        if (taken) {
+            whereArgs.add("1");
+        }
+        else {
+            whereArgs.add("0");
+        }
 
         String orderBy = "ORDERING ASC";
-        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs, orderBy);
+        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
 
         try {
             cursor.moveToFirst();
@@ -315,8 +325,28 @@ public class Gallery {
         }
     }
 
-    public String getLastUpdateDate() {
+    /**
+     * Finds the user's top rated Artwork based on the number of stars and the ordering determined and returns it.
+     * @return the top rated artwork
+     */
+    public ArtWork getTopPickArtwork() {
+        List<ArtWork> artWorks = new ArrayList<>();
+        int stars = 5;
 
+        while (artWorks.isEmpty() && stars >= 0) {
+            artWorks = getArtWorks(stars, false);
+            stars -= 1;
+        }
+        if (artWorks.isEmpty()) {
+            return null;
+        }
+        else {
+            Collections.sort(artWorks);
+            return artWorks.get(artWorks.size() - 1);
+        }
+    }
+
+    public String getLastUpdateDate() {
         Cursor cursor = mDatabase.query(
                 ArtWorkDbSchema.InfoTable.NAME,                     // String table
                 new String[]{InfoTable.Cols.DATE_LAST_UPDATED},     // String[] columns,
@@ -326,7 +356,6 @@ public class Gallery {
                 null,                                               // String having,
                 null                                                // String orderBy)
         );
-
         try {
             if (cursor.getCount() == 0) {
                 return "N/A";
@@ -337,6 +366,5 @@ public class Gallery {
         finally {
             cursor.close();
         }
-
     }
 }

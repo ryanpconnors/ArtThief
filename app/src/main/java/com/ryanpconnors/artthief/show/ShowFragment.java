@@ -105,7 +105,7 @@ public class ShowFragment extends Fragment {
 
 
     private void setTopRatedArtwork() {
-        ArtWork topRatedArtwork = getTopPickArtwork();
+        ArtWork topRatedArtwork = Gallery.get(getActivity()).getTopPickArtwork();
         if (topRatedArtwork == null) {
             Toast.makeText(getActivity(), "Rate Your Favorite Artworks", Toast.LENGTH_LONG).show();
         }
@@ -172,18 +172,4 @@ public class ShowFragment extends Fragment {
         void onShowFragmentInteraction(Uri uri);
     }
 
-    /**
-     * @return
-     */
-    private ArtWork getTopPickArtwork() {
-        if (mArtWorks.isEmpty()) {
-            return null;
-        }
-        for (int i = mArtWorks.size() - 1; i >= 0; i--) {
-            if (!mArtWorks.get(i).isTaken()) {
-                return mArtWorks.get(i);
-            }
-        }
-        return null;
-    }
 }

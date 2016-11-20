@@ -86,7 +86,7 @@ public class SortArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS));
+            mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS), false);
             setHasOptionsMenu(true);
         }
     }
