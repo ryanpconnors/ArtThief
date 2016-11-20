@@ -86,10 +86,10 @@ public class SortArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS), false);
             setHasOptionsMenu(true);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,6 +129,9 @@ public class SortArtWorkFragment extends Fragment {
             }
         });
 
+        mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS), false);
+        normalizeArtworkOrdering();
+
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
         displayArtwork(mArtworkImageViewBeta, mCurrentIndex + 1);
         return v;
@@ -139,15 +142,6 @@ public class SortArtWorkFragment extends Fragment {
      */
     private void sortArtwork(ArtworkChoice choice) {
         if (choice.equals(ALPHA)) {
-            if (mCurrentIndex >= mArtWorks.size() - 2) {
-                Toast.makeText(getActivity(), R.string.artworks_sorted, Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-            else {
-                mCurrentIndex += 1;
-            }
-        }
-        else if (choice.equals(BETA)) {
             swapOrderingAlphaBeta(mCurrentIndex, mCurrentIndex + 1);
             if (mCurrentIndex > 0) {
                 mCurrentIndex -= 1;
@@ -160,8 +154,37 @@ public class SortArtWorkFragment extends Fragment {
                 getActivity().finish();
             }
         }
+        else if (choice.equals(BETA)) {
+            if (mCurrentIndex >= mArtWorks.size() - 2) {
+                Toast.makeText(getActivity(), R.string.artworks_sorted, Toast.LENGTH_LONG).show();
+                getActivity().finish();
+            }
+            else {
+                mCurrentIndex += 1;
+            }
+        }
+
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
         displayArtwork(mArtworkImageViewBeta, mCurrentIndex + 1);
+    }
+
+    /**
+     * Sorts and normalizes the ordering of each artwork in mArtWorks
+     * such that ordering is from 0, 1, ..., N
+     */
+    private void normalizeArtworkOrdering() {
+        if (mArtWorks.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < mArtWorks.size(); i++) {
+            Collections.sort(mArtWorks);
+            ArtWork artWork = mArtWorks.get(i);
+            if (artWork.getOrdering() != i) {
+                artWork.setOrdering(i);
+                Gallery.get(getActivity()).updateArtWork(artWork);
+            }
+        }
     }
 
     /**
