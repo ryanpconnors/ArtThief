@@ -97,6 +97,9 @@ public class ArtWorkFragment extends Fragment {
         mArtworkRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                //TODO: Removed 'SORTED' boolean check-mark from both lists for `previous` and `new` Stars
+                //TODO: Maybe check ordering here?
                 mArtWork.setStars(Math.round(rating));
                 Gallery.get(getActivity()).updateArtWork(mArtWork);
             }
