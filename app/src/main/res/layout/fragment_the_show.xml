@@ -121,7 +121,7 @@
         android:layout_marginTop="14dp"
         android:background="@color/colorPrimaryLight"
         android:padding="@dimen/compare_artwork_star_button_padding"
-        android:text="Mark as Taken"
+        android:text="@string/mark_taken"
         android:textColor="@color/textColorPrimary"/>
 
     <ImageView

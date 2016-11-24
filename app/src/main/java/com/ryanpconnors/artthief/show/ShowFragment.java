@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -118,15 +119,14 @@ public class ShowFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if (!s.toString().matches("")) {
                     mCurrentArtwork = Gallery.get(getActivity()).getArtWork(Integer.parseInt(s.toString()));
-                    if (mCurrentArtwork != null) {
-                        setTakenButton();
-                        setCurrentArtworkImageView();
-                        return;
+                    if (mCurrentArtwork == null) {
+                        Toast.makeText(getActivity(), String.format(Locale.US, "Artwork [%s] Not Found", s), Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getActivity(), String.format(Locale.US, "Artwork [%s] Not Found", s), Toast.LENGTH_SHORT).show();
                 }
-                mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
-                mCurrentArtwork = null;
+                else {
+                    mCurrentArtwork = null;
+                }
+                setCurrentArtworkImageView();
                 setTakenButton();
             }
         });
@@ -135,11 +135,17 @@ public class ShowFragment extends Fragment {
         mTakenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Hide the keyboard if it is open
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
                 if (mCurrentArtwork != null) {
-                    mCurrentArtwork.setTaken(true);
-                    Gallery.get(getActivity()).updateArtWork(mCurrentArtwork);
-                    // Call setTopRatedArtwork to refresh in case top rated artwork is now taken
-                    setTopRatedArtwork();
+                    mCurrentArtwork.setTaken(!mCurrentArtwork.isTaken());
+                    Gallery.get(getActivity()).updateArtWork(mCurrentArtwork); // reverse the current artworks `taken` status
+                    Toast.makeText(getActivity(), String.format(Locale.US, "[ %d ] marked : %s", mCurrentArtwork.getArtThiefID(), mCurrentArtwork.isTaken() ? "Taken" : "Not Taken"), Toast.LENGTH_LONG).show();
+                    setTopRatedArtwork(); //refresh the current top rated artwork
+                    setTakenButton();
                 }
             }
         });
@@ -157,22 +163,24 @@ public class ShowFragment extends Fragment {
             mTakenButton.setAlpha(.5f);
         }
         else {
+            mTakenButton.setText(mCurrentArtwork.isTaken() ? R.string.mark_not_taken : R.string.mark_taken);
             mTakenButton.setClickable(true);
             mTakenButton.setAlpha(1f);
         }
     }
 
     private void setCurrentArtworkImageView() {
-        if (mCurrentArtwork != null) {
+        if (mCurrentArtwork == null) {
+            mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
+        }
+        else {
             String largeImagePath = mCurrentArtwork.getLargeImagePath();
             if (largeImagePath != null) {
                 Bitmap largeArtworkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
                 mCurrentArtworkImageView.setImageBitmap(largeArtworkImage);
                 mCurrentArtworkImageView.setVisibility(View.VISIBLE);
-                return;
             }
         }
-        mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
     }
 
     @Override

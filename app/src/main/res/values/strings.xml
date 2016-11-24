@@ -55,4 +55,8 @@
     <string name="four_stars">4</string>
     <string name="five_stars">5</string>
 
+    <!--The Show Taken Button-->
+    <string name="mark_taken">Mark Taken</string>
+    <string name="mark_not_taken">Mark Not Taken</string>
+
 </resources>
