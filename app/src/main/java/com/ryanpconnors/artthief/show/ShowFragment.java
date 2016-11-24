@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,8 @@ import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +44,10 @@ public class ShowFragment extends Fragment {
     private EditText mIdEditText;
     private Button mTakenButton;
 
-    private ImageView mArtworkImageView;
+    private ImageView mCurrentArtworkImageView;
     private OnShowFragmentInteractionListener mListener;
+
+    private ArtWork mCurrentArtwork;
 
 
     public ShowFragment() {
@@ -90,9 +94,85 @@ public class ShowFragment extends Fragment {
 
         // Initialize ShowFragment view objects
         mIdEditText = (EditText) view.findViewById(R.id.id_edit_text);
+        mIdEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing here
+            }
+
+            /**
+             * Called when user changes the text in mIdEditText. Gets the current artwork from the Gallery
+             * that matches the suppied ID in mIdEditText iff it exists, assigns it to mCurrentArtwork and calls
+             * `setCurrentArtworkImageView()` to apply the updated current artwork to the imageView.
+             * If an artwork does not exist for the given ID in the Gallery, a Toast is shown to the user
+             * and the ImageView is set to INVISIBLE.
+             *
+             * @param s
+             */
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().matches("")) {
+                    mCurrentArtwork = Gallery.get(getActivity()).getArtWork(Integer.parseInt(s.toString()));
+                    if (mCurrentArtwork != null) {
+                        setTakenButton();
+                        setCurrentArtworkImageView();
+                        return;
+                    }
+                    Toast.makeText(getActivity(), String.format(Locale.US, "Artwork [%s] Not Found", s), Toast.LENGTH_SHORT).show();
+                }
+                mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
+                mCurrentArtwork = null;
+                setTakenButton();
+            }
+        });
+
         mTakenButton = (Button) view.findViewById(R.id.mark_as_taken_button);
+        mTakenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCurrentArtwork != null) {
+                    mCurrentArtwork.setTaken(true);
+                    Gallery.get(getActivity()).updateArtWork(mCurrentArtwork);
+                    // Call setTopRatedArtwork to refresh in case top rated artwork is now taken
+                    setTopRatedArtwork();
+                }
+            }
+        });
+        setTakenButton();
+
+        mCurrentArtworkImageView = (ImageView) view.findViewById(R.id.current_artwork_image_view);
+        mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
 
         return view;
+    }
+
+    private void setTakenButton() {
+        if (mCurrentArtwork == null) {
+            mTakenButton.setClickable(false);
+            mTakenButton.setAlpha(.5f);
+        }
+        else {
+            mTakenButton.setClickable(true);
+            mTakenButton.setAlpha(1f);
+        }
+    }
+
+    private void setCurrentArtworkImageView() {
+        if (mCurrentArtwork != null) {
+            String largeImagePath = mCurrentArtwork.getLargeImagePath();
+            if (largeImagePath != null) {
+                Bitmap largeArtworkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
+                mCurrentArtworkImageView.setImageBitmap(largeArtworkImage);
+                mCurrentArtworkImageView.setVisibility(View.VISIBLE);
+                return;
+            }
+        }
+        mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
     }
 
     @Override
