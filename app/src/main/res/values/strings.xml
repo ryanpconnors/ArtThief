@@ -1,41 +1,41 @@
 <resources>
 
-    <!--General-->
+    <!-- General -->
     <string name="app_name">Art Thief</string>
     <string name="date_format">EEEE MMM dd, yyyy, hh:mm a </string>
     <string name="not_available">N/E</string>
 
-    <!--Action Bar-->
+    <!-- Action Bar -->
     <string name="action_settings">Settings</string>
 
-    <!--Tab Titles-->
+    <!-- Tab Titles -->
     <string name="update_art_title">Update Art</string>
     <string name="rate_art_title">Rate Art</string>
     <string name="compare_art_title">Compare Art</string>
     <string name="the_show_title">The Show</string>
     <string name="vote_title">Vote</string>
 
-    <!--Tab Labels-->
+    <!-- Tab Labels -->
     <string name="update_art_tab_label">Update</string>
     <string name="rate_art_tab_label">Rate</string>
     <string name="compare_art_tab_label">Compare</string>
     <string name="the_show_tab_label">Show</string>
     <string name="vote_tab_label">Vote</string>
 
-    <!--Update Art Work-->
+    <!-- Update Art Work -->
     <string name="update_art_header">Art Thief</string>
     <string name="update_art_sub_header">Get a steal at the Art League\'s\n Patrons\' Show</string>
     <string name="update_art_last_update">Last update:</string>
     <string name="update_artworks_button_label">Update Artworks</string>
     <string name="loot_url">http://artthief.zurka.com/loot.json</string>
 
-    <!--Rate Art Work-->
+    <!-- Rate Art Work -->
     <string name="artwork_title_text">(#) Artwork Title</string>
     <string name="share_subject">Patrons\' Show Artwork</string>
     <string name="share_text">I really like this piece from the Art League\'s Patron\'s Show. #PatronsShow</string>
     <string name="prefer_text">Which one of these artworks at the Art League\'s Patron\'s Show do you prefer? #PatronsShow</string>
 
-    <!--Compare Art-->
+    <!-- Compare Art -->
     <string name="compare_art_header">Fine Tune Your List</string>
     <string name="compare_art_sub_header">You\'ll be show two art works at a time that have the same rating. By simply indicating the artwork you prefer, the list will be sorted from most to least favorite.</string>
     <string name="compare_five_star_button_label">Five Stars (%d)</string>
@@ -45,18 +45,23 @@
     <string name="compare_one_star_button_label">One Star (%d)</string>
     <string name="artworks_sorted">Artworks Sorted</string>
 
-    <!--Sort Art-->
+    <!-- Sort Art -->
     <string name="sort_artwork_title">Which do you prefer?</string>
 
-    <!--Star Integer Strings-->
+    <!-- Star Integer Strings -->
     <string name="one_star">1</string>
     <string name="two_stars">2</string>
     <string name="three_stars">3</string>
     <string name="four_stars">4</string>
     <string name="five_stars">5</string>
 
-    <!--The Show Taken Button-->
+    <!--The Show : Taken Button -->
     <string name="mark_taken">Mark Taken</string>
     <string name="mark_not_taken">Mark Not Taken</string>
+
+    <!-- The Show : Current Artwork Text -->
+    <string name="enter_artwork_id">Enter an Artwork ID</string>
+    <string name="artwork_taken">Artwork Taken!</string>
+    <string name="artwork_image_not_found">Artwork Image Not Found</string>
 
 </resources>

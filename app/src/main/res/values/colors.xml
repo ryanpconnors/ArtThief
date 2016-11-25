@@ -10,4 +10,6 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#01A6A0</color>
     <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorGreyText">#808080</color>
+    <color name="colorRedText">#ff0000</color>
 </resources>

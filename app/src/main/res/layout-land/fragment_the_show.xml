@@ -96,16 +96,16 @@
         />
 
     <ImageView
-        android:id="@+id/current_artwork_image_view"
+        android:id="@id/current_artwork_image_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_below="@+id/white_background_image"
+        android:layout_below="@id/white_background_image"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="13dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorWhite"
-        android:padding="5dp"
-        />
+        android:padding="5dp"/>
 
     <TextView
         android:id="@+id/current_artwork_text_view"
@@ -115,47 +115,41 @@
         android:layout_alignLeft="@+id/current_artwork_image_view"
         android:layout_alignRight="@id/current_artwork_image_view"
         android:layout_alignStart="@+id/current_artwork_image_view"
-        android:text="@string/enter_artwork_id"
-        android:textColor="@color/colorGreyText"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"/>
+        android:text="@string/enter_artwork_id"
+        android:textColor="@color/colorGreyText"/>
 
     <EditText
         android:id="@+id/id_edit_text"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/mark_as_taken_button"
-        android:layout_alignLeft="@+id/current_artwork_image_view"
+        android:layout_above="@+id/mark_as_taken_button"
+        android:layout_alignLeft="@+id/mark_as_taken_button"
+        android:layout_alignStart="@+id/mark_as_taken_button"
+        android:layout_marginBottom="11dp"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@id/current_artwork_image_view"
+        android:background="@color/colorWhite"
         android:ems="10"
         android:gravity="center"
-        android:layout_below="@id/current_artwork_image_view"
         android:hint="ID"
         android:inputType="number"
         android:maxLength="3"
-        android:layout_marginTop="14dp"
-        android:background="@color/colorWhite"
-        android:padding="7dp"/>
+        android:padding="7dp"
+        />
 
     <Button
         android:id="@id/mark_as_taken_button"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_alignBottom="@+id/current_artwork_image_view"
+        android:layout_marginBottom="42dp"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@id/current_artwork_image_view"
         android:background="@color/colorPrimaryLight"
         android:padding="@dimen/compare_artwork_star_button_padding"
-        android:layout_alignRight="@+id/current_artwork_image_view"
-        android:layout_below="@id/current_artwork_image_view"
-        android:layout_centerVertical="true"
         android:text="@string/mark_not_taken"
         android:textColor="@color/textColorPrimary"/>
-
-    <ImageView
-        android:id="@+id/thief_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/mark_as_taken_button"
-        android:src="@drawable/thief_half_background"
-        />
 
 </RelativeLayout>

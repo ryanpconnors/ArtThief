@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -47,6 +48,8 @@ public class ShowFragment extends Fragment {
 
     private ImageView mCurrentArtworkImageView;
     private OnShowFragmentInteractionListener mListener;
+
+    private TextView mCurrentArtworkTextView;
 
     private ArtWork mCurrentArtwork;
 
@@ -120,7 +123,12 @@ public class ShowFragment extends Fragment {
                 if (!s.toString().matches("")) {
                     mCurrentArtwork = Gallery.get(getActivity()).getArtWork(Integer.parseInt(s.toString()));
                     if (mCurrentArtwork == null) {
-                        Toast.makeText(getActivity(), String.format(Locale.US, "Artwork [%s] Not Found", s), Toast.LENGTH_SHORT).show();
+                        mCurrentArtworkImageView.setImageBitmap(null);
+                        mCurrentArtworkTextView.setText(String.format(Locale.US, "Artwork [%s] Not Found", s));
+                        mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
+                        mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+                        setTakenButton();
+                        return;
                     }
                 }
                 else {
@@ -143,7 +151,7 @@ public class ShowFragment extends Fragment {
                 if (mCurrentArtwork != null) {
                     mCurrentArtwork.setTaken(!mCurrentArtwork.isTaken());
                     Gallery.get(getActivity()).updateArtWork(mCurrentArtwork); // reverse the current artworks `taken` status
-                    Toast.makeText(getActivity(), String.format(Locale.US, "[ %d ] marked : %s", mCurrentArtwork.getArtThiefID(), mCurrentArtwork.isTaken() ? "Taken" : "Not Taken"), Toast.LENGTH_LONG).show();
+                    setCurrentArtworkImageView();
                     setTopRatedArtwork(); //refresh the current top rated artwork
                     setTakenButton();
                 }
@@ -152,7 +160,7 @@ public class ShowFragment extends Fragment {
         setTakenButton();
 
         mCurrentArtworkImageView = (ImageView) view.findViewById(R.id.current_artwork_image_view);
-        mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
+        mCurrentArtworkTextView = (TextView) view.findViewById(R.id.current_artwork_text_view);
 
         return view;
     }
@@ -169,17 +177,38 @@ public class ShowFragment extends Fragment {
         }
     }
 
+    /**
+     *
+     */
     private void setCurrentArtworkImageView() {
+
         if (mCurrentArtwork == null) {
-            mCurrentArtworkImageView.setVisibility(View.INVISIBLE);
+            mCurrentArtworkTextView.setText(R.string.enter_artwork_id);
+            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorGreyText, null));
+            mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+            mCurrentArtworkImageView.setImageBitmap(null);
+            return;
         }
-        else {
-            String largeImagePath = mCurrentArtwork.getLargeImagePath();
-            if (largeImagePath != null) {
+
+        String largeImagePath = mCurrentArtwork.getLargeImagePath();
+        if (largeImagePath != null) {
                 Bitmap largeArtworkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
                 mCurrentArtworkImageView.setImageBitmap(largeArtworkImage);
-                mCurrentArtworkImageView.setVisibility(View.VISIBLE);
-            }
+        }
+        else {
+            mCurrentArtworkImageView.setImageBitmap(null);
+            mCurrentArtworkTextView.setText(R.string.artwork_image_not_found);
+            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
+            mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (mCurrentArtwork.isTaken()) {
+            mCurrentArtworkTextView.setText(R.string.artwork_taken);
+            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
+            mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+        }
+        else {
+            mCurrentArtworkTextView.setVisibility(View.INVISIBLE);
         }
     }
 
