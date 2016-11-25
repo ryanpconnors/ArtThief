@@ -63,5 +63,6 @@
     <string name="enter_artwork_id">Enter an Artwork ID</string>
     <string name="artwork_taken">Artwork Taken!</string>
     <string name="artwork_image_not_found">Artwork Image Not Found</string>
+    <string name="no_top_pick">Rate Artworks in the "Rate" Tab</string>
 
 </resources>

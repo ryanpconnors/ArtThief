@@ -95,6 +95,17 @@
         android:layout_toRightOf="@id/top_pick_rating_text_view"
         />
 
+    <TextView
+        android:id="@+id/top_pick_empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignLeft="@id/white_background_image"
+        android:layout_alignStart="@id/white_background_image"
+        android:gravity="center"
+        android:text="@string/no_top_pick"
+        android:visibility="invisible"
+        />
+
     <ImageView
         android:id="@id/current_artwork_image_view"
         android:layout_width="200dp"

@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -42,6 +41,7 @@ public class ShowFragment extends Fragment {
     private TextView mTopPickMediaTextView;
     private TextView mTopPickRatingTextView;
     private ImageView mTopPickRatingStarImageView;
+    private TextView mTopPickEmptyText;
 
     private EditText mIdEditText;
     private Button mTakenButton;
@@ -95,6 +95,7 @@ public class ShowFragment extends Fragment {
         mTopPickMediaTextView = (TextView) view.findViewById(R.id.top_pick_media);
         mTopPickRatingTextView = (TextView) view.findViewById(R.id.top_pick_rating_text_view);
         mTopPickRatingStarImageView = (ImageView) view.findViewById(R.id.top_pick_rating_star_image_view);
+        mTopPickEmptyText = (TextView) view.findViewById(R.id.top_pick_empty_text);
 
         // Initialize ShowFragment view objects
         mIdEditText = (EditText) view.findViewById(R.id.id_edit_text);
@@ -221,7 +222,14 @@ public class ShowFragment extends Fragment {
     private void setTopRatedArtwork() {
         ArtWork topRatedArtwork = Gallery.get(getActivity()).getTopPickArtwork();
         if (topRatedArtwork == null) {
-            Toast.makeText(getActivity(), "Rate Your Favorite Artworks", Toast.LENGTH_LONG).show();
+            mTopPickArtworkImageView.setVisibility(View.INVISIBLE);
+            mTopPickShowIdTextView.setVisibility(View.INVISIBLE);
+            mTopPickTitleTextView.setVisibility(View.INVISIBLE);
+            mTopPickArtistTextView.setVisibility(View.INVISIBLE);
+            mTopPickMediaTextView.setVisibility(View.INVISIBLE);
+            mTopPickRatingTextView.setVisibility(View.INVISIBLE);
+            mTopPickRatingStarImageView.setVisibility(View.INVISIBLE);
+            mTopPickEmptyText.setVisibility(View.VISIBLE);
         }
         else {
             String smallImagePath = topRatedArtwork.getSmallImagePath();
@@ -244,6 +252,14 @@ public class ShowFragment extends Fragment {
                 mTopPickRatingStarImageView.setVisibility(View.GONE);
                 mTopPickRatingTextView.setVisibility(View.GONE);
             }
+            mTopPickArtworkImageView.setVisibility(View.VISIBLE);
+            mTopPickShowIdTextView.setVisibility(View.VISIBLE);
+            mTopPickTitleTextView.setVisibility(View.VISIBLE);
+            mTopPickArtistTextView.setVisibility(View.VISIBLE);
+            mTopPickMediaTextView.setVisibility(View.VISIBLE);
+            mTopPickRatingTextView.setVisibility(View.VISIBLE);
+            mTopPickRatingStarImageView.setVisibility(View.VISIBLE);
+            mTopPickEmptyText.setVisibility(View.INVISIBLE);
         }
     }
 
