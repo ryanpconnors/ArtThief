@@ -203,7 +203,7 @@ public class ArtWork implements Comparable<ArtWork> {
     /**
      * Determines whether this ArtWork object is ordered before or after the given ArtWork.
      *
-     * @param @NotNull that an ArtWork object.
+     * @param @NotNull that - an ArtWork object.
      * @return the difference between this ArtWorks stars and obj
      * or in the case that the number of stars is equal, return the difference in ordering.
      */

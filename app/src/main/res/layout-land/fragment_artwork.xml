@@ -5,57 +5,62 @@
 
     <ImageView
         android:id="@+id/artwork_large_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/artwork_rating_bar"
-        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
-        android:src="@drawable/thief"/>
+        />
 
     <RatingBar
         android:id="@id/artwork_rating_bar"
         style="?android:attr/ratingBarStyle"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/artwork_title"
-        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@id/artwork_large_image_view"
+        android:layout_toRightOf="@id/artwork_large_image_view"
         android:isIndicator="false"
         android:numStars="5"
         android:stepSize="1.0"/>
 
     <TextView
-        android:id="@id/artwork_title"
-        android:layout_width="match_parent"
+        android:id="@+id/artwork_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/artwork_artist"
+        android:layout_below="@id/artwork_rating_bar"
+        android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toEndOf="@id/artwork_large_image_view"
         android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toRightOf="@id/artwork_large_image_view"
         android:text="@string/artwork_title_text"
         android:textSize="@dimen/artwork_fragment_artwork_title_text_size"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@id/artwork_artist"
-        android:layout_width="match_parent"
+        android:id="@+id/artwork_artist"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/artwork_media"
+        android:layout_below="@id/artwork_title"
+        android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toEndOf="@id/artwork_large_image_view"
         android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toRightOf="@id/artwork_large_image_view"
         android:text="Artist Name"
         android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
         android:textStyle="normal"/>
 
     <TextView
-        android:id="@id/artwork_media"
-        android:layout_width="match_parent"
+        android:id="@+id/artwork_media"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/artwork_artist"
+        android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toEndOf="@id/artwork_large_image_view"
         android:layout_marginLeft="@dimen/artwork_fragment_info_margin_left"
+        android:layout_toRightOf="@id/artwork_large_image_view"
         android:paddingBottom="@dimen/artwork_fragment_info_padding_bottom"
         android:text="Media"
         android:textSize="@dimen/artwork_fragment_artwork_info_text_size"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/thief_half_background"/>
 
 </RelativeLayout>
