@@ -122,7 +122,7 @@ public class ShowFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().matches("")) {
-                    mCurrentArtwork = Gallery.get(getActivity()).getArtWork(Integer.parseInt(s.toString()));
+                    mCurrentArtwork = Gallery.get(getActivity()).getArtWork(s.toString());
                     if (mCurrentArtwork == null) {
                         mCurrentArtworkImageView.setImageBitmap(null);
                         mCurrentArtworkTextView.setText(String.format(Locale.US, "Artwork [%s] Not Found", s));

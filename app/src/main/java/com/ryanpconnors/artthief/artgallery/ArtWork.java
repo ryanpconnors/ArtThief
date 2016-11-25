@@ -1,11 +1,13 @@
 package com.ryanpconnors.artthief.artgallery;
 
+import android.support.annotation.NonNull;
+
 import java.util.UUID;
 
 /**
  * Created by Ryan Connors on 2/9/16.
  */
-public class ArtWork implements Comparable {
+public class ArtWork implements Comparable<ArtWork> {
 
     private final UUID mId;
 
@@ -201,13 +203,12 @@ public class ArtWork implements Comparable {
     /**
      * Determines whether this ArtWork object is ordered before or after the given ArtWork.
      *
-     * @param obj an ArtWork object.
+     * @param @NotNull that an ArtWork object.
      * @return the difference between this ArtWorks stars and obj
      * or in the case that the number of stars is equal, return the difference in ordering.
      */
     @Override
-    public int compareTo(Object obj) {
-        ArtWork that = (ArtWork) obj;
+    public int compareTo(@NonNull ArtWork that) {
         if (this.getStars() == that.getStars()) {
             return this.getOrdering() - that.getOrdering();
         }

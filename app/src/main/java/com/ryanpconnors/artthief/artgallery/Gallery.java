@@ -64,6 +64,33 @@ public class Gallery {
                 null
         );
 
+        // TODO: API-Level 19+ can use automatic resource management
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getArtWork();
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
+
+    /**
+     * @param showId String - the showId used to identify the artWork
+     * @return the ArtWork in this database that has the corresponding showId,
+     * if not ArtWork exists in the database with the showId, null is returned.
+     */
+    public ArtWork getArtWork(String showId) {
+        ArtWorkCursorWrapper cursor = queryArtWorks(
+                ArtWorkTable.Cols.SHOW_ID + " = ?",
+                new String[]{showId},
+                null
+        );
+
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             if (cursor.getCount() == 0) {
                 return null;
@@ -88,11 +115,11 @@ public class Gallery {
                 null
         );
 
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             if (cursor.getCount() == 0) {
                 return null;
             }
-
             cursor.moveToFirst();
             return cursor.getArtWork();
         }
@@ -125,7 +152,9 @@ public class Gallery {
         }
         finally {
             try {
-                fos.close();
+                if (fos != null) {
+                    fos.close();
+                }
             }
             catch (IOException ioe) {
                 Log.e(TAG, "FileOutputStream close error", ioe);
@@ -178,6 +207,7 @@ public class Gallery {
 
         ArtWorkCursorWrapper cursor = queryArtWorks(null, null, null);
 
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -220,6 +250,7 @@ public class Gallery {
         String orderBy = "ORDERING ASC";
         ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
 
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -234,7 +265,7 @@ public class Gallery {
     }
 
 
-    public static ContentValues getContentValues(ArtWork artWork) {
+    private static ContentValues getContentValues(ArtWork artWork) {
         ContentValues values = new ContentValues();
         values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
 
@@ -284,6 +315,8 @@ public class Gallery {
                 null,
                 null
         );
+
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             if (cursor.getCount() == 0) {
                 return 0;
@@ -356,6 +389,8 @@ public class Gallery {
                 null,                                               // String having,
                 null                                                // String orderBy)
         );
+
+        // TODO: API-Level 19+ can use automatic resource management
         try {
             if (cursor.getCount() == 0) {
                 return "N/A";
