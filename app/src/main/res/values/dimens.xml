@@ -45,4 +45,8 @@
     <dimen name="compare_artwork_land_image_margin_top">10dp</dimen>
     <integer name="sort_artwork_weight">1</integer>
 
+    <!-- The Show -->
+    <dimen name="enter_artwork_id_text_size">24sp</dimen>
+    <dimen name="taken_artwork_text_size">56sp</dimen>
+
 </resources>

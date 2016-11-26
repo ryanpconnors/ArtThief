@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +127,7 @@ public class ShowFragment extends Fragment {
                     if (mCurrentArtwork == null) {
                         mCurrentArtworkImageView.setImageBitmap(null);
                         mCurrentArtworkTextView.setText(String.format(Locale.US, "Artwork [%s] Not Found", s));
+                        mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
                         mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
                         mCurrentArtworkTextView.setVisibility(View.VISIBLE);
                         setTakenButton();
@@ -186,6 +188,7 @@ public class ShowFragment extends Fragment {
         if (mCurrentArtwork == null) {
             mCurrentArtworkTextView.setText(R.string.enter_artwork_id);
             mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorGreyText, null));
+            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.enter_artwork_id_text_size));
             mCurrentArtworkTextView.setVisibility(View.VISIBLE);
             mCurrentArtworkImageView.setImageBitmap(null);
             return;
@@ -199,12 +202,14 @@ public class ShowFragment extends Fragment {
         else {
             mCurrentArtworkImageView.setImageBitmap(null);
             mCurrentArtworkTextView.setText(R.string.artwork_image_not_found);
+            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
             mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
             mCurrentArtworkTextView.setVisibility(View.VISIBLE);
         }
 
         if (mCurrentArtwork.isTaken()) {
             mCurrentArtworkTextView.setText(R.string.artwork_taken);
+            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
             mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
             mCurrentArtworkTextView.setVisibility(View.VISIBLE);
         }
@@ -244,7 +249,7 @@ public class ShowFragment extends Fragment {
 
             if (topRatedArtwork.getStars() > 0) {
                 mTopPickRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp);
-                mTopPickRatingTextView.setText(Integer.toString(topRatedArtwork.getStars()));
+                mTopPickRatingTextView.setText(String.format(Locale.US, "%s", Integer.toString(topRatedArtwork.getStars())));
                 mTopPickRatingStarImageView.setVisibility(View.VISIBLE);
                 mTopPickRatingTextView.setVisibility(View.VISIBLE);
             }

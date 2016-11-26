@@ -37,7 +37,7 @@
 
     <!-- Compare Art -->
     <string name="compare_art_header">Fine Tune Your List</string>
-    <string name="compare_art_sub_header">You\'ll be show two art works at a time that have the same rating. By simply indicating the artwork you prefer, the list will be sorted from most to least favorite.</string>
+    <string name="compare_art_sub_header">You\'ll be shown two artworks at a time that have the same rating. By simply indicating the artwork you prefer, the list will be sorted from most to least favorite.</string>
     <string name="compare_five_star_button_label">Five Stars (%d)</string>
     <string name="compare_four_star_button_label">Four Stars (%d)</string>
     <string name="compare_three_star_button_label">Three Stars (%d)</string>
@@ -61,7 +61,7 @@
 
     <!-- The Show : Current Artwork Text -->
     <string name="enter_artwork_id">Enter an Artwork ID</string>
-    <string name="artwork_taken">Artwork Taken!</string>
+    <string name="artwork_taken">TAKEN</string>
     <string name="artwork_image_not_found">Artwork Image Not Found</string>
     <string name="no_top_pick">Rate Artworks in the "Rate" Tab</string>
 
