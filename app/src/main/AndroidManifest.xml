@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic__artthief_launcher"
+        android:icon="@mipmap/ic_artthief_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/TabbedTheme">
