@@ -14,7 +14,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/colorPrimaryDark"
                     tools:context=".compare.CompareArtWorkFragment">
 
@@ -26,7 +26,9 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/compare_artwork_header_padding_bottom"
             android:paddingLeft="@dimen/compare_artwork_header_padding_left"
+            android:paddingEnd="@dimen/compare_artwork_header_padding_right"
             android:paddingRight="@dimen/compare_artwork_header_padding_right"
+            android:paddingStart="@dimen/compare_artwork_header_padding_left"
             android:paddingTop="@dimen/compare_artwork_header_padding_top"
             android:text="@string/compare_art_header"
             android:textColor="@color/textColorPrimary"
@@ -41,7 +43,9 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/compare_artwork_sub_header_padding_bottom"
             android:paddingLeft="@dimen/compare_artwork_sub_header_padding_left"
+            android:paddingEnd="@dimen/compare_artwork_header_padding_right"
             android:paddingRight="@dimen/compare_artwork_header_padding_right"
+            android:paddingStart="@dimen/compare_artwork_sub_header_padding_left"
             android:paddingTop="@dimen/compare_artwork_sub_header_padding_top"
             android:text="@string/compare_art_sub_header"
             android:textColor="@color/textColorThirdly"
@@ -114,5 +118,4 @@
             android:textColor="@color/textColorPrimary"/>
 
     </RelativeLayout>
-    ¬
 </ScrollView>
