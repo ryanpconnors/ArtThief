@@ -17,6 +17,14 @@
                     tools:context=".show.ShowFragment">
 
         <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/show_blurry_landscape"
+            />
+
+        <ImageView
             android:id="@+id/white_background_image"
             android:layout_width="match_parent"
             android:layout_height="80dp"

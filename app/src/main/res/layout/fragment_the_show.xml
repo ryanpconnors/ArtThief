@@ -10,11 +10,17 @@
             android:scrollbars="vertical">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
-                tools:context=".show.ShowFragment">
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".show.ShowFragment">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/show_blurry"
+            android:background="@color/colorPrimaryDark" />
 
         <ImageView
             android:id="@+id/white_background_image"
@@ -149,14 +155,14 @@
             android:maxLength="3"
             android:padding="7dp"/>
 
-        <ImageView
-            android:id="@+id/thief_image"
-            android:layout_width="wrap_content"
-            android:layout_height="240dp"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/mark_as_taken_button"
-            android:src="@drawable/thief_half_background"
-            />
+        <!--<ImageView-->
+        <!--android:id="@+id/thief_image"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="240dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_below="@id/mark_as_taken_button"-->
+        <!--android:src="@drawable/thief_half_background"-->
+        <!--/>-->
 
         <TextView
             android:id="@+id/top_pick_empty_text"
