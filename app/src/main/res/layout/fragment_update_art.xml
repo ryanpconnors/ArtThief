@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="top"
+            android:fadingEdge="none"
+            android:fillViewport="true"
+            android:isScrollContainer="true"
+            android:paddingBottom="0dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/update_art_header"
         android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
         android:text="@string/update_art_sub_header"
         android:textAlignment="center"
         android:textColor="@color/textColorSecondary"
@@ -38,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/update_art_sub_header"
         android:layout_centerInParent="true"
-        android:paddingTop="60dp"
+        android:paddingTop="10dp"
         android:text="@string/update_art_last_update"
         android:textAlignment="center"
         android:textColor="@color/textColorThirdly"
@@ -51,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/last_update_date_text"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
         android:backgroundTint="@color/colorPrimaryLight"
         android:text="@string/update_artworks_button_label"
         android:textColor="@color/textColorPrimary" />
@@ -64,3 +75,5 @@
         android:src="@drawable/thief_half_background" />
 
 </RelativeLayout>
+
+</ScrollView>
