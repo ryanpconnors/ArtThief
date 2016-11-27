@@ -7,7 +7,7 @@
             android:fadingEdge="none"
             android:fillViewport="true"
             android:isScrollContainer="true"
-            android:paddingBottom="45dp"
+            android:paddingBottom="0dp"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbars="vertical">
 
