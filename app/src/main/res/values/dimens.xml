@@ -47,6 +47,7 @@
 
     <!-- The Show -->
     <dimen name="enter_artwork_id_text_size">24sp</dimen>
-    <dimen name="taken_artwork_text_size">56sp</dimen>
+    <dimen name="taken_artwork_button_padding_vertical">14dp</dimen>
+    <dimen name="taken_artwork_button_padding_horizontal">24dp</dimen>
 
 </resources>

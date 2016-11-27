@@ -5,10 +5,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +43,7 @@ public class ShowFragment extends Fragment {
     private TextView mTopPickEmptyText;
 
     private EditText mIdEditText;
+    private Button mMarkTakenButton;
     private Button mTakenButton;
 
     private ImageView mCurrentArtworkImageView;
@@ -113,23 +112,27 @@ public class ShowFragment extends Fragment {
 
             /**
              * Called when user changes the text in mIdEditText. Gets the current artwork from the Gallery
-             * that matches the suppied ID in mIdEditText iff it exists, assigns it to mCurrentArtwork and calls
+             * that matches the supplied ID in mIdEditText iff it exists, assigns it to mCurrentArtwork and calls
              * `setCurrentArtworkImageView()` to apply the updated current artwork to the imageView.
-             * If an artwork does not exist for the given ID in the Gallery, a Toast is shown to the user
-             * and the ImageView is set to INVISIBLE.
+             * If an artwork does not exist for the given ID in the Gallery, the taken button is displayed with text
+             * alerting the user that artowrk for the given ID was not found.
              *
              * @param s
              */
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (!s.toString().matches("")) {
                     mCurrentArtwork = Gallery.get(getActivity()).getArtWork(s.toString());
+
                     if (mCurrentArtwork == null) {
+
                         mCurrentArtworkImageView.setImageBitmap(null);
-                        mCurrentArtworkTextView.setText(String.format(Locale.US, "Artwork [%s] Not Found", s));
-                        mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
-                        mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
-                        mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+                        mCurrentArtworkTextView.setVisibility(View.INVISIBLE);
+
+                        mTakenButton.setText(String.format(Locale.US, getString(R.string.artwork_not_found), s.toString()));
+                        mTakenButton.setVisibility(View.VISIBLE);
+
                         setTakenButton();
                         return;
                     }
@@ -142,8 +145,11 @@ public class ShowFragment extends Fragment {
             }
         });
 
-        mTakenButton = (Button) view.findViewById(R.id.mark_as_taken_button);
-        mTakenButton.setOnClickListener(new View.OnClickListener() {
+        mTakenButton = (Button) view.findViewById(R.id.taken_button);
+        mTakenButton.setVisibility(View.INVISIBLE);
+
+        mMarkTakenButton = (Button) view.findViewById(R.id.mark_as_taken_button);
+        mMarkTakenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -169,14 +175,18 @@ public class ShowFragment extends Fragment {
     }
 
     private void setTakenButton() {
+
         if (mCurrentArtwork == null) {
-            mTakenButton.setClickable(false);
-            mTakenButton.setAlpha(.5f);
+            mMarkTakenButton.setClickable(false);
+            mMarkTakenButton.setAlpha(.5f);
         }
         else {
-            mTakenButton.setText(mCurrentArtwork.isTaken() ? R.string.mark_not_taken : R.string.mark_taken);
-            mTakenButton.setClickable(true);
-            mTakenButton.setAlpha(1f);
+            mMarkTakenButton.setText(mCurrentArtwork.isTaken() ? R.string.mark_not_taken : R.string.mark_taken);
+            mMarkTakenButton.setClickable(true);
+            mMarkTakenButton.setAlpha(1f);
+
+            mTakenButton.setText(String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork.getShowId()));
+            mTakenButton.setVisibility(mCurrentArtwork.isTaken() ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -187,8 +197,6 @@ public class ShowFragment extends Fragment {
 
         if (mCurrentArtwork == null) {
             mCurrentArtworkTextView.setText(R.string.enter_artwork_id);
-            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorGreyText, null));
-            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.enter_artwork_id_text_size));
             mCurrentArtworkTextView.setVisibility(View.VISIBLE);
             mCurrentArtworkImageView.setImageBitmap(null);
             return;
@@ -201,17 +209,15 @@ public class ShowFragment extends Fragment {
         }
         else {
             mCurrentArtworkImageView.setImageBitmap(null);
-            mCurrentArtworkTextView.setText(R.string.artwork_image_not_found);
-            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
-            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
-            mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+            mTakenButton.setText(String.format(Locale.US, getString(R.string.artwork_image_not_found), mCurrentArtwork.getShowId()));
+            mTakenButton.setVisibility(View.VISIBLE);
+            mCurrentArtworkTextView.setVisibility(View.INVISIBLE);
         }
 
         if (mCurrentArtwork.isTaken()) {
-            mCurrentArtworkTextView.setText(R.string.artwork_taken);
-            mCurrentArtworkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.taken_artwork_text_size));
-            mCurrentArtworkTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorRedText, null));
-            mCurrentArtworkTextView.setVisibility(View.VISIBLE);
+            mTakenButton.setText(String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork.getShowId()));
+            mTakenButton.setVisibility(View.VISIBLE);
+            mCurrentArtworkTextView.setVisibility(View.INVISIBLE);
         }
         else {
             mCurrentArtworkTextView.setVisibility(View.INVISIBLE);

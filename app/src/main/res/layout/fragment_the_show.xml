@@ -132,6 +132,8 @@
         android:hint="ID"
         android:inputType="number"
         android:maxLength="3"
+        android:layout_alignTop="@id/mark_as_taken_button"
+        android:layout_alignBaseline="@id/mark_as_taken_button"
         android:layout_marginTop="14dp"
         android:background="@color/colorWhite"
         android:padding="7dp"/>
@@ -168,5 +170,24 @@
         android:gravity="center"
         android:visibility="invisible"
         />
+
+    <Button
+        android:id="@+id/taken_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/current_artwork_text_view"
+        android:layout_alignBottom="@+id/current_artwork_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorAccent"
+        android:clickable="false"
+        android:paddingBottom="@dimen/taken_artwork_button_padding_vertical"
+        android:paddingLeft="@dimen/taken_artwork_button_padding_horizontal"
+        android:paddingRight="@dimen/taken_artwork_button_padding_horizontal"
+        android:paddingTop="@dimen/taken_artwork_button_padding_vertical"
+        android:text="@string/artwork_taken"
+        android:textColor="@color/textColorPrimary"
+        android:alpha="0.75"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

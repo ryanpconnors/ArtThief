@@ -133,7 +133,7 @@
 
     <EditText
         android:id="@+id/id_edit_text"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/mark_as_taken_button"
         android:layout_alignLeft="@+id/mark_as_taken_button"
@@ -162,5 +162,25 @@
         android:padding="@dimen/compare_artwork_star_button_padding"
         android:text="@string/mark_not_taken"
         android:textColor="@color/textColorPrimary"/>
+
+    <Button
+        android:id="@+id/taken_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/current_artwork_text_view"
+        android:layout_alignBottom="@+id/current_artwork_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.75"
+        android:background="@color/colorAccent"
+        android:clickable="false"
+        android:paddingBottom="@dimen/taken_artwork_button_padding_vertical"
+        android:paddingLeft="@dimen/taken_artwork_button_padding_horizontal"
+        android:paddingRight="@dimen/taken_artwork_button_padding_horizontal"
+        android:paddingTop="@dimen/taken_artwork_button_padding_vertical"
+        android:text="@string/artwork_taken"
+        android:textColor="@color/textColorPrimary"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>
