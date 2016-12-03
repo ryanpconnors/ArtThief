@@ -1,20 +1,25 @@
 package com.ryanpconnors.artthief;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
@@ -24,6 +29,7 @@ import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkPagerActivity;
 import com.ryanpconnors.artthief.show.ShowFragment;
 import com.ryanpconnors.artthief.update.UpdateArtWorkFragment;
+import com.ryanpconnors.artthief.vote.ScannerActivity;
 import com.ryanpconnors.artthief.vote.VoteFragment;
 
 import java.util.ArrayList;
@@ -42,9 +48,13 @@ public class MainActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
+    private static final String TAG = "MainActivity";
+
     private List<ArtWork> mDummyArtWorks;
 
     private static final int ARTWORK_LIST_COLUMN_COUNT = 1;
+
+    private static final int ZXING_CAMERA_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,8 +195,46 @@ public class MainActivity extends AppCompatActivity
     }
 
     // communication from the VoteFragment
-    public void onVoteFragmentInteraction(Uri uri) {
+    public void onScanTicketButtonClick() {
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
+        }
+        else {
+            startNewScannerActivity();
+        }
+    }
+
+    public void startNewScannerActivity() {
+        Intent scannerIntent = new Intent(this, ScannerActivity.class);
+        startActivity(scannerIntent);
+    }
+
+    /**
+     * Checks for granted permissions
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case ZXING_CAMERA_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startNewScannerActivity();
+                }
+                else {
+                    Toast.makeText(this, "Please grant camera permission to use the QR Scanner", Toast.LENGTH_SHORT).show();
+                }
+                return;
+
+            default:
+                Log.d(TAG, "onRequestPermissionResult called for requestCode : " + requestCode);
+                return;
+        }
     }
 
     // communication from the ArtWorkFragment

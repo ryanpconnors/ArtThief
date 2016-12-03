@@ -33,6 +33,8 @@ import java.util.Locale;
  */
 public class ShowFragment extends Fragment {
 
+    private OnShowFragmentInteractionListener mListener;
+
     private ImageView mTopPickArtworkImageView;
     private TextView mTopPickShowIdTextView;
     private TextView mTopPickTitleTextView;
@@ -47,10 +49,7 @@ public class ShowFragment extends Fragment {
     private Button mTakenButton;
 
     private ImageView mCurrentArtworkImageView;
-    private OnShowFragmentInteractionListener mListener;
-
     private TextView mCurrentArtworkTextView;
-
     private ArtWork mCurrentArtwork;
 
 
@@ -68,6 +67,7 @@ public class ShowFragment extends Fragment {
         ShowFragment fragment = new ShowFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -77,7 +77,8 @@ public class ShowFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            setHasOptionsMenu(true);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
