@@ -184,20 +184,14 @@ public class ArtWork implements Comparable<ArtWork> {
             return false;
         }
         ArtWork artWork = (ArtWork) obj;
-        if (this.mArtThiefID == artWork.getArtThiefID() &&
+        return this.mArtThiefID == artWork.getArtThiefID() &&
                 this.mShowId.equals(artWork.getShowId()) &&
                 this.mTitle.equals(artWork.getTitle()) &&
                 this.mArtist.equals(artWork.getArtist()) &&
                 this.mMedia.equals((artWork.getMedia())) &&
                 this.mTags.equals(artWork.getTags()) &&
                 this.mSmallImageUrl.equals(artWork.getSmallImageUrl()) &&
-                this.mLargeImageUrl.equals(artWork.getLargeImageUrl())
-                ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+                this.mLargeImageUrl.equals(artWork.getLargeImageUrl());
     }
 
     /**
