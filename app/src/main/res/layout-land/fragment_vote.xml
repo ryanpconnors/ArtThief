@@ -11,12 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:background="@color/colorPrimaryDark"
         android:paddingBottom="0dp"
         android:scaleType="fitEnd"
-        android:src="@drawable/ballot_box"/>
+        android:src="@drawable/ballot_box_landscape"/>
 
     <TextView
         android:id="@+id/vote_header"
@@ -33,11 +31,26 @@
 
     <TextView
         android:id="@+id/vote_sub_header"
-        android:layout_width="275dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/vote_header"
         android:layout_centerHorizontal="true"
+        android:layout_margin="14dp"
         android:text="The artwork that gets the most votes will recieve the Halt, Buzas and Powell Popular Vote Award."
+        android:textAlignment="center"
+        android:textColor="@color/textColorThirdly"
+        android:textSize="18sp"
+        android:textStyle="normal"/>
+
+    <TextView
+        android:id="@+id/scan_qr_code_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_sub_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:lines="1"
+        android:text="Scan the QR Code on your ticket"
         android:textAlignment="center"
         android:textColor="@color/textColorThirdly"
         android:textSize="18sp"
@@ -48,26 +61,13 @@
         android:id="@+id/scan_ticket_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/scan_qr_code_text"
         android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/colorPrimaryLight"
         android:text="Scan Ticket"
         android:textColor="@color/textColorPrimary"
         />
 
-    <TextView
-        android:id="@+id/scan_qr_code_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/scan_ticket_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="9dp"
-        android:lines="1"
-        android:text="Scan the QR Code on your ticket"
-        android:textAlignment="center"
-        android:textColor="@color/textColorThirdly"
-        android:textSize="18sp"
-        android:textStyle="normal"/>
 
 </RelativeLayout>
