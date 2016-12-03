@@ -33,9 +33,9 @@
         <ImageView
             android:id="@+id/thief_image_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@id/update_artworks_button"
+            android:scaleType="fitEnd"
             android:src="@drawable/thief_half_background"/>
 
         <TextView

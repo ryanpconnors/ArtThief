@@ -18,11 +18,14 @@
 
         <ImageView
             android:id="@+id/background"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
             android:src="@drawable/show_blurry_landscape"
-            />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="0dp"
+            android:scaleType="fitCenter"/>
 
         <ImageView
             android:id="@+id/white_background_image"
