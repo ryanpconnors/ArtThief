@@ -30,13 +30,6 @@
             android:textSize="40dp"
             android:textStyle="normal"/>
 
-        <ImageView
-            android:id="@+id/thief_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:scaleType="fitEnd"
-            android:src="@drawable/thief_half_background"/>
 
         <TextView
             android:id="@+id/update_art_sub_header"
@@ -74,6 +67,16 @@
             android:layout_marginTop="9dp"
             android:layout_below="@+id/update_art_sub_header"
             android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/thief_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/update_artworks_button"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitEnd"
+            android:src="@drawable/thief_landscape"/>
 
     </RelativeLayout>
 
