@@ -138,7 +138,6 @@ public class Gallery {
 
         // Create imageDir
         File imageDirPath = new File(directory, imageName);
-
         FileOutputStream fos = null;
 
         try {
@@ -239,15 +238,61 @@ public class Gallery {
                 ArtWorkTable.Cols.LARGE_IMAGE_PATH);
 
         List<String> whereArgs = new ArrayList<>();
+
         whereArgs.add(Integer.toString(stars));
-        if (taken) {
-            whereArgs.add("1");
-        }
-        else {
-            whereArgs.add("0");
-        }
+        whereArgs.add(taken ? "1" : "0");
 
         String orderBy = "ORDERING ASC";
+
+        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
+
+        // TODO: API-Level 19+ can use automatic resource management
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                artWorks.add(cursor.getArtWork());
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close();
+        }
+        return artWorks;
+    }
+
+    /**
+     * Returns all artworks with the given number of stars,
+     * ordered by the given ordering String. Default ordering ASCENDING
+     *
+     * @param stars the number of stars to search by
+     * @param order "ASC" for ASCENDING order, "DESC" for DESCENDING
+     * @return
+     */
+    public List<ArtWork> getArtWorks(int stars, String order) {
+        List<ArtWork> artWorks = new ArrayList<>();
+
+        String whereClause = String.format("%s=?",
+                ArtWorkTable.Cols.STARS);
+
+        List<String> whereArgs = new ArrayList<>();
+        whereArgs.add(Integer.toString(stars));
+
+        String orderBy = "ORDERING ASC";
+
+        switch (order) {
+
+            case "DESC":
+                orderBy = "ORDERING DESC";
+                break;
+
+            case "ASC":
+                orderBy = "ORDERING ASC";
+                break;
+
+            default:
+                break;
+        }
+
         ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
 
         // TODO: API-Level 19+ can use automatic resource management

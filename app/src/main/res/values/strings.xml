@@ -66,4 +66,17 @@
     <string name="no_top_pick">Rate Artworks in the "Rate" Tab</string>
     <string name="artwork_not_found">%s Not Found</string>
 
+    <!-- Database Ordering -->
+    <string name="ascending">ASC</string>
+    <string name="descending">DESC</string>
+
+    <!-- Vote Package JSON -->
+    <string name="package_key">package</string>
+    <string name="package_list">list</string>
+    <string name="package_art_thief_id">artthiefid</string>
+    <string name="package_show_id">showid</string>
+    <string name="package_rating">rating</string>
+    <string name="package_uuid">uuid</string>
+    <string name="package_scan_data">scanData</string>
+
 </resources>

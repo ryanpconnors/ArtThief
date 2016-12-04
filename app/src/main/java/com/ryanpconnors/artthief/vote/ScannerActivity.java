@@ -7,10 +7,17 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.ryanpconnors.artthief.R;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -60,12 +67,43 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Toast.makeText(this, scanData, Toast.LENGTH_LONG).show();
 
         //TODO: get user rating info and send to Zurka
+        getUserVotingPackage(scanData);
+
         finish();
     }
 
 
-    private JSONObject getUserVotingPackage() {
-        return null;
+    private JSONObject getUserVotingPackage(String scanData) {
+
+        JSONObject jsonPackage = new JSONObject();
+        JSONArray list = new JSONArray();
+
+        for (int i = 5; i >= 1; i--) {
+            List<ArtWork> artworks = Gallery.get(this).getArtWorks(i, getString(R.string.descending));
+
+            for (ArtWork artWork : artworks) {
+                JSONObject artworkJson = new JSONObject();
+                try {
+                    artworkJson.put(getString(R.string.package_art_thief_id), artWork.getArtThiefID());
+                    artworkJson.put(getString(R.string.package_show_id), artWork.getShowId());
+                    artworkJson.put(getString(R.string.package_rating), artWork.getStars());
+                    list.put(artworkJson);
+                }
+                catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }
+        try {
+            jsonPackage.put(getString(R.string.package_list), list);
+            jsonPackage.put(getString(R.string.package_uuid), UUID.randomUUID().toString());
+            jsonPackage.put(getString(R.string.package_scan_data), scanData);
+        }
+        catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        return jsonPackage;
     }
 
 }
