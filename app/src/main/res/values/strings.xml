@@ -4,6 +4,10 @@
     <string name="app_name">Art Thief</string>
     <string name="date_format">EEEE MMM dd, yyyy, hh:mm a </string>
     <string name="not_available">N/E</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Action Bar -->
     <string name="action_settings">Settings</string>
@@ -28,6 +32,10 @@
     <string name="update_art_last_update">Last update:</string>
     <string name="update_artworks_button_label">Update Artworks</string>
     <string name="loot_url">http://artthief.zurka.com/loot.json</string>
+    <string name="update_artwork_success">Artworks updated</string>
+    <string name="update_artwork_error">There was a problem updating artworks. Try again later</string>
+    <string name="small_image_extension">S.jpg</string>
+    <string name="large_image_extension">L.jpg</string>
 
     <!-- Rate Art Work -->
     <string name="artwork_title_text">(#) Artwork Title</string>
@@ -71,13 +79,18 @@
     <string name="descending">DESC</string>
 
     <!-- Vote Package JSON -->
-    <string name="package_key">package</string>
-    <string name="package_list">list</string>
-    <string name="package_art_thief_id">artthiefid</string>
-    <string name="package_show_id">showid</string>
-    <string name="package_rating">rating</string>
-    <string name="package_uuid">uuid</string>
-    <string name="package_scan_data">scanData</string>
+    <string name="vote_package_key">package</string>
+    <string name="vote_package_list">list</string>
+    <string name="vote_package_art_thief_id">artthiefid</string>
+    <string name="vote_package_show_id">showid</string>
+    <string name="vote_package_rating">rating</string>
+    <string name="vote_package_uuid">uuid</string>
+    <string name="vote_package_scan_data">scanData</string>
     <string name="vote_url">http://artthief.zurka.com/vote/</string>
+    <string name="vote_success">Artworks updated</string>
+    <string name="vote_error">There was a problem updating artworks. Try again later</string>
+    <string name="cast_your_vote">Casting Your Vote</string>
+    <string name="casting_vote">Casting Your Vote</string>
+    <string name="transmit_vote_message">Would you like to transmit your favorite artworks to the Art League?</string>
 
 </resources>

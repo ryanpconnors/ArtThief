@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,9 +95,7 @@ public class UpdateArtWorkFragment extends Fragment {
 
         // Setup the last update date textView
         mLastUpdateTextView = (TextView) v.findViewById(R.id.last_update_date_text);
-        mLastUpdateTextView.setText(String.format("%s %s",
-                getString(R.string.update_art_last_update),
-                Gallery.get(getActivity()).getLastUpdateDate()));
+        mLastUpdateTextView.setText(String.format("%s %s", getString(R.string.update_art_last_update), Gallery.get(getActivity()).getLastUpdateDate()));
 
         return v;
     }
@@ -109,8 +108,7 @@ public class UpdateArtWorkFragment extends Fragment {
             mArtWorkUpdateListener = (OnUpdateArtWorkFragmentInteractionListener) context;
         }
         else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -138,7 +136,7 @@ public class UpdateArtWorkFragment extends Fragment {
             Bitmap artWorkImage = fetcher.fetchArtWorkImage(smallImageUrl);
             String smallImagePath = Gallery.get(getActivity()).saveToInternalStorage(
                     artWorkImage,
-                    artWork.getArtThiefID() + "S.jpg"
+                    artWork.getArtThiefID() + getString(R.string.small_image_extension)
             );
             artWork.setSmallImagePath(smallImagePath);
         }
@@ -149,7 +147,7 @@ public class UpdateArtWorkFragment extends Fragment {
             Bitmap artWorkImage = fetcher.fetchArtWorkImage(largeImageUrl);
             String largeImagePath = Gallery.get(getActivity()).saveToInternalStorage(
                     artWorkImage,
-                    artWork.getArtThiefID() + "L.jpg"
+                    artWork.getArtThiefID() + getString(R.string.large_image_extension)
             );
             artWork.setLargeImagePath(largeImagePath);
         }
@@ -189,7 +187,7 @@ public class UpdateArtWorkFragment extends Fragment {
     /**
      *
      */
-    private class UpdateArtWorksTask extends AsyncTask<Void, String, Void> {
+    private class UpdateArtWorksTask extends AsyncTask<Void, String, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -208,13 +206,17 @@ public class UpdateArtWorkFragment extends Fragment {
          * @return
          */
         @Override
-        protected Void doInBackground(Void... args) {
+        protected Boolean doInBackground(Void... args) {
 
             GalleryFetcher fetcher = new GalleryFetcher();
             List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
             List<ArtWork> newArtworks = fetcher.fetchArtWorks();
 
             int gallerySize = existingArtWorks.size();
+
+            if (newArtworks == null) {
+                return false;
+            }
 
             //TODO Only update the artWorks that have changed
             for (ArtWork artWork : newArtworks) {
@@ -256,7 +258,7 @@ public class UpdateArtWorkFragment extends Fragment {
                 }
             }
             updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
-            return null;
+            return true;
         }
 
         @Override
@@ -269,27 +271,32 @@ public class UpdateArtWorkFragment extends Fragment {
             }
         }
 
-
         @Override
-        protected void onPostExecute(Void arg) {
-            mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
+        protected void onPostExecute(Boolean success) {
+
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
 
+            if (success) {
+                mArtWorkUpdateListener.onArtWorkDataSourceUpdate();
+                mLastUpdateTextView.setText(String.format(Locale.US, "%s %s", getString(R.string.update_art_last_update), Gallery.get(getActivity()).getLastUpdateDate()));
+            }
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("ArtWorks Updated!")
+            builder.setTitle(success ? getString(R.string.success) : getString(R.string.error))
+                    .setMessage(success ? getString(R.string.update_artwork_success) : getString(R.string.update_artwork_error))
                     .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // Dismiss the AlertDialog
                         }
                     });
             AlertDialog alert = builder.create();
             alert.show();
 
-            mLastUpdateTextView.setText(getString(R.string.update_art_last_update) + " " + Gallery.get(getActivity()).getLastUpdateDate());
-            mUpdateArtWorksButton.setEnabled(true);
-            mUpdateArtWorksButton.setAlpha(1.0f);
+            mUpdateArtWorksButton.setEnabled(!success);
+            mUpdateArtWorksButton.setAlpha(success ? 0.5f : 1.0f);
         }
     }
 

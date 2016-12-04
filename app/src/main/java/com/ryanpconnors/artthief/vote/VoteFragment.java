@@ -1,14 +1,17 @@
 package com.ryanpconnors.artthief.vote;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -18,8 +21,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -36,6 +49,10 @@ public class VoteFragment extends Fragment {
 
     private OnVoteFragmentInteractionListener mListener;
     private Button mScanTicketButton;
+
+    private ProgressDialog mProgressDialog;
+
+    private String mTicketCode;
 
     public VoteFragment() {
         // Required empty public constructor
@@ -83,13 +100,24 @@ public class VoteFragment extends Fragment {
      * @param ticketCode
      */
     public void vote(String ticketCode) {
-
-        Toast.makeText(getActivity(), "TicketCode : " + ticketCode, Toast.LENGTH_SHORT).show();
-        JSONObject votePackage = getVotingPackage(ticketCode);
-    }
-
-    public void sendVote() {
-
+        mTicketCode = ticketCode;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.cast_your_vote))
+                .setMessage(getString(R.string.transmit_vote_message))
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        JSONObject votePackage = getVotingPackage(mTicketCode);
+                        new VotePostTask().execute(votePackage);
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
     }
 
     @Override
@@ -153,6 +181,103 @@ public class VoteFragment extends Fragment {
             Log.e(TAG, e.getMessage());
         }
         return jsonPackage;
+    }
+
+    private class VotePostTask extends AsyncTask<JSONObject, String, Boolean> {
+
+        JSONObject voteJson;
+
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setTitle(getString(R.string.casting_vote));
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(JSONObject... args) {
+
+            voteJson = args[0];
+
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(getString(R.string.vote_url));
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setChunkedStreamingMode(0);
+
+                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+                writeStream(out, voteJson.toString());
+
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                readStream(in);
+
+                if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    throw new IOException(urlConnection.getResponseMessage() + ": with " + url);
+                }
+            }
+            catch (MalformedURLException e) {
+                Log.e(TAG, e.getMessage());
+                return false;
+            }
+            catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+                return false;
+            }
+            finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+            return true;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(success ? getString(R.string.success) : getString(R.string.error))
+                    .setMessage(success ? getString(R.string.vote_success) : getString(R.string.vote_error))
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Dismiss the AlertDialog
+                        }
+                    });
+            builder.create();
+            builder.show();
+
+            mScanTicketButton.setEnabled(!success);
+            mScanTicketButton.setAlpha(success ? 0.5f : 1.0f);
+        }
+    }
+
+    private void readStream(InputStream in) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        StringBuffer sb = new StringBuffer();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        br.close();
+        System.out.println("" + sb.toString());
+    }
+
+    private void writeStream(OutputStream out, String data) {
+        OutputStreamWriter writer = new OutputStreamWriter(out);
+        try {
+            writer.write(data);
+            writer.flush();
+        }
+        catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
     }
 
 
