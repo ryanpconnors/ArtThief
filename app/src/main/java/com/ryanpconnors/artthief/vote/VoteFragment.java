@@ -162,9 +162,9 @@ public class VoteFragment extends Fragment {
             for (ArtWork artWork : artworks) {
                 JSONObject artworkJson = new JSONObject();
                 try {
-                    artworkJson.put(getString(R.string.package_art_thief_id), artWork.getArtThiefID());
-                    artworkJson.put(getString(R.string.package_show_id), artWork.getShowId());
-                    artworkJson.put(getString(R.string.package_rating), artWork.getStars());
+                    artworkJson.put(getString(R.string.vote_package_art_thief_id), artWork.getArtThiefID());
+                    artworkJson.put(getString(R.string.vote_package_show_id), artWork.getShowId());
+                    artworkJson.put(getString(R.string.vote_package_rating), artWork.getStars());
                     list.put(artworkJson);
                 }
                 catch (JSONException e) {
@@ -173,9 +173,9 @@ public class VoteFragment extends Fragment {
             }
         }
         try {
-            jsonPackage.put(getString(R.string.package_list), list);
-            jsonPackage.put(getString(R.string.package_uuid), UUID.randomUUID().toString());
-            jsonPackage.put(getString(R.string.package_scan_data), ticketCode);
+            jsonPackage.put(getString(R.string.vote_package_list), list);
+            jsonPackage.put(getString(R.string.vote_package_uuid), UUID.randomUUID().toString());
+            jsonPackage.put(getString(R.string.vote_package_scan_data), ticketCode);
         }
         catch (JSONException e) {
             Log.e(TAG, e.getMessage());
