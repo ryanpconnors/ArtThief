@@ -1,6 +1,7 @@
 package com.ryanpconnors.artthief;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity
 
     private static final int ARTWORK_LIST_COLUMN_COUNT = 1;
 
+    private static final int TICKET_NUMBER_REQUEST_CODE = 2;
+    public static final String TICKET_CODE = "ticketCode";
+
     private static final int ZXING_CAMERA_PERMISSION = 1;
 
     @Override
@@ -82,6 +86,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case (TICKET_NUMBER_REQUEST_CODE): {
+                if (resultCode == Activity.RESULT_OK) {
+                    String ticketCode = intent.getStringExtra(TICKET_CODE);
+                    SectionsPagerAdapter spa = (SectionsPagerAdapter) mViewPager.getAdapter();
+                    VoteFragment voteFragment = (VoteFragment) spa.getItem(getString(R.string.vote_title));
+                    voteFragment.vote(ticketCode);
+                }
+                break;
+            }
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -162,6 +178,10 @@ public class MainActivity extends AppCompatActivity
             return mFragmentList.get(position);
         }
 
+        public Fragment getItem(String title) {
+            return mFragmentList.get(mFragmentTitleList.lastIndexOf(title));
+        }
+
         @Override
         public int getCount() {
             return mFragmentList.size();
@@ -175,6 +195,33 @@ public class MainActivity extends AppCompatActivity
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+        }
+    }
+
+    /**
+     * Checks for granted permissions
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case ZXING_CAMERA_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startNewScannerActivity();
+                }
+                else {
+                    Toast.makeText(this, "Please grant camera permission to use the QR Scanner", Toast.LENGTH_SHORT).show();
+                }
+                return;
+
+            default:
+                Log.d(TAG, "onRequestPermissionResult called for requestCode : " + requestCode);
+                return;
         }
     }
 
@@ -207,41 +254,14 @@ public class MainActivity extends AppCompatActivity
 
     public void startNewScannerActivity() {
         Intent scannerIntent = new Intent(this, ScannerActivity.class);
-        startActivity(scannerIntent);
+        startActivityForResult(scannerIntent, TICKET_NUMBER_REQUEST_CODE);
     }
 
-    /**
-     * Checks for granted permissions
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-
-        switch (requestCode) {
-
-            case ZXING_CAMERA_PERMISSION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startNewScannerActivity();
-                }
-                else {
-                    Toast.makeText(this, "Please grant camera permission to use the QR Scanner", Toast.LENGTH_SHORT).show();
-                }
-                return;
-
-            default:
-                Log.d(TAG, "onRequestPermissionResult called for requestCode : " + requestCode);
-                return;
-        }
-    }
 
     // communication from the ArtWorkFragment
     public void onArtWorkFragmentInteraction(Uri uri) {
 
     }
-
 
     // communication from the ArtWorkListFragment
     public void onArtWorkListFragmentInteraction(ArtWork artWork) {

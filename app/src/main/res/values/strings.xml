@@ -78,5 +78,6 @@
     <string name="package_rating">rating</string>
     <string name="package_uuid">uuid</string>
     <string name="package_scan_data">scanData</string>
+    <string name="vote_url">http://artthief.zurka.com/vote/</string>
 
 </resources>

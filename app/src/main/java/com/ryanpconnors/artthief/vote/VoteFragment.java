@@ -3,12 +3,24 @@ package com.ryanpconnors.artthief.vote;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
+import com.ryanpconnors.artthief.artgallery.ArtWork;
+import com.ryanpconnors.artthief.artgallery.Gallery;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +32,7 @@ import com.ryanpconnors.artthief.R;
  */
 public class VoteFragment extends Fragment {
 
-    private static final String TAG = "VoteFragment";
+    public static final String TAG = "VoteFragment";
 
     private OnVoteFragmentInteractionListener mListener;
     private Button mScanTicketButton;
@@ -41,7 +53,6 @@ public class VoteFragment extends Fragment {
         // For arguments passed into the new instance
         Bundle args = new Bundle();
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -50,8 +61,7 @@ public class VoteFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+            // Do something with args
         }
     }
 
@@ -67,6 +77,19 @@ public class VoteFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    /**
+     * @param ticketCode
+     */
+    public void vote(String ticketCode) {
+
+        Toast.makeText(getActivity(), "TicketCode : " + ticketCode, Toast.LENGTH_SHORT).show();
+        JSONObject votePackage = getVotingPackage(ticketCode);
+    }
+
+    public void sendVote() {
+
     }
 
     @Override
@@ -97,6 +120,43 @@ public class VoteFragment extends Fragment {
     }
 
     /**
+     * @param ticketCode String
+     * @return
+     */
+    private JSONObject getVotingPackage(String ticketCode) {
+
+        JSONObject jsonPackage = new JSONObject();
+        JSONArray list = new JSONArray();
+
+        for (int i = 5; i >= 1; i--) {
+            List<ArtWork> artworks = Gallery.get(getActivity()).getArtWorks(i, getString(R.string.descending));
+
+            for (ArtWork artWork : artworks) {
+                JSONObject artworkJson = new JSONObject();
+                try {
+                    artworkJson.put(getString(R.string.package_art_thief_id), artWork.getArtThiefID());
+                    artworkJson.put(getString(R.string.package_show_id), artWork.getShowId());
+                    artworkJson.put(getString(R.string.package_rating), artWork.getStars());
+                    list.put(artworkJson);
+                }
+                catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }
+        try {
+            jsonPackage.put(getString(R.string.package_list), list);
+            jsonPackage.put(getString(R.string.package_uuid), UUID.randomUUID().toString());
+            jsonPackage.put(getString(R.string.package_scan_data), ticketCode);
+        }
+        catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return jsonPackage;
+    }
+
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -110,4 +170,5 @@ public class VoteFragment extends Fragment {
 
         void onScanTicketButtonClick();
     }
+
 }
