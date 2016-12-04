@@ -53,6 +53,8 @@ public class SortArtWorkFragment extends Fragment {
 
     private List<ArtWork> mArtWorks;
 
+    private int mNumberOfStars;
+
     private int mCurrentIndex = 0;
 
     private ImageView mArtworkImageViewAlpha;
@@ -86,7 +88,7 @@ public class SortArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            setHasOptionsMenu(true);
+            mNumberOfStars = getArguments().getInt(ARG_NUMBER_OF_STARS);
         }
     }
 
@@ -129,7 +131,7 @@ public class SortArtWorkFragment extends Fragment {
             }
         });
 
-        mArtWorks = Gallery.get(getActivity()).getArtWorks(getArguments().getInt(ARG_NUMBER_OF_STARS), false);
+        mArtWorks = Gallery.get(getActivity()).getArtWorks(mNumberOfStars, false);
         normalizeArtworkOrdering();
 
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
