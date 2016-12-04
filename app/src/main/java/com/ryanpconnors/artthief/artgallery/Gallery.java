@@ -40,11 +40,18 @@ public class Gallery {
     private static String TAG = "Gallery";
     private static final String IMAGE_DIRECTORY_NAME = "artwork_images";
 
+    /**
+     * @param context
+     */
     private Gallery(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new ArtWorkBaseHelper(mContext).getWritableDatabase();
     }
 
+    /**
+     * @param context
+     * @return
+     */
     public static Gallery get(Context context) {
         if (sGallery == null) {
             sGallery = new Gallery(context);
@@ -58,23 +65,12 @@ public class Gallery {
      * if not ArtWork exists in the database with the artThiefId, null is returned.
      */
     public ArtWork getArtWork(int artThiefId) {
-        ArtWorkCursorWrapper cursor = queryArtWorks(
+
+        return getArtWork(
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
                 new String[]{String.valueOf(artThiefId)},
                 null
         );
-
-        // TODO: API-Level 19+ can use automatic resource management
-        try {
-            if (cursor.getCount() == 0) {
-                return null;
-            }
-            cursor.moveToFirst();
-            return cursor.getArtWork();
-        }
-        finally {
-            cursor.close();
-        }
     }
 
 
@@ -84,11 +80,36 @@ public class Gallery {
      * if not ArtWork exists in the database with the showId, null is returned.
      */
     public ArtWork getArtWork(String showId) {
-        ArtWorkCursorWrapper cursor = queryArtWorks(
+
+        return getArtWork(
                 ArtWorkTable.Cols.SHOW_ID + " = ?",
                 new String[]{showId},
                 null
         );
+    }
+
+
+    /**
+     * @param id
+     * @return
+     */
+    public ArtWork getArtWork(UUID id) {
+        return getArtWork(
+                ArtWorkTable.Cols.UUID + " = ?",
+                new String[]{id.toString()},
+                null
+        );
+    }
+
+    /**
+     * @param whereClause
+     * @param whereArgs
+     * @param orderBy
+     * @return
+     */
+    private ArtWork getArtWork(String whereClause, String[] whereArgs, String orderBy) {
+
+        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs, orderBy);
 
         // TODO: API-Level 19+ can use automatic resource management
         try {
@@ -105,30 +126,11 @@ public class Gallery {
 
 
     /**
-     * @param id
+     *
+     * @param bitmapImage
+     * @param imageName
      * @return
      */
-    public ArtWork getArtWork(UUID id) {
-        ArtWorkCursorWrapper cursor = queryArtWorks(
-                ArtWorkTable.Cols.UUID + " = ?",
-                new String[]{id.toString()},
-                null
-        );
-
-        // TODO: API-Level 19+ can use automatic resource management
-        try {
-            if (cursor.getCount() == 0) {
-                return null;
-            }
-            cursor.moveToFirst();
-            return cursor.getArtWork();
-        }
-        finally {
-            cursor.close();
-        }
-    }
-
-
     public String saveToInternalStorage(Bitmap bitmapImage, String imageName) {
 
         ContextWrapper cw = new ContextWrapper(mContext);
@@ -163,6 +165,10 @@ public class Gallery {
     }
 
 
+    /**
+     * @param path
+     * @return
+     */
     public Bitmap getArtWorkImage(String path) {
         try {
             return BitmapFactory.decodeStream(new FileInputStream(new File(path)));
@@ -174,6 +180,9 @@ public class Gallery {
     }
 
 
+    /**
+     * @param artWork
+     */
     public void addArtWork(ArtWork artWork) {
         ContentValues values = getContentValues(artWork);
         try {
@@ -184,6 +193,9 @@ public class Gallery {
         }
     }
 
+    /**
+     * @param artWork
+     */
     public void updateArtWork(ArtWork artWork) {
         String artThiefIdString = String.valueOf(artWork.getArtThiefID());
         ContentValues values = getContentValues(artWork);
@@ -192,6 +204,11 @@ public class Gallery {
                 new String[]{artThiefIdString});
     }
 
+
+    /**
+     * @param artWork
+     * @return
+     */
     public boolean deleteArtWork(ArtWork artWork) {
         String artThiefIdString = Integer.toString(artWork.getArtThiefID());
         return mDatabase.delete(
@@ -201,23 +218,11 @@ public class Gallery {
         ) > 0;
     }
 
+    /**
+     * @return
+     */
     public List<ArtWork> getArtWorks() {
-        List<ArtWork> artWorks = new ArrayList<>();
-
-        ArtWorkCursorWrapper cursor = queryArtWorks(null, null, null);
-
-        // TODO: API-Level 19+ can use automatic resource management
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                artWorks.add(cursor.getArtWork());
-                cursor.moveToNext();
-            }
-        }
-        finally {
-            cursor.close();
-        }
-        return artWorks;
+        return getArtWorks(null, null, null);
     }
 
 
@@ -230,7 +235,6 @@ public class Gallery {
      * @return
      */
     public List<ArtWork> getArtWorks(int stars, boolean taken) {
-        List<ArtWork> artWorks = new ArrayList<>();
 
         String whereClause = String.format("%s=? AND %s=? AND %s IS NOT NULL",
                 ArtWorkTable.Cols.STARS,
@@ -244,7 +248,19 @@ public class Gallery {
 
         String orderBy = "ORDERING ASC";
 
-        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
+        return getArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
+    }
+
+    /**
+     * @param whereClause
+     * @param whereArgs
+     * @param orderBy
+     * @return
+     */
+    private List<ArtWork> getArtWorks(String whereClause, String[] whereArgs, String orderBy) {
+
+        List<ArtWork> artWorks = new ArrayList<>();
+        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs, orderBy);
 
         // TODO: API-Level 19+ can use automatic resource management
         try {
@@ -258,6 +274,7 @@ public class Gallery {
             cursor.close();
         }
         return artWorks;
+
     }
 
     /**
@@ -293,23 +310,14 @@ public class Gallery {
                 break;
         }
 
-        ArtWorkCursorWrapper cursor = queryArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
-
-        // TODO: API-Level 19+ can use automatic resource management
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                artWorks.add(cursor.getArtWork());
-                cursor.moveToNext();
-            }
-        }
-        finally {
-            cursor.close();
-        }
-        return artWorks;
+        return getArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
     }
 
 
+    /**
+     * @param artWork
+     * @return
+     */
     private static ContentValues getContentValues(ArtWork artWork) {
         ContentValues values = new ContentValues();
         values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
@@ -335,6 +343,12 @@ public class Gallery {
         return values;
     }
 
+    /**
+     * @param whereClause
+     * @param whereArgs
+     * @param orderBy
+     * @return
+     */
     private ArtWorkCursorWrapper queryArtWorks(String whereClause, String[] whereArgs, String orderBy) {
 
         Cursor cursor = mDatabase.query(
@@ -349,6 +363,11 @@ public class Gallery {
         return new ArtWorkCursorWrapper(cursor);
     }
 
+
+    /**
+     * @param numStars
+     * @return
+     */
     public int getStarCount(String numStars) {
 
         Cursor cursor = mDatabase.query(
@@ -375,6 +394,11 @@ public class Gallery {
     }
 
 
+    /**
+     * @param date
+     * @param showYear
+     * @param dataVersion
+     */
     public void updateInfo(String date, int showYear, int dataVersion) {
 
         ContentValues values = new ContentValues();
@@ -424,6 +448,10 @@ public class Gallery {
         }
     }
 
+
+    /**
+     * @return
+     */
     public String getLastUpdateDate() {
         Cursor cursor = mDatabase.query(
                 ArtWorkDbSchema.InfoTable.NAME,                     // String table
