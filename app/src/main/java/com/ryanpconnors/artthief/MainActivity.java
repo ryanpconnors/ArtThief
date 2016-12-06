@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ryanpconnors.artthief.artgallery.ArtWork;
-import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.compare.CompareArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkFragment;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment;
@@ -51,8 +50,6 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
-    private List<ArtWork> mDummyArtWorks;
-
     private static final int ARTWORK_LIST_COLUMN_COUNT = 1;
 
     private static final int TICKET_NUMBER_REQUEST_CODE = 2;
@@ -79,8 +76,6 @@ public class MainActivity extends AppCompatActivity
         mTabLayout.setupWithViewPager(mViewPager);
 
         setupTabIcons();
-
-        mDummyArtWorks = Gallery.get(this).getArtWorks();
     }
 
     @Override
