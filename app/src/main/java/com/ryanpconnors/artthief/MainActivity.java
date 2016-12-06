@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
 
         assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -144,7 +144,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tabbed, menu);
+
+        //TODO: Removes the Menu (settings) from upper right corner of Toolbar
+        //getMenuInflater().inflate(R.menu.menu_tabbed, menu);
         return true;
     }
 
