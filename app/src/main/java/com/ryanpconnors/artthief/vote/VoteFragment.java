@@ -260,10 +260,10 @@ public class VoteFragment extends Fragment {
 
     private void readStream(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String line;
         while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
+            sb.append(String.format("%s\n", line));
         }
         br.close();
         System.out.println("" + sb.toString());
