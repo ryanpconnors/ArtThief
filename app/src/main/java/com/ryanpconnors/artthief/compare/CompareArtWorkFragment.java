@@ -183,13 +183,9 @@ public class CompareArtWorkFragment extends Fragment {
 
         starButton.setText(starButtonText);
 
-        if (starCount > 0) {
-            starButton.setEnabled(true);
-            starButton.setAlpha(1f);
-        } else {
-            starButton.setEnabled(starCount > 0);
-            starButton.setAlpha(.5f);
-        }
+        /* Enable the star button iff there are at least 2 artworks */
+        starButton.setEnabled(starCount >= 2);
+        starButton.setAlpha(starButton.isEnabled() ? 1f : .5f);
 
     }
 
