@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -65,6 +66,18 @@ public class ArtWorkListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_artwork_list, container, false);
 
+        TextView emptyView = (TextView) view.getRootView().findViewById(R.id.empty_view);
+        RecyclerView list = (RecyclerView) view.getRootView().findViewById(R.id.list);
+
+        if (Gallery.get(getActivity()).isEmpty()) {
+            list.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            list.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -76,7 +89,6 @@ public class ArtWorkListFragment extends Fragment {
             else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
             recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(
                     Gallery.get(getActivity()).getArtWorks(),
                     mListener)

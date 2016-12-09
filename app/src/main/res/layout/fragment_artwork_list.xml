@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
     android:id="@+id/list"
     android:name="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,3 +18,13 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
     tools:listitem="@layout/fragment_artwork_list_item"/>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/artworks_empty_message" />
+
+</LinearLayout>

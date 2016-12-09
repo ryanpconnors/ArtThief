@@ -225,6 +225,13 @@ public class Gallery {
         return getArtWorks(null, null, null);
     }
 
+    /**
+     * @return
+     */
+    public boolean isEmpty() {
+        return getArtWorks().isEmpty();
+    }
+
 
     /**
      * Returns all artworks with the given number of stars,

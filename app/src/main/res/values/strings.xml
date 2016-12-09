@@ -42,6 +42,8 @@
     <string name="share_subject">Patrons\' Show Artwork</string>
     <string name="share_text">I really like this piece from the Art League\'s Patron\'s Show. #PatronsShow</string>
     <string name="prefer_text">Which one of these artworks at the Art League\'s Patron\'s Show do you prefer? #PatronsShow</string>
+    <string name="artworks_empty_title">Update Artworks</string>
+    <string name="artworks_empty_message">Go to the \'Update\' screen to download artworks</string>
 
     <!-- Compare Art -->
     <string name="compare_art_header">Fine Tune Your List</string>
