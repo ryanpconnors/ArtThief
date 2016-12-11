@@ -89,7 +89,6 @@ public class SortArtWorkFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mRating = getArguments().getInt(ARG_NUMBER_OF_STARS);
-            Gallery.get(getActivity()).setSorted(Math.round(mRating), false);
         }
     }
 
