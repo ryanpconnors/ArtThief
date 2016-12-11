@@ -60,9 +60,15 @@
     <ImageView
         android:id="@+id/thief_image_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitEnd"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/thief"
+        android:adjustViewBounds="true"
+        android:layout_alignParentStart="true"
+        android:cropToPadding="false"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/thief"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

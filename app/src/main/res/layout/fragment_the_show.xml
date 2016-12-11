@@ -21,10 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:background="@color/colorPrimaryDark"
         android:scaleType="fitEnd"
-        android:src="@drawable/show_blurry"/>
+        android:src="@drawable/show_blurry"
+        android:adjustViewBounds="true"
+        android:baselineAlignBottom="true"
+        android:layout_alignParentStart="true"/>
 
     <ImageView
         android:id="@+id/white_background_image"

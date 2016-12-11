@@ -70,13 +70,15 @@
 
         <ImageView
             android:id="@+id/thief_image_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@id/update_artworks_button"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitEnd"
-            android:src="@drawable/thief_landscape"/>
+            android:scaleType="center"
+            android:src="@drawable/thief_landscape"
+            android:cropToPadding="false"
+            android:adjustViewBounds="true"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 

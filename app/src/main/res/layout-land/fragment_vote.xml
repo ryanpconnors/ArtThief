@@ -14,7 +14,8 @@
         android:background="@color/colorPrimaryDark"
         android:paddingBottom="0dp"
         android:scaleType="fitEnd"
-        android:src="@drawable/ballot_box_landscape"/>
+        android:src="@drawable/ballot_box_landscape"
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/vote_header"

@@ -25,7 +25,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingBottom="0dp"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:baselineAlignBottom="true"/>
 
         <ImageView
             android:id="@+id/white_background_image"
