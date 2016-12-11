@@ -53,7 +53,7 @@ public class SortArtWorkFragment extends Fragment {
 
     private List<ArtWork> mArtWorks;
 
-    private int mNumberOfStars;
+    private int mRating;
 
     private int mCurrentIndex = 0;
 
@@ -88,7 +88,7 @@ public class SortArtWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mNumberOfStars = getArguments().getInt(ARG_NUMBER_OF_STARS);
+            mRating = getArguments().getInt(ARG_NUMBER_OF_STARS);
         }
     }
 
@@ -131,7 +131,7 @@ public class SortArtWorkFragment extends Fragment {
             }
         });
 
-        mArtWorks = Gallery.get(getActivity()).getArtWorks(mNumberOfStars, false);
+        mArtWorks = Gallery.get(getActivity()).getArtWorks(mRating, false);
         normalizeArtworkOrdering();
 
         displayArtwork(mArtworkImageViewAlpha, mCurrentIndex);
@@ -152,12 +152,14 @@ public class SortArtWorkFragment extends Fragment {
                 mCurrentIndex += 1;
             }
             else {
+                Gallery.get(getActivity()).setSorted(Math.round(mRating), true);
                 Toast.makeText(getActivity(), R.string.artworks_sorted, Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
         }
         else if (choice.equals(BETA)) {
             if (mCurrentIndex >= mArtWorks.size() - 2) {
+                Gallery.get(getActivity()).setSorted(Math.round(mRating), true);
                 Toast.makeText(getActivity(), R.string.artworks_sorted, Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }

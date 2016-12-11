@@ -15,7 +15,6 @@ public class ArtWorkDbSchema {
          */
         public static final String NAME = "info";
 
-
         /**
          * Columns in the database table Info
          */
@@ -23,6 +22,25 @@ public class ArtWorkDbSchema {
             public static final String DATE_LAST_UPDATED = "date_last_updated";
             public static final String SHOW_YEAR = "show_year";
             public static final String DATA_VERSION = "data_version";
+        }
+    }
+
+    /**
+     * SQLite database table - SortArtwork
+     */
+    public static final class SortArtworkTable {
+
+        /**
+         * Name of this database table - sort_artwork
+         */
+        public static final String NAME = "sort_artwork";
+
+        /**
+         * Columns in the database table sort_artwork
+         */
+        public static final class Cols {
+            public static final String RATING = "rating";
+            public static final String SORTED = "sorted";
         }
     }
 

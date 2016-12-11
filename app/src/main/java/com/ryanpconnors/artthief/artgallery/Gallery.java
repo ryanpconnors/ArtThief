@@ -15,6 +15,7 @@ import com.ryanpconnors.artthief.database.ArtWorkCursorWrapper;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.ArtWorkTable;
 import com.ryanpconnors.artthief.database.ArtWorkDbSchema.InfoTable;
+import com.ryanpconnors.artthief.database.ArtWorkDbSchema.SortArtworkTable;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,6 +58,59 @@ public class Gallery {
             sGallery = new Gallery(context);
         }
         return sGallery;
+    }
+
+
+    /**
+     * Determines if the artworks for the given rating are sorted or not
+     *
+     * @param rating the artwork rating
+     * @return true iff the artworks with the given rating are sorted, otherwise returns false
+     */
+    public boolean isSorted(int rating) {
+
+        String whereClause = String.format("%s=?", SortArtworkTable.Cols.RATING);
+
+        String[] whereArgs = {Integer.toString(rating)};
+
+        Cursor cursor = mDatabase.query(
+                SortArtworkTable.NAME,                      // Table name
+                new String[]{SortArtworkTable.Cols.SORTED}, // Columns : [null] selects all columns
+                whereClause,                                // where [clause]
+                whereArgs,                                  // where [args]
+                null,                                       // groupBy
+                null,                                       // having
+                null                                        // orderBy
+        );
+
+        // TODO: API-Level 19+ can use automatic resource management
+        try {
+            cursor.moveToFirst();
+            return cursor.getInt(cursor.getColumnIndex(SortArtworkTable.Cols.SORTED)) != 0;
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
+
+    /**
+     * Sets the sorted flag for the given rating
+     * @param rating the rating value to set
+     * @param sorted the boolean flag
+     */
+    public void setSorted(int rating, boolean sorted) {
+
+        if (rating <= 0 || rating > 5) {
+            return;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(SortArtworkTable.Cols.SORTED, sorted ? 1 : 0);
+
+        mDatabase.update(SortArtworkTable.NAME, values,
+                SortArtworkTable.Cols.RATING + " = ?",
+                new String[]{String.valueOf(rating)});
     }
 
     /**
@@ -293,7 +347,6 @@ public class Gallery {
      * @return
      */
     public List<ArtWork> getArtWorks(int stars, String order) {
-        List<ArtWork> artWorks = new ArrayList<>();
 
         String whereClause = String.format("%s=?",
                 ArtWorkTable.Cols.STARS);
