@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.Gallery;
@@ -35,6 +36,12 @@ public class CompareArtWorkFragment extends Fragment {
     private Button mThreeStarButton;
     private Button mTwoStarButton;
     private Button mOneStarButton;
+
+    private ImageView mFiveStarDoneImageView;
+    private ImageView mFourStarDoneImageView;
+    private ImageView mThreeStarDoneImageView;
+    private ImageView mTwoStarDoneImageView;
+    private ImageView mOneStarDoneImageView;
 
     public CompareArtWorkFragment() {
         // Required empty public constructor
@@ -80,6 +87,8 @@ public class CompareArtWorkFragment extends Fragment {
             }
         });
 
+        mOneStarDoneImageView = (ImageView) v.findViewById(R.id.one_star_done);
+
         mTwoStarButton = (Button) v.findViewById(R.id.compare_artwork_two_star_button);
         mTwoStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +96,8 @@ public class CompareArtWorkFragment extends Fragment {
                 startSortArtWorkActivity(2);
             }
         });
+
+        mTwoStarDoneImageView = (ImageView) v.findViewById(R.id.two_star_done);
 
         mThreeStarButton = (Button) v.findViewById(R.id.compare_artwork_three_star_button);
         mThreeStarButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +107,8 @@ public class CompareArtWorkFragment extends Fragment {
             }
         });
 
+        mThreeStarDoneImageView = (ImageView) v.findViewById(R.id.three_star_done);
+
         mFourStarButton = (Button) v.findViewById(R.id.compare_artwork_four_star_button);
         mFourStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +117,8 @@ public class CompareArtWorkFragment extends Fragment {
             }
         });
 
+        mFourStarDoneImageView = (ImageView) v.findViewById(R.id.four_star_done);
+
         mFiveStarButton = (Button) v.findViewById(R.id.compare_artwork_five_star_button);
         mFiveStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +126,8 @@ public class CompareArtWorkFragment extends Fragment {
                 startSortArtWorkActivity(5);
             }
         });
+
+        mFiveStarDoneImageView = (ImageView) v.findViewById(R.id.five_star_done);
 
         return v;
     }
@@ -146,6 +163,7 @@ public class CompareArtWorkFragment extends Fragment {
                 starCount = Gallery.get(getActivity()).getStarCount(getString(R.string.one_star));
                 starButtonText = getResources()
                         .getString(R.string.compare_one_star_button_label, starCount);
+                mOneStarDoneImageView.setVisibility(Gallery.get(getActivity()).isSorted(1) ? View.VISIBLE : View.INVISIBLE);
                 break;
 
             case 2:
@@ -153,6 +171,7 @@ public class CompareArtWorkFragment extends Fragment {
                 starCount = Gallery.get(getActivity()).getStarCount(getString(R.string.two_stars));
                 starButtonText = getResources()
                         .getString(R.string.compare_two_star_button_label, starCount);
+                mTwoStarDoneImageView.setVisibility(Gallery.get(getActivity()).isSorted(2) ? View.VISIBLE : View.INVISIBLE);
                 break;
 
             case 3:
@@ -160,6 +179,7 @@ public class CompareArtWorkFragment extends Fragment {
                 starCount = Gallery.get(getActivity()).getStarCount(getString(R.string.three_stars));
                 starButtonText = getResources()
                         .getString(R.string.compare_three_star_button_label, starCount);
+                mThreeStarDoneImageView.setVisibility(Gallery.get(getActivity()).isSorted(3) ? View.VISIBLE : View.INVISIBLE);
                 break;
 
             case 4:
@@ -167,6 +187,7 @@ public class CompareArtWorkFragment extends Fragment {
                 starCount = Gallery.get(getActivity()).getStarCount(getString(R.string.four_stars));
                 starButtonText = getResources()
                         .getString(R.string.compare_four_star_button_label, starCount);
+                mFourStarDoneImageView.setVisibility(Gallery.get(getActivity()).isSorted(4) ? View.VISIBLE : View.INVISIBLE);
                 break;
 
             case 5:
@@ -174,6 +195,7 @@ public class CompareArtWorkFragment extends Fragment {
                 starCount = Gallery.get(getActivity()).getStarCount(getString(R.string.five_stars));
                 starButtonText = getResources()
                         .getString(R.string.compare_five_star_button_label, starCount);
+                mFiveStarDoneImageView.setVisibility(Gallery.get(getActivity()).isSorted(5) ? View.VISIBLE : View.INVISIBLE);
                 break;
 
             default:
