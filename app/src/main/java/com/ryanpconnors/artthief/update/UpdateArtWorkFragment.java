@@ -189,6 +189,9 @@ public class UpdateArtWorkFragment extends Fragment {
      */
     private class UpdateArtWorksTask extends AsyncTask<Void, String, Boolean> {
 
+        int mCurrentArtworkUpdating;
+        int mNewArtWorkTotal;
+
         @Override
         protected void onPreExecute() {
             mProgressDialog = new ProgressDialog(getActivity());
@@ -212,15 +215,18 @@ public class UpdateArtWorkFragment extends Fragment {
             List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
             List<ArtWork> newArtworks = fetcher.fetchArtWorks();
 
-            int gallerySize = existingArtWorks.size();
-
             if (newArtworks == null) {
                 return false;
             }
 
-            //TODO Only update the artWorks that have changed
+            int gallerySize = existingArtWorks.size();
+            mNewArtWorkTotal = newArtworks.size();
+            mCurrentArtworkUpdating = 0;
+
+            //TODO: Only update the artWorks that have changed
             for (ArtWork artWork : newArtworks) {
 
+                mCurrentArtworkUpdating += 1;
                 ArtWork existingArtWork = Gallery.get(getActivity()).getArtWork(artWork.getArtThiefID());
 
                 if (existingArtWork == null) {
@@ -267,7 +273,7 @@ public class UpdateArtWorkFragment extends Fragment {
                 if (!mProgressDialog.isShowing()) {
                     mProgressDialog.show();
                 }
-                mProgressDialog.setMessage("Updating : " + s);
+                mProgressDialog.setMessage(String.format(Locale.US, "(%d of %d) %s", mCurrentArtworkUpdating, mNewArtWorkTotal, s));
             }
         }
 
