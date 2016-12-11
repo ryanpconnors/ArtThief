@@ -95,10 +95,15 @@ public class Gallery {
 
 
     /**
-     * @param rating
-     * @param sorted
+     * Sets the sorted flag for the given rating
+     * @param rating the rating value to set
+     * @param sorted the boolean flag
      */
     public void setSorted(int rating, boolean sorted) {
+
+        if (rating <= 0 || rating > 5) {
+            return;
+        }
 
         ContentValues values = new ContentValues();
         values.put(SortArtworkTable.Cols.SORTED, sorted ? 1 : 0);
