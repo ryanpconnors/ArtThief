@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,12 +13,15 @@ import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 import com.ryanpconnors.artthief.rate.ArtWorkListFragment.OnArtWorkListFragmentInteractionListener;
 
+import java.util.Locale;
+
 /**
  * Created by Ryan Connors on 2/17/16.
  */
 public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ImageView mArtWorkImageView;
+    private Button mArtworkTakenButton;
     private TextView mShowIdTextView;
     private TextView mTitleTextView;
     private TextView mArtistTextView;
@@ -34,6 +38,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         itemView.setOnClickListener(this);
 
         mArtWorkImageView = (ImageView) itemView.findViewById(R.id.artwork_list_item_artwork_image);
+        mArtworkTakenButton = (Button) itemView.findViewById(R.id.artwork_list_item_taken_button);
         mShowIdTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_show_id);
         mTitleTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_title);
         mArtistTextView = (TextView) itemView.findViewById(R.id.artwork_list_item_artist);
@@ -54,6 +59,8 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
             mArtWorkImageView.setImageBitmap(smallArtWorkImage);
         }
 
+        mArtworkTakenButton.setVisibility(artWork.isTaken() ? View.VISIBLE : View.INVISIBLE);
+
         mShowIdTextView.setText("(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
@@ -61,7 +68,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
 
         if (mArtWork.getStars() > 0) {
             mArtWorkRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp);
-            mArtWorkRatingTextView.setText(Integer.toString(mArtWork.getStars()));
+            mArtWorkRatingTextView.setText(String.format(Locale.US, "%s", Integer.toString(mArtWork.getStars())));
             mArtWorkRatingStarImageView.setVisibility(View.VISIBLE);
             mArtWorkRatingTextView.setVisibility(View.VISIBLE);
         }

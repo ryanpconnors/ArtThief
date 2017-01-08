@@ -66,16 +66,16 @@ public class ArtWorkListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_artwork_list, container, false);
 
-        TextView emptyView = (TextView) view.getRootView().findViewById(R.id.empty_view);
+        TextView emptyTextViewLabel = (TextView) view.getRootView().findViewById(R.id.empty_view);
         RecyclerView list = (RecyclerView) view.getRootView().findViewById(R.id.list);
 
         if (Gallery.get(getActivity()).isEmpty()) {
             list.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
+            emptyTextViewLabel.setVisibility(View.VISIBLE);
         }
         else {
             list.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            emptyTextViewLabel.setVisibility(View.GONE);
         }
 
         // Set the adapter

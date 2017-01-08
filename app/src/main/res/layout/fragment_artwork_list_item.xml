@@ -7,6 +7,7 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:contentDescription="@string/artwork_list_item_artwork_image_description"
         android:id="@+id/artwork_list_item_artwork_image"
         android:layout_width="@dimen/artwork_small_image_height"
         android:layout_height="@dimen/artwork_small_image_width"
@@ -15,13 +16,34 @@
         android:foregroundGravity="center"
         android:scaleType="centerInside"/>
 
+    <Button
+        android:id="@+id/artwork_list_item_taken_button"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignEnd="@id/artwork_list_item_artwork_image"
+        android:layout_alignLeft="@id/artwork_list_item_artwork_image"
+        android:layout_alignRight="@id/artwork_list_item_artwork_image"
+        android:layout_alignStart="@id/artwork_list_item_artwork_image"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.75"
+        android:background="@color/colorAccent"
+        android:clickable="false"
+        android:text="@string/taken"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/artwork_list_item_taken_button_font_size"
+        />
+
     <TextView
         android:id="@+id/artwork_list_item_show_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
         android:layout_toRightOf="@id/artwork_list_item_artwork_image"
-        android:text="(###)"
+        android:layout_toEndOf="@id/artwork_list_item_artwork_image"
+        android:text="@string/artwork_show_id_label_text"
         android:textStyle="bold"/>
 
     <TextView
@@ -29,19 +51,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/artwork_list_item_number_title_margin"
+        android:layout_marginStart="@dimen/artwork_list_item_number_title_margin"
         android:layout_toRightOf="@id/artwork_list_item_show_id"
+        android:layout_toEndOf="@id/artwork_list_item_show_id"
         android:maxLines="1"
-        android:text="Title"
+        android:text="@string/artwork_title_label_text"
         android:textStyle="bold"/>
+
 
     <TextView
         android:id="@+id/artwork_list_item_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/artwork_list_item_show_id"
+        android:layout_marginStart="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_toRightOf="@id/artwork_list_item_artwork_image"
-        android:text="Artist Name"/>
+        android:layout_toEndOf="@id/artwork_list_item_artwork_image"
+        android:text="@string/artwork_artist_label_text"
+        />
 
     <TextView
         android:id="@+id/artwork_list_item_media"
@@ -49,9 +77,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/artwork_list_item_artist"
         android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
         android:layout_toEndOf="@id/artwork_list_item_artwork_image"
         android:layout_toRightOf="@id/artwork_list_item_artwork_image"
-        android:text="Media"
+        android:text="@string/artwork_media_label_text"
         />
 
     <TextView
@@ -60,16 +89,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/artwork_list_item_title"
         android:layout_toRightOf="@id/artwork_list_item_artist"
+        android:layout_toEndOf="@id/artwork_list_item_artist"
         android:paddingLeft="@dimen/artwork_list_item_rating_padding"
+        android:paddingEnd="@dimen/artwork_list_item_rating_padding"
+        android:paddingRight="@dimen/artwork_list_item_rating_padding"
+        android:paddingStart="@dimen/artwork_list_item_rating_padding"
         android:textStyle="bold"
         />
 
     <ImageView
         android:id="@+id/artwork_list_item_rating_star_image"
+        android:layout_toEndOf="@id/artwork_list_item_rating_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/artwork_list_item_title"
         android:layout_toRightOf="@id/artwork_list_item_rating_text_view"
+        android:contentDescription="@string/artwork_list_item_rating_star_image_description"
         />
 
 
