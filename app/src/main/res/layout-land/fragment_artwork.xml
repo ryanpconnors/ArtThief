@@ -12,6 +12,23 @@
         android:padding="@dimen/artwork_fragment_artwork_large_image_padding"
         />
 
+    <Button
+        android:id="@+id/artwork_list_item_taken_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/artwork_large_image_view"
+        android:layout_alignRight="@id/artwork_large_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.75"
+        android:background="@color/colorAccent"
+        android:clickable="false"
+        android:text="taken"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="15sp"
+        />
+
     <RatingBar
         android:id="@id/artwork_rating_bar"
         style="?android:attr/ratingBarStyle"

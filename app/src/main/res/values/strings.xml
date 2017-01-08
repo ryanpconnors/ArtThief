@@ -8,6 +8,7 @@
     <string name="error">Error</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="taken">TAKEN</string>
 
     <!-- Action Bar -->
     <string name="action_settings">Settings</string>
@@ -39,11 +40,22 @@
 
     <!-- Rate Art Work -->
     <string name="artwork_title_text">(#) Artwork Title</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="media">Media</string>
     <string name="share_subject">Patrons\' Show Artwork</string>
     <string name="share_text">I really like this piece from the Art League\'s Patron\'s Show. #PatronsShow</string>
     <string name="prefer_text">Which one of these artworks at the Art League\'s Patron\'s Show do you prefer? #PatronsShow</string>
     <string name="artworks_empty_title">Update Artworks</string>
     <string name="artworks_empty_message">Go to the \'Update\' screen to download artworks</string>
+
+    <!-- Artwork List Item -->
+    <string name="artwork_list_item_artwork_image_description">Artwork Image</string>
+    <string name="artwork_list_item_rating_star_image_description">Artwork Rating</string>
+
+    <string name="artwork_show_id_label_text">(###)</string>
+    <string name="artwork_title_label_text">Title</string>
+    <string name="artwork_artist_label_text">Artist Name</string>
+    <string name="artwork_media_label_text">Media</string>
 
     <!-- Compare Art -->
     <string name="compare_art_header">Fine Tune Your List</string>
@@ -65,9 +77,13 @@
     <string name="four_stars">4</string>
     <string name="five_stars">5</string>
 
-    <!--The Show : Taken Button -->
+    <!-- The Show -->
+    <string name="id_edit_text">ID</string>
+
+    <!-- The Show : Taken Button -->
     <string name="mark_taken">Mark Taken</string>
     <string name="mark_not_taken">Mark Not Taken</string>
+    <string name="top_pick_text">Top Pick</string>
 
     <!-- The Show : Current Artwork Text -->
     <string name="enter_artwork_id">Enter an Artwork ID</string>
