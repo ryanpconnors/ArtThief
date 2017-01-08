@@ -14,7 +14,9 @@
         android:background="@android:color/transparent"
         android:cropToPadding="true"
         android:foregroundGravity="center"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"/>
 
     <Button
         android:id="@+id/artwork_list_item_taken_button"

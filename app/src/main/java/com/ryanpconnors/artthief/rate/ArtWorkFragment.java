@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
@@ -40,6 +41,7 @@ public class ArtWorkFragment extends Fragment {
     private ArtWork mArtWork;
 
     private ImageView mArtWorkLargeImageView;
+    private Button mTakenButton;
     private RatingBar mArtworkRatingBar;
     private TextView mArtWorkTitleTextView;
     private TextView mArtWorkArtistTextView;
@@ -91,6 +93,9 @@ public class ArtWorkFragment extends Fragment {
             Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
             mArtWorkLargeImageView.setImageBitmap(largeArtWorkImage);
         }
+
+        mTakenButton = (Button) view.findViewById(R.id.artwork_taken_button);
+        mTakenButton.setVisibility(mArtWork.isTaken() ? View.VISIBLE : View.INVISIBLE);
 
         mArtworkRatingBar = (RatingBar) view.findViewById(R.id.artwork_rating_bar);
         mArtworkRatingBar.setRating(mArtWork.getStars());

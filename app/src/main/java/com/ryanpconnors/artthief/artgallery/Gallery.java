@@ -495,7 +495,7 @@ public class Gallery {
         List<ArtWork> artWorks = new ArrayList<>();
         int stars = 5;
 
-        while (artWorks.isEmpty() && stars >= 0) {
+        while (artWorks.isEmpty() && stars >= 1) {
             artWorks = getArtWorks(stars, false);
             stars -= 1;
         }
