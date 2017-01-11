@@ -104,7 +104,7 @@
     <string name="vote_package_rating">rating</string>
     <string name="vote_package_uuid">uuid</string>
     <string name="vote_package_scan_data">scanData</string>
-    <string name="vote_url">http://artthief.zurka.com/vote/</string>
+    <string name="vote_url">http://artthief.zurka.com/vote/index.php</string>
     <string name="vote_success">Thank you. Your vote has been cast.</string>
     <string name="vote_error">There was a problem casting your vote. Try again later</string>
     <string name="cast_your_vote">Casting Your Vote</string>
