@@ -140,6 +140,7 @@ public class ShowFragment extends Fragment {
                 }
                 else {
                     mCurrentArtwork = null;
+                    mTakenButton.setVisibility(View.INVISIBLE);
                 }
                 setCurrentArtworkImageView();
                 setTakenButton();
