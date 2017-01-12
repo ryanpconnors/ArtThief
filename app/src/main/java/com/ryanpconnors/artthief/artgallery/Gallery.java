@@ -24,7 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -453,6 +455,34 @@ public class Gallery {
         }
     }
 
+    public HashMap<String, Object> getInfo() {
+        Cursor cursor = mDatabase.query(
+                InfoTable.NAME,         // Table name
+                null,                   // Columns : [null] selects all columns
+                null,                   // where [clause]
+                null,                   // where [args]
+                null,                   // groupBy
+                null,                   // having
+                null                    // orderBy
+        );
+
+        HashMap<String, Object> info = new HashMap<>();
+        // TODO: API-Level 19+ can use automatic resource management
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            info.put("showYear", cursor.getInt(cursor.getColumnIndex(InfoTable.Cols.SHOW_YEAR)));
+            info.put("dataVersion", cursor.getInt(cursor.getColumnIndex(InfoTable.Cols.DATA_VERSION)));
+            info.put("lastUpdated", cursor.getString(cursor.getColumnIndex(InfoTable.Cols.DATE_LAST_UPDATED)));
+        }
+        finally {
+            cursor.close();
+        }
+        return info;
+    }
+
 
     /**
      * @param date
@@ -483,7 +513,7 @@ public class Gallery {
             }
         }
         catch (SQLiteConstraintException sce) {
-            Log.e(TAG, "Failed to add ArtWork to database", sce);
+            Log.e(TAG, "Failed to update Info table in database", sce);
         }
     }
 
@@ -534,5 +564,11 @@ public class Gallery {
         finally {
             cursor.close();
         }
+    }
+
+    public void clearArtwork() {
+        int deleted = mDatabase.delete(ArtWorkTable.NAME, "1", null);
+        mDatabase.execSQL("vacuum");
+        Log.i(TAG, String.format(Locale.US, "Deleted %d records from %s", deleted, ArtWorkTable.NAME));
     }
 }

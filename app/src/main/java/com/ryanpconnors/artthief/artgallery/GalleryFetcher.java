@@ -1,8 +1,11 @@
 package com.ryanpconnors.artthief.artgallery;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.ryanpconnors.artthief.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +17,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by Ryan Connors on 2/18/16.
@@ -22,33 +25,25 @@ import java.util.List;
 public class GalleryFetcher {
 
     private static final String TAG = "GalleryFetcher";
-    public static final String LOOT_URL = "http://artthief.zurka.com/loot.json";
 
-    private int mDataVersion = -1;
-    private int mShowYear = -1;
 
     public GalleryFetcher() {
-
+        // Required empty constructor
     }
 
-    public int getDataVersion() {
-        return mDataVersion;
-    }
+    public HashMap<String, Object> fetchLoot(Context context) {
 
-    public int getShowYear() {
-        return mShowYear;
-    }
-
-    public List<ArtWork> fetchArtWorks() {
-
-        List<ArtWork> artWorks = new ArrayList<>();
+        HashMap<String, Object> loot = new HashMap<>();
 
         try {
-            String jsonString = getUrlString(LOOT_URL);
-            JSONObject jsonBody = new JSONObject(jsonString);
-            Log.i(TAG, "Received Loot JSON: " + jsonString);
 
-            addArtworks(jsonBody, artWorks);
+            String lootUrl = context.getString(R.string.loot_url);
+            String lootString = getUrlString(lootUrl);
+            JSONObject jsonBody = new JSONObject(lootString);
+
+            loot.put(context.getString(R.string.show_year), jsonBody.getInt(context.getString(R.string.show_year)));
+            loot.put(context.getString(R.string.data_version), jsonBody.getInt(context.getString(R.string.data_version)));
+            loot.put(context.getString(R.string.art_works), getArtworksArray(jsonBody));
         }
         catch (JSONException je) {
             Log.e(TAG, "Failed to parse JSON", je);
@@ -58,7 +53,7 @@ public class GalleryFetcher {
             Log.e(TAG, "Failed to fetch artwork loot", ioe);
             return null;
         }
-        return artWorks;
+        return loot;
     }
 
     public Bitmap fetchArtWorkImage(String imageUrl) {
@@ -102,14 +97,10 @@ public class GalleryFetcher {
         return new String(getUrlBytes(urlSpec));
     }
 
-    private void addArtworks(JSONObject jsonBody, List<ArtWork> artWorks)
-            throws IOException, JSONException {
+    private ArrayList<ArtWork> getArtworksArray(JSONObject jsonBody) throws IOException, JSONException {
 
+        ArrayList<ArtWork> artWorks = new ArrayList<>();
         JSONArray artWorksJsonArray = jsonBody.getJSONArray("artWorks");
-
-        //TODO utilize the showYear and dataVersion JSON objects
-        mShowYear = jsonBody.getInt("showYear");
-        mDataVersion = jsonBody.getInt("dataVersion");
 
         for (int i = 0; i < artWorksJsonArray.length(); i++) {
             try {
@@ -122,7 +113,9 @@ public class GalleryFetcher {
                 Log.d(TAG, "Failed to parse JSON object", je);
             }
         }
+        return artWorks;
     }
+
 
     private ArtWork getArtWorkFromJson(JSONObject jsonArtWorkObject) throws JSONException {
         ArtWork artWork = new ArtWork();

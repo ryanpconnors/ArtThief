@@ -23,6 +23,7 @@ import com.ryanpconnors.artthief.artgallery.GalleryFetcher;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -161,12 +162,10 @@ public class UpdateArtWorkFragment extends Fragment {
         }
 
         // Update the InfoTable in the database to reflect the current data
-        SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.date_format),
-                getResources().getConfiguration().locale);
+        SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.date_format), getResources().getConfiguration().locale);
         sdf.setTimeZone(Calendar.getInstance().getTimeZone());
         String todayDate = sdf.format(new Date());
         Gallery.get(getActivity()).updateInfo(todayDate, showYear, dataVersion);
-
     }
 
     /**
@@ -213,10 +212,21 @@ public class UpdateArtWorkFragment extends Fragment {
 
             GalleryFetcher fetcher = new GalleryFetcher();
             List<ArtWork> existingArtWorks = Gallery.get(getActivity()).getArtWorks();
-            List<ArtWork> newArtworks = fetcher.fetchArtWorks();
+
+            HashMap<String, Object> loot = fetcher.fetchLoot(getContext());
+
+            List<ArtWork> newArtworks = null;
+            if (loot.get(getString(R.string.art_works)) instanceof List) {
+                newArtworks = (List<ArtWork>) loot.get(getString(R.string.art_works));
+            }
 
             if (newArtworks == null) {
                 return false;
+            }
+
+            HashMap<String, Object> info = Gallery.get(getActivity()).getInfo();
+            if ((Integer) loot.get(getString(R.string.show_year)) > (Integer) info.get(getString(R.string.show_year))) {
+                Gallery.get(getActivity()).clearArtwork();
             }
 
             int gallerySize = existingArtWorks.size();
@@ -263,7 +273,7 @@ public class UpdateArtWorkFragment extends Fragment {
                     // TODO : Reorder ALL artwork >= the one deleted to maintain order
                 }
             }
-            updateInfoTable(fetcher.getDataVersion(), fetcher.getShowYear());
+            updateInfoTable((Integer) loot.get("showYear"), (Integer) loot.get("dataVersion"));
             return true;
         }
 

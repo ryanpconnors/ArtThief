@@ -96,6 +96,11 @@
     <string name="ascending">ASC</string>
     <string name="descending">DESC</string>
 
+    <!-- Loot -->
+    <string name="art_works">artWorks</string>
+    <string name="show_year">showYear</string>
+    <string name="data_version">dataVersion</string>
+
     <!-- Vote Package JSON -->
     <string name="vote_package_key">package</string>
     <string name="vote_package_list">list</string>
