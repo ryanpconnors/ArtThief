@@ -61,7 +61,7 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
 
         mArtworkTakenButton.setVisibility(artWork.isTaken() ? View.VISIBLE : View.INVISIBLE);
 
-        mShowIdTextView.setText("(" + artWork.getShowId() + ")");
+        mShowIdTextView.setText(artWork.getShowId().equals("x") ? "*" : "(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
         mMediaTextView.setText(artWork.getMedia());
