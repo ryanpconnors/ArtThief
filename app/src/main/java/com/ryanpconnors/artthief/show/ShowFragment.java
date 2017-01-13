@@ -250,7 +250,7 @@ public class ShowFragment extends Fragment {
                 Bitmap smallArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(smallImagePath);
                 mTopPickArtworkImageView.setImageBitmap(smallArtWorkImage);
             }
-            mTopPickShowIdTextView.setText("(" + topRatedArtwork.getShowId() + ")");
+            mTopPickShowIdTextView.setText(topRatedArtwork.getShowId().equals("x") ? "*" : "(" + topRatedArtwork.getShowId() + ")");
             mTopPickTitleTextView.setText(topRatedArtwork.getTitle());
             mTopPickArtistTextView.setText(topRatedArtwork.getArtist());
             mTopPickMediaTextView.setText(topRatedArtwork.getMedia());
