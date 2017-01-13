@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
@@ -183,7 +184,9 @@ public class ArtWorkFragment extends Fragment {
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
-            imageUri = Uri.fromFile(file);
+            
+            imageUri = FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", file);
+
         } catch (IOException e) {
             e.printStackTrace();
             mShareActionProvider = null;

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -248,6 +249,24 @@ public class SortArtWorkFragment extends Fragment {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
+                // if this doesn't work as desired, another possibility is to call `finish()` here.
+                this.getActivity().onBackPressed();
+                return true;
+
+            case R.id.menu_item_share:
+                // Share menu item not accessible here?
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Asynchronous task for setting this ArtWorkFragments share intent
      */
@@ -319,9 +338,9 @@ public class SortArtWorkFragment extends Fragment {
             shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
             shareIntent.setType("image/*");
 
-            ArrayList<Uri> uris = new ArrayList<>();
-            uris.add(Uri.fromFile(imgFileAlpha));
-            uris.add(Uri.fromFile(imgFileBeta));
+            ArrayList<Uri> uris =  new ArrayList<>();
+            uris.add(FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", imgFileAlpha));
+            uris.add(FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", imgFileBeta));
 
             shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
