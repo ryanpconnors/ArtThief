@@ -208,6 +208,7 @@ public class UpdateArtWorkFragment extends Fragment {
          * @return
          */
         @Override
+        @SuppressWarnings("unchecked")
         protected Boolean doInBackground(Void... args) {
 
             GalleryFetcher fetcher = new GalleryFetcher();
@@ -215,12 +216,11 @@ public class UpdateArtWorkFragment extends Fragment {
 
             HashMap<String, Object> loot = fetcher.fetchLoot(getContext());
 
-            List<ArtWork> newArtworks = null;
-            if (loot.get(getString(R.string.art_works)) instanceof List) {
+            List<ArtWork> newArtworks;
+            if (loot != null && loot.get(getString(R.string.art_works)) instanceof List) {
                 newArtworks = (List<ArtWork>) loot.get(getString(R.string.art_works));
             }
-
-            if (newArtworks == null) {
+            else {
                 return false;
             }
 
