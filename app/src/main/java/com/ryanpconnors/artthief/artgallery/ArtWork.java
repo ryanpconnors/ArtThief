@@ -185,7 +185,6 @@ public class ArtWork implements Comparable<ArtWork> {
         }
         ArtWork artWork = (ArtWork) obj;
         return this.mArtThiefID == artWork.getArtThiefID() &&
-                this.mShowId.equals(artWork.getShowId()) &&
                 this.mTitle.equals(artWork.getTitle()) &&
                 this.mArtist.equals(artWork.getArtist()) &&
                 this.mMedia.equals((artWork.getMedia())) &&
