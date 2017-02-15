@@ -268,7 +268,7 @@ public class Gallery {
     public boolean deleteArtWork(ArtWork artWork) {
         String artThiefIdString = Integer.toString(artWork.getArtThiefID());
         return mDatabase.delete(
-                ArtWorkTable.Cols.ART_THIEF_ID,
+                ArtWorkTable.NAME,
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
                 new String[]{artThiefIdString}
         ) > 0;
