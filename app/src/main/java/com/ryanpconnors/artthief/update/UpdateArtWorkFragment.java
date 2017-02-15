@@ -256,8 +256,15 @@ public class UpdateArtWorkFragment extends Fragment {
                     gallerySize++;
                 }
                 else {
+
                     // update the existing artwork if it is not equal to newArtWork
                     if (!artWork.equals(existingArtWork)) {
+                        Gallery.get(getActivity()).updateArtWork(artWork);
+                    }
+                    // Check the image paths of the artwork
+                    else if (existingArtWork.getSmallImagePath() == null || existingArtWork.getLargeImagePath() == null) {
+                        // download image files if they exist and store the paths in newArtWork
+                        downloadImageFiles(fetcher, artWork);
                         Gallery.get(getActivity()).updateArtWork(artWork);
                     }
                     // otherwise do nothing, the artwork does not need to be updated
@@ -268,6 +275,8 @@ public class UpdateArtWorkFragment extends Fragment {
             //TODO: Remove existing artWork from the database if it is no longer in loot.json
             for (ArtWork existingArtWork : existingArtWorks) {
                 if (!newArtworks.contains(existingArtWork)) {
+                    Log.i(TAG, "Deleting Artwork : " + existingArtWork.getTitle() + " [ " + existingArtWork.getArtThiefID() + " ]");
+                    System.out.println("Deleting Artwork : " + existingArtWork.getTitle() + " [ " + existingArtWork.getArtThiefID() + " ]");
                     Gallery.get(getActivity()).deleteArtWork(existingArtWork);
                     gallerySize--;
 
