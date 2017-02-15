@@ -170,10 +170,16 @@ public class ArtWorkFragment extends Fragment {
      */
     private Intent getShareIntent() {
         Bitmap bitmap;
-        File imgFile = new File(mArtWork.getLargeImagePath());
-        if (imgFile.exists()) {
+
+        File imgFile = null;
+        if (mArtWork!= null) {
+             imgFile = new File(mArtWork.getLargeImagePath());
+        }
+
+        if (imgFile != null && imgFile.exists()) {
             bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        } else {
+        }
+        else {
             mShareActionProvider = null;
             return null;
         }
@@ -191,6 +197,7 @@ public class ArtWorkFragment extends Fragment {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
+
         } catch (Exception e) {
             e.printStackTrace();
             mShareActionProvider = null;
