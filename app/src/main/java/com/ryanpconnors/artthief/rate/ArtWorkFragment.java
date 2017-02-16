@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
@@ -91,8 +92,13 @@ public class ArtWorkFragment extends Fragment {
         mArtWorkLargeImageView = (ImageView) view.findViewById(R.id.artwork_large_image_view);
         String largeImagePath = mArtWork.getLargeImagePath();
         if (largeImagePath != null) {
-            Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
-            mArtWorkLargeImageView.setImageBitmap(largeArtWorkImage);
+            try {
+                Bitmap largeArtWorkImage = Gallery.get(getActivity()).getArtWorkImage(largeImagePath);
+                mArtWorkLargeImageView.setImageBitmap(largeArtWorkImage);
+            }
+            catch (OutOfMemoryError e) {
+                Toast.makeText(getActivity(), "There was an error displaying the Artwork", Toast.LENGTH_LONG).show();
+            }
         }
 
         mTakenButton = (Button) view.findViewById(R.id.artwork_taken_button);
