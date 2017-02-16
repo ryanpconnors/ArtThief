@@ -276,7 +276,6 @@ public class UpdateArtWorkFragment extends Fragment {
             for (ArtWork existingArtWork : existingArtWorks) {
                 if (!newArtworks.contains(existingArtWork)) {
                     Log.i(TAG, "Deleting Artwork : " + existingArtWork.getTitle() + " [ " + existingArtWork.getArtThiefID() + " ]");
-                    System.out.println("Deleting Artwork : " + existingArtWork.getTitle() + " [ " + existingArtWork.getArtThiefID() + " ]");
                     Gallery.get(getActivity()).deleteArtWork(existingArtWork);
                     gallerySize--;
 

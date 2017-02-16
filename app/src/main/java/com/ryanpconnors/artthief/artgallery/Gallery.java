@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -280,6 +281,23 @@ public class Gallery {
     public List<ArtWork> getArtWorks() {
         return getArtWorks(null, null, null);
     }
+
+    public List<ArtWork> getArtworksSortedByShowId() {
+        List<ArtWork> artWorks = getArtWorks();
+        Collections.sort(artWorks, new Comparator<ArtWork>() {
+            public int compare(ArtWork a1, ArtWork a2) {
+                return extractInt(a1.getShowId()) - extractInt(a2.getShowId());
+            }
+
+            int extractInt(String s) {
+                String num = s.replaceAll("\\D", "");
+                // return MAX_VALUE if no digits found
+                return num.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(num);
+            }
+        });
+        return artWorks;
+    }
+
 
     /**
      * @return

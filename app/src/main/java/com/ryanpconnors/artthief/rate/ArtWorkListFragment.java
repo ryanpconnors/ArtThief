@@ -15,6 +15,8 @@ import com.ryanpconnors.artthief.R;
 import com.ryanpconnors.artthief.artgallery.ArtWork;
 import com.ryanpconnors.artthief.artgallery.Gallery;
 
+import java.util.List;
+
 /**
  * A fragment representing a list of Items.
  * <p>
@@ -89,10 +91,8 @@ public class ArtWorkListFragment extends Fragment {
             else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(
-                    Gallery.get(getActivity()).getArtWorks(),
-                    mListener)
-            );
+            List<ArtWork> artWorks = Gallery.get(getActivity()).getArtworksSortedByShowId();
+            recyclerView.setAdapter(new ArtWorkRecyclerViewAdapter(artWorks, mListener));
         }
         return view;
     }
@@ -109,14 +109,14 @@ public class ArtWorkListFragment extends Fragment {
             ArtWorkRecyclerViewAdapter recyclerViewAdapter = (ArtWorkRecyclerViewAdapter) recyclerView.getAdapter();
 
             if (recyclerViewAdapter == null) {
-                recyclerViewAdapter = new ArtWorkRecyclerViewAdapter(
-                        Gallery.get(getActivity()).getArtWorks(),
-                        mListener
-                );
+                List<ArtWork> artWorks = Gallery.get(getActivity()).getArtworksSortedByShowId();
+                recyclerViewAdapter = new ArtWorkRecyclerViewAdapter(artWorks, mListener);
                 recyclerView.setAdapter(recyclerViewAdapter);
             }
-            recyclerViewAdapter.updateArtWorks(Gallery.get(getActivity()).getArtWorks());
-            recyclerViewAdapter.notifyDataSetChanged();
+            else {
+                recyclerViewAdapter.updateArtWorks(Gallery.get(getActivity()).getArtworksSortedByShowId());
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
         }
     }
 

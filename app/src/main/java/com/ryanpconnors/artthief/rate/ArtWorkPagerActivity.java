@@ -41,7 +41,7 @@ public class ArtWorkPagerActivity extends AppCompatActivity implements OnArtWork
         UUID artWorkId = (UUID) getIntent().getSerializableExtra(EXTRA_ARTWORK_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_art_work_pager_view_pager);
-        mArtWorks = Gallery.get(this).getArtWorks();
+        mArtWorks = Gallery.get(this).getArtworksSortedByShowId();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
