@@ -121,7 +121,7 @@ public class ArtWorkFragment extends Fragment {
         });
 
         mArtWorkTitleTextView = (TextView) view.findViewById(R.id.artwork_title);
-        mArtWorkTitleTextView.setText(mArtWork.getTitle());
+        mArtWorkTitleTextView.setText(String.format("(%s) %s", mArtWork.getShowId(), mArtWork.getTitle()));
 
         mArtWorkArtistTextView = (TextView) view.findViewById(R.id.artwork_artist);
         mArtWorkArtistTextView.setText(mArtWork.getArtist());
