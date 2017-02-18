@@ -272,7 +272,9 @@ public class UpdateArtWorkFragment extends Fragment {
                 publishProgress(artWork.getTitle());
             }
 
-            //TODO: Remove existing artWork from the database if it is no longer in loot.json
+            /* TODO: Remove existing artWork from the database if it is no longer in loot.json
+                As this is written, it will not work as the `equals` method won't ever yield a positive
+                result for a new artwork with an existing one. This might not even be necessary. */
             for (ArtWork existingArtWork : existingArtWorks) {
                 if (!newArtworks.contains(existingArtWork)) {
                     Log.i(TAG, "Deleting Artwork : " + existingArtWork.getTitle() + " [ " + existingArtWork.getArtThiefID() + " ]");
