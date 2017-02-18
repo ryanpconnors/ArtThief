@@ -123,12 +123,28 @@ public class SortArtWorkFragment extends Fragment {
                 sortArtwork(ALPHA);
             }
         });
+        mArtworkImageViewAlpha.setLongClickable(true);
+        mArtworkImageViewAlpha.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity(), mArtWorks.get(mCurrentIndex).getShowId(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
         mArtworkImageViewBeta = (ImageView) v.findViewById(R.id.artwork_large_image_view_beta);
         mArtworkImageViewBeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sortArtwork(BETA);
+            }
+        });
+        mArtworkImageViewBeta.setLongClickable(true);
+        mArtworkImageViewBeta.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity(), mArtWorks.get(mCurrentIndex + 1).getShowId(), Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 
