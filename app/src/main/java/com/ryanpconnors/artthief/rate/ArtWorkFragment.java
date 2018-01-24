@@ -178,7 +178,7 @@ public class ArtWorkFragment extends Fragment {
         Bitmap bitmap;
 
         File imgFile = null;
-        if (mArtWork!= null) {
+        if (mArtWork!= null && mArtWork.getLargeImagePath() != null) {
              imgFile = new File(mArtWork.getLargeImagePath());
         }
 
