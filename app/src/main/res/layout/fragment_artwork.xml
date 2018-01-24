@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/artwork_large_image_view"
@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/artwork_rating_bar"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/artwork_fragment_artwork_large_image_padding"/>
+        android:padding="@dimen/artwork_fragment_artwork_large_image_padding" />
 
     <Button
         android:id="@+id/artwork_taken_button"
@@ -28,19 +28,18 @@
         android:text="@string/taken"
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/artwork_list_item_taken_button_text_size"
-        android:visibility="invisible"
-        />
+        android:visibility="invisible" />
 
     <RatingBar
         android:id="@id/artwork_rating_bar"
         style="?android:attr/ratingBarStyle"
-        android:numStars="5"
-        android:rating="0.0"
-        android:stepSize="1.0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/artwork_title"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="1.0" />
 
     <TextView
         android:id="@id/artwork_title"
@@ -51,7 +50,7 @@
         android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
         android:text="@string/artwork_title_text"
         android:textSize="@dimen/artwork_fragment_artwork_title_text_size"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@id/artwork_artist"
@@ -62,7 +61,7 @@
         android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
         android:text="@string/artist_name"
         android:textSize="@dimen/artwork_fragment_artwork_info_text_size"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 
     <TextView
         android:id="@id/artwork_media"
@@ -73,6 +72,6 @@
         android:layout_marginStart="@dimen/artwork_fragment_info_margin_left"
         android:paddingBottom="@dimen/artwork_fragment_info_padding_bottom"
         android:text="@string/media"
-        android:textSize="@dimen/artwork_fragment_artwork_info_text_size"/>
+        android:textSize="@dimen/artwork_fragment_artwork_info_text_size" />
 
 </RelativeLayout>

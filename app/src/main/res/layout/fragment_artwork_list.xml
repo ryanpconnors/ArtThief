@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <android.support.v7.widget.RecyclerView
-    android:id="@+id/list"
-    android:name="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
-    tools:listitem="@layout/fragment_artwork_list_item"/>
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/list"
+        android:name="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
+        tools:listitem="@layout/fragment_artwork_list_item" />
 
     <TextView
         android:id="@+id/empty_view"
@@ -25,8 +24,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="14dp"
-        android:visibility="gone"
+        android:text="@string/artworks_empty_message"
         android:textSize="24dp"
-        android:text="@string/artworks_empty_message" />
+        android:visibility="gone" />
 
 </LinearLayout>

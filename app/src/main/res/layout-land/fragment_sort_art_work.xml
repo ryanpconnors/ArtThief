@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/sort_artwork_toolbar"/>
+        layout="@layout/sort_artwork_toolbar" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_centerInParent="true"
-                  android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/artwork_large_image_view_alpha"
@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
             android:layout_weight="@integer/sort_artwork_weight"
-            android:padding="@dimen/sort_artwork_image_padding"/>
+            android:padding="@dimen/sort_artwork_image_padding" />
 
         <ImageView
             android:id="@+id/artwork_large_image_view_beta"
@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
             android:layout_weight="@integer/sort_artwork_weight"
-            android:padding="@dimen/sort_artwork_image_padding"/>
+            android:padding="@dimen/sort_artwork_image_padding" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:context="com.ryanpconnors.artthief.vote.VoteFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.ryanpconnors.artthief.vote.VoteFragment">
 
     <ImageView
         android:id="@+id/background"
@@ -16,7 +16,7 @@
         android:background="@color/colorPrimaryDark"
         android:paddingBottom="0dp"
         android:scaleType="fitEnd"
-        android:src="@drawable/ballot_box"/>
+        android:src="@drawable/ballot_box" />
 
     <TextView
         android:id="@+id/vote_header"
@@ -29,7 +29,7 @@
         android:text="Vote For Your Favorite"
         android:textColor="@color/textColorPrimary"
         android:textSize="26sp"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/vote_sub_header"
@@ -41,7 +41,7 @@
         android:textAlignment="center"
         android:textColor="@color/textColorThirdly"
         android:textSize="18sp"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 
 
     <Button
@@ -53,8 +53,7 @@
         android:layout_centerVertical="true"
         android:backgroundTint="@color/colorPrimaryLight"
         android:text="Scan Ticket"
-        android:textColor="@color/textColorPrimary"
-        />
+        android:textColor="@color/textColorPrimary" />
 
     <TextView
         android:id="@+id/scan_qr_code_text"
@@ -68,6 +67,6 @@
         android:textAlignment="center"
         android:textColor="@color/textColorThirdly"
         android:textSize="18sp"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 
 </RelativeLayout>
