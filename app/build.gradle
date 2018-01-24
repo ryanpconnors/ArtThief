@@ -10,7 +10,6 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "25"
     defaultConfig {
         applicationId "com.ryanpconnors.artthief"
         minSdkVersion 16
