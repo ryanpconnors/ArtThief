@@ -178,8 +178,8 @@ public class ArtWorkFragment extends Fragment {
         Bitmap bitmap;
 
         File imgFile = null;
-        if (mArtWork!= null && mArtWork.getLargeImagePath() != null) {
-             imgFile = new File(mArtWork.getLargeImagePath());
+        if (mArtWork != null && mArtWork.getLargeImagePath() != null) {
+            imgFile = new File(mArtWork.getLargeImagePath());
         }
 
         if (imgFile != null && imgFile.exists()) {
@@ -196,15 +196,17 @@ public class ArtWorkFragment extends Fragment {
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
-            
+
             imageUri = FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", file);
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             mShareActionProvider = null;
             return null;
@@ -217,7 +219,8 @@ public class ArtWorkFragment extends Fragment {
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
             shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + " : " + mArtWork.getTitle());
             return shareIntent;
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -227,7 +230,8 @@ public class ArtWorkFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnArtWorkFragmentInteractionListener) {
             mListener = (OnArtWorkFragmentInteractionListener) context;
-        } else {
+        }
+        else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
