@@ -21,6 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
             android:layout_weight="@integer/sort_artwork_weight"
+            android:contentDescription="@string/artwork_list_item_artwork_image_description"
             android:padding="@dimen/sort_artwork_image_padding" />
 
         <ImageView
@@ -30,6 +31,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
             android:layout_weight="@integer/sort_artwork_weight"
+            android:contentDescription="@string/artwork_list_item_artwork_image_description"
             android:padding="@dimen/sort_artwork_image_padding" />
     </LinearLayout>
 

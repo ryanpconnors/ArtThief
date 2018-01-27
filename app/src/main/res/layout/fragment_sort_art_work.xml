@@ -14,6 +14,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
+        android:contentDescription="@string/artwork_list_item_artwork_image_description"
         android:contextClickable="false"
         android:padding="@dimen/sort_artwork_image_padding" />
 
@@ -23,6 +24,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="@integer/sort_artwork_weight"
+        android:contentDescription="@string/artwork_list_item_artwork_image_description"
         android:contextClickable="false"
         android:padding="@dimen/sort_artwork_image_padding" />
 
