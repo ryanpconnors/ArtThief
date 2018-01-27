@@ -78,10 +78,10 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
     private void addArtworkMeasurements(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
-                " ADD COLUMN " + ArtWorkTable.Cols.WIDTH + " TEXT; "
+                " ADD COLUMN " + ArtWorkTable.Cols.WIDTH + " TEXT NOT NULL DEFAULT ''; "
         );
         db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
-                " ADD COLUMN " + ArtWorkTable.Cols.HEIGHT + " TEXT; "
+                " ADD COLUMN " + ArtWorkTable.Cols.HEIGHT + " TEXT NOT NULL DEFAULT ''; "
         );
     }
 
