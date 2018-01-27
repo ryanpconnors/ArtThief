@@ -6,9 +6,11 @@
     <ImageView
         android:id="@+id/artwork_large_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/artwork_rating_bar"
         android:layout_centerHorizontal="true"
+        android:contentDescription="@string/artwork_list_item_artwork_image_description"
+        android:cropToPadding="false"
         android:padding="@dimen/artwork_fragment_artwork_large_image_padding" />
 
     <Button
