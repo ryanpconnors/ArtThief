@@ -36,13 +36,11 @@ import java.util.UUID;
  */
 public class Gallery {
 
+    private static final String IMAGE_DIRECTORY_NAME = "artwork_images";
     private static Gallery sGallery;
-
+    private static String TAG = "Gallery";
     private Context mContext;
     private SQLiteDatabase mDatabase;
-
-    private static String TAG = "Gallery";
-    private static final String IMAGE_DIRECTORY_NAME = "artwork_images";
 
     /**
      * @param context
@@ -63,6 +61,37 @@ public class Gallery {
         return sGallery;
     }
 
+    /**
+     * @param artWork
+     * @return
+     */
+    private static ContentValues getContentValues(ArtWork artWork) {
+        ContentValues values = new ContentValues();
+        values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
+
+        values.put(ArtWorkTable.Cols.ART_THIEF_ID, artWork.getArtThiefID());
+        values.put(ArtWorkTable.Cols.SHOW_ID, artWork.getShowId());
+        values.put(ArtWorkTable.Cols.ORDERING, artWork.getOrdering());
+
+        values.put(ArtWorkTable.Cols.TITLE, artWork.getTitle());
+        values.put(ArtWorkTable.Cols.ARTIST, artWork.getArtist());
+        values.put(ArtWorkTable.Cols.MEDIA, artWork.getMedia());
+        values.put(ArtWorkTable.Cols.TAGS, artWork.getTags());
+
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
+        values.put(ArtWorkTable.Cols.SMALL_IMAGE_PATH, artWork.getSmallImagePath());
+
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
+        values.put(ArtWorkTable.Cols.LARGE_IMAGE_PATH, artWork.getLargeImagePath());
+
+        values.put(ArtWorkTable.Cols.WIDTH, artWork.getWidth());
+        values.put(ArtWorkTable.Cols.HEIGHT, artWork.getHeight());
+
+        values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
+        values.put(ArtWorkTable.Cols.TAKEN, artWork.isTaken() ? 1 : 0);
+
+        return values;
+    }
 
     /**
      * Determines if the artworks for the given rating are sorted or not
@@ -77,13 +106,13 @@ public class Gallery {
         String[] whereArgs = {Integer.toString(rating)};
 
         Cursor cursor = mDatabase.query(
-                SortArtworkTable.NAME,                      // Table name
-                new String[]{SortArtworkTable.Cols.SORTED}, // Columns : [null] selects all columns
-                whereClause,                                // where [clause]
-                whereArgs,                                  // where [args]
-                null,                                       // groupBy
-                null,                                       // having
-                null                                        // orderBy
+                SortArtworkTable.NAME,                          // Table name
+                new String[]{SortArtworkTable.Cols.SORTED},     // Columns : [null] selects all columns
+                whereClause,                                    // where [clause]
+                whereArgs,                                      // where [args]
+                null,                                  // groupBy
+                null,                                   // having
+                null                                   // orderBy
         );
 
         // TODO: API-Level 19+ can use automatic resource management
@@ -96,9 +125,9 @@ public class Gallery {
         }
     }
 
-
     /**
      * Sets the sorted flag for the given rating
+     *
      * @param rating the rating value to set
      * @param sorted the boolean flag
      */
@@ -130,7 +159,6 @@ public class Gallery {
         );
     }
 
-
     /**
      * @param showId String - the showId used to identify the artWork
      * @return the ArtWork in this database that has the corresponding showId,
@@ -144,7 +172,6 @@ public class Gallery {
                 null
         );
     }
-
 
     /**
      * @param id
@@ -181,9 +208,7 @@ public class Gallery {
         }
     }
 
-
     /**
-     *
      * @param bitmapImage
      * @param imageName
      * @return
@@ -221,7 +246,6 @@ public class Gallery {
         return directory.getAbsolutePath() + "/" + imageName;
     }
 
-
     /**
      * @param path
      * @return
@@ -235,7 +259,6 @@ public class Gallery {
         }
         return null;
     }
-
 
     /**
      * @param artWork
@@ -260,7 +283,6 @@ public class Gallery {
                 ArtWorkTable.Cols.ART_THIEF_ID + " = ?",
                 new String[]{artThiefIdString});
     }
-
 
     /**
      * @param artWork
@@ -298,14 +320,12 @@ public class Gallery {
         return artWorks;
     }
 
-
     /**
      * @return
      */
     public boolean isEmpty() {
         return getArtWorks().isEmpty();
     }
-
 
     /**
      * Returns all artworks with the given number of stars,
@@ -393,36 +413,6 @@ public class Gallery {
         return getArtWorks(whereClause, whereArgs.toArray(new String[0]), orderBy);
     }
 
-
-    /**
-     * @param artWork
-     * @return
-     */
-    private static ContentValues getContentValues(ArtWork artWork) {
-        ContentValues values = new ContentValues();
-        values.put(ArtWorkTable.Cols.UUID, artWork.getId().toString());
-
-        values.put(ArtWorkTable.Cols.ART_THIEF_ID, artWork.getArtThiefID());
-        values.put(ArtWorkTable.Cols.SHOW_ID, artWork.getShowId());
-        values.put(ArtWorkTable.Cols.ORDERING, artWork.getOrdering());
-
-        values.put(ArtWorkTable.Cols.TITLE, artWork.getTitle());
-        values.put(ArtWorkTable.Cols.ARTIST, artWork.getArtist());
-        values.put(ArtWorkTable.Cols.MEDIA, artWork.getMedia());
-        values.put(ArtWorkTable.Cols.TAGS, artWork.getTags());
-
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE_URL, artWork.getSmallImageUrl());
-        values.put(ArtWorkTable.Cols.SMALL_IMAGE_PATH, artWork.getSmallImagePath());
-
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE_URL, artWork.getLargeImageUrl());
-        values.put(ArtWorkTable.Cols.LARGE_IMAGE_PATH, artWork.getLargeImagePath());
-
-        values.put(ArtWorkTable.Cols.STARS, artWork.getStars());
-        values.put(ArtWorkTable.Cols.TAKEN, artWork.isTaken() ? 1 : 0);
-
-        return values;
-    }
-
     /**
      * @param whereClause
      * @param whereArgs
@@ -433,12 +423,12 @@ public class Gallery {
 
         Cursor cursor = mDatabase.query(
                 ArtWorkTable.NAME,      // Table name
-                null,                   // Columns : [null] selects all columns
+                null,          // Columns : [null] selects all columns
                 whereClause,            // where [clause]
                 whereArgs,              // where [args]
-                null,                   // groupBy
-                null,                   // having
-                orderBy                 // orderBy
+                null,          // groupBy
+                null,           // having
+                orderBy                // orderBy
         );
         return new ArtWorkCursorWrapper(cursor);
     }
@@ -476,12 +466,12 @@ public class Gallery {
     public HashMap<String, Object> getInfo() {
         Cursor cursor = mDatabase.query(
                 InfoTable.NAME,         // Table name
-                null,                   // Columns : [null] selects all columns
-                null,                   // where [clause]
-                null,                   // where [args]
-                null,                   // groupBy
-                null,                   // having
-                null                    // orderBy
+                null,          // Columns : [null] selects all columns
+                null,          // where [clause]
+                null,      // where [args]
+                null,          // groupBy
+                null,           // having
+                null           // orderBy
         );
 
         HashMap<String, Object> info = new HashMap<>();
@@ -537,6 +527,7 @@ public class Gallery {
 
     /**
      * Finds the user's top rated Artwork based on the number of stars and the ordering determined and returns it.
+     *
      * @return the top rated artwork
      */
     public ArtWork getTopPickArtwork() {
@@ -564,11 +555,11 @@ public class Gallery {
         Cursor cursor = mDatabase.query(
                 ArtWorkDbSchema.InfoTable.NAME,                     // String table
                 new String[]{InfoTable.Cols.DATE_LAST_UPDATED},     // String[] columns,
-                null,                                               // String selection,
-                null,                                               // String[] selectionArgs,
-                null,                                               // String groupBy,
-                null,                                               // String having,
-                null                                                // String orderBy)
+                null,                                      // String selection,
+                null,                                  // String[] selectionArgs,
+                null,                                      // String groupBy,
+                null,                                       // String having,
+                null                                       // String orderBy)
         );
 
         // TODO: API-Level 19+ can use automatic resource management

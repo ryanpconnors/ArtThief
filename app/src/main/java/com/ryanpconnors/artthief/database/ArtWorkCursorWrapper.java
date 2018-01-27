@@ -44,6 +44,9 @@ public class ArtWorkCursorWrapper extends CursorWrapper {
         artWork.setSmallImageUrl(getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.SMALL_IMAGE_URL)));
         artWork.setLargeImageUrl(getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.LARGE_IMAGE_URL)));
 
+        artWork.setWidth(getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.WIDTH)));
+        artWork.setHeight(getString(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.HEIGHT)));
+
         artWork.setStars(getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.STARS)));
         artWork.setTaken(getInt(getColumnIndex(ArtWorkDbSchema.ArtWorkTable.Cols.TAKEN)) != 0);
 

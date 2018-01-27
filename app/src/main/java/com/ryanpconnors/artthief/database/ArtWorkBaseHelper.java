@@ -15,7 +15,7 @@ import com.ryanpconnors.artthief.database.ArtWorkDbSchema.SortArtworkTable;
  */
 public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
     private static final String DATABASE_NAME = "artWorkBase.db";
 
     public ArtWorkBaseHelper(Context context) {
@@ -76,13 +76,24 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         );
     }
 
+    private void addArtworkMeasurements(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
+                " ADD COLUMN " + ArtWorkTable.Cols.WIDTH + " TEXT; "
+        );
+        db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
+                " ADD COLUMN " + ArtWorkTable.Cols.HEIGHT + " TEXT; "
+        );
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion) {
             case 1:
+                //upgrade from version 1 to 2
                 createSortArtworkTable(db);
-                // avoid adding a break when adding additional versions
-                // to ensure each update is applied in sequence
+            case 2:
+                //upgrade from version 2 to 3
+                addArtworkMeasurements(db);
         }
     }
 }

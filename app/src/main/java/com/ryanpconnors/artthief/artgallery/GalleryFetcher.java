@@ -128,6 +128,8 @@ public class GalleryFetcher {
             artWork.setTags(jsonArtWorkObject.getString("tags"));
             artWork.setLargeImageUrl(jsonArtWorkObject.getString("image_large"));
             artWork.setSmallImageUrl(jsonArtWorkObject.getString("image_small"));
+            artWork.setWidth(jsonArtWorkObject.getString("width"));
+            artWork.setHeight(jsonArtWorkObject.getString("height"));
         }
         catch (JSONException je) {
             Log.e(TAG, "Failed to parse JSON artWork object: ", je);

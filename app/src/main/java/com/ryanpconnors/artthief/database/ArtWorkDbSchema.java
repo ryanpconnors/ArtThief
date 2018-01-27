@@ -70,6 +70,8 @@ public class ArtWorkDbSchema {
             public static final String SMALL_IMAGE_PATH = "small_image_path";
             public static final String LARGE_IMAGE_URL = "large_image_url";
             public static final String LARGE_IMAGE_PATH = "large_image_path";
+            public static final String WIDTH = "width";
+            public static final String HEIGHT = "height";
             public static final String STARS = "stars";
             public static final String TAKEN = "taken";
         }

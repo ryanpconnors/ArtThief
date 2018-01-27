@@ -26,22 +26,19 @@ public class ArtWork implements Comparable<ArtWork> {
     private String mSmallImagePath;
     private String mLargeImagePath;
 
+    private String mWidth;
+    private String mHeight;
+
     private int mStars;
     private boolean mTaken;
 
     public ArtWork() {
-        // Generate unique identifier
         this(UUID.randomUUID());
     }
 
     public ArtWork(UUID id) {
         mId = id;
     }
-
-
-    /**********
-     * Getters
-     **********/
 
     public UUID getId() {
         return mId;
@@ -51,8 +48,16 @@ public class ArtWork implements Comparable<ArtWork> {
         return mArtThiefID;
     }
 
+    public void setArtThiefID(int artThiefID) {
+        mArtThiefID = artThiefID;
+    }
+
     public String getShowId() {
         return mShowId;
+    }
+
+    public void setShowId(String showId) {
+        mShowId = showId;
     }
 
     public int getOrdering() {
@@ -67,88 +72,68 @@ public class ArtWork implements Comparable<ArtWork> {
         return mTitle;
     }
 
-    public String getArtist() {
-        return mArtist;
-    }
-
-    public String getMedia() {
-        return mMedia;
-    }
-
-    public String getTags() {
-        return mTags;
-    }
-
-    public String getLargeImageUrl() {
-        return mLargeImageUrl;
-    }
-
-    public String getSmallImageUrl() {
-        return mSmallImageUrl;
-    }
-
-    public String getSmallImagePath() {
-        return mSmallImagePath;
-    }
-
-    public String getLargeImagePath() {
-        return mLargeImagePath;
-    }
-
-    public int getStars() {
-        return mStars;
-    }
-
-    public boolean isTaken() {
-        return mTaken;
-    }
-
-    /**********
-     * Setters
-     **********/
-
-    public void setArtThiefID(int artThiefID) {
-        mArtThiefID = artThiefID;
-    }
-
-    public void setShowId(String showId) {
-        mShowId = showId;
-    }
-
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    public String getArtist() {
+        return mArtist;
     }
 
     public void setArtist(String artist) {
         mArtist = artist;
     }
 
+    public String getMedia() {
+        return mMedia;
+    }
+
     public void setMedia(String media) {
         mMedia = media;
+    }
+
+    public String getTags() {
+        return mTags;
     }
 
     public void setTags(String tags) {
         mTags = tags;
     }
 
+    public String getLargeImageUrl() {
+        return mLargeImageUrl;
+    }
+
     public void setLargeImageUrl(String largeImageUrl) {
         mLargeImageUrl = largeImageUrl;
+    }
+
+    public String getSmallImageUrl() {
+        return mSmallImageUrl;
     }
 
     public void setSmallImageUrl(String smallImageUrl) {
         mSmallImageUrl = smallImageUrl;
     }
 
+    public String getSmallImagePath() {
+        return mSmallImagePath;
+    }
+
     public void setSmallImagePath(String smallImagePath) {
         mSmallImagePath = smallImagePath;
+    }
+
+    public String getLargeImagePath() {
+        return mLargeImagePath;
     }
 
     public void setLargeImagePath(String largeImagePath) {
         mLargeImagePath = largeImagePath;
     }
 
-    public void setTaken(boolean taken) {
-        mTaken = taken;
+    public int getStars() {
+        return mStars;
     }
 
     public void setStars(int stars) {
@@ -158,6 +143,30 @@ public class ArtWork implements Comparable<ArtWork> {
         else {
             mStars = stars;
         }
+    }
+
+    public boolean isTaken() {
+        return mTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        mTaken = taken;
+    }
+
+    public String getWidth() {
+        return mWidth;
+    }
+
+    public void setWidth(String mWidth) {
+        this.mWidth = mWidth;
+    }
+
+    public String getHeight() {
+        return mHeight;
+    }
+
+    public void setHeight(String mHeight) {
+        this.mHeight = mHeight;
     }
 
     public void swapOrder(ArtWork artWork) {
@@ -191,7 +200,9 @@ public class ArtWork implements Comparable<ArtWork> {
                 this.mMedia.equals((artWork.getMedia())) &&
                 this.mTags.equals(artWork.getTags()) &&
                 this.mSmallImageUrl.equals(artWork.getSmallImageUrl()) &&
-                this.mLargeImageUrl.equals(artWork.getLargeImageUrl());
+                this.mLargeImageUrl.equals(artWork.getLargeImageUrl()) &&
+                this.mWidth.equals(artWork.getWidth()) &&
+                this.mHeight.equals(artWork.getHeight());
     }
 
     /**
