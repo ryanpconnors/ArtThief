@@ -39,22 +39,6 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         );
     }
 
-    private void createSortArtworkTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + SortArtworkTable.NAME + "(" +
-                SortArtworkTable.Cols.RATING + " INTEGER PRIMARY KEY NOT NULL UNIQUE, " +
-                SortArtworkTable.Cols.SORTED + " BOOLEAN " +
-                ")"
-        );
-
-        // Initialize the Sorted table with a false for each rating [1.. 5]
-        for (int i = 1; i <= 5; i++) {
-            ContentValues values = new ContentValues();
-            values.put(SortArtworkTable.Cols.RATING, i);
-            values.put(SortArtworkTable.Cols.SORTED, false);
-            db.insert(SortArtworkTable.NAME, null, values);
-        }
-    }
-
     private void createArtworkTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + ArtWorkTable.NAME + "(" +
                 " _ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -76,6 +60,22 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         );
     }
 
+    private void createSortArtworkTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + SortArtworkTable.NAME + "(" +
+                SortArtworkTable.Cols.RATING + " INTEGER PRIMARY KEY NOT NULL UNIQUE, " +
+                SortArtworkTable.Cols.SORTED + " BOOLEAN " +
+                ")"
+        );
+
+        // Initialize the Sorted table with a false for each rating [1.. 5]
+        for (int i = 1; i <= 5; i++) {
+            ContentValues values = new ContentValues();
+            values.put(SortArtworkTable.Cols.RATING, i);
+            values.put(SortArtworkTable.Cols.SORTED, false);
+            db.insert(SortArtworkTable.NAME, null, values);
+        }
+    }
+
     private void addArtworkMeasurements(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
                 " ADD COLUMN " + ArtWorkTable.Cols.WIDTH + " TEXT; "
@@ -87,13 +87,13 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        switch (oldVersion) {
-            case 1:
-                //upgrade from version 1 to 2
-                createSortArtworkTable(db);
-            case 2:
-                //upgrade from version 2 to 3
-                addArtworkMeasurements(db);
+        if (oldVersion < 2) {
+            // upgrade db from version 1 to 2
+            createSortArtworkTable(db);
+        }
+        if (oldVersion < 3) {
+            // upgrade db from version 2 to 3
+            addArtworkMeasurements(db);
         }
     }
 }

@@ -226,6 +226,8 @@ public class UpdateArtWorkFragment extends Fragment {
 
             HashMap<String, Object> info = Gallery.get(getActivity()).getInfo();
 
+            // Check if the showYear has been updated
+            // If so, delete all previous artwork from previous show
             if (info != null && (Integer) loot.get(getString(R.string.show_year)) > (Integer) info.get(getString(R.string.show_year))) {
                 Gallery.get(getActivity()).clearArtwork();
             }
