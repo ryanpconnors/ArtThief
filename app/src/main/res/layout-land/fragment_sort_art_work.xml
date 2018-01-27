@@ -4,13 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/sort_artwork_toolbar" />
+    <LinearLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/sort_artwork_toolbar" />
+    </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/sort_artwork_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_layout"
         android:layout_centerInParent="true"
         android:orientation="horizontal">
 
@@ -21,6 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/compare_artwork_land_image_margin_top"
             android:layout_weight="@integer/sort_artwork_weight"
+            android:adjustViewBounds="false"
             android:contentDescription="@string/artwork_list_item_artwork_image_description"
             android:padding="@dimen/sort_artwork_image_padding" />
 
