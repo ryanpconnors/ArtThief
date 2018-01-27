@@ -40,20 +40,16 @@ import java.util.UUID;
  */
 public class ArtWorkFragment extends Fragment {
 
+    private static final String ARG_ARTWORK_ID = "artwork_id";
     private ArtWork mArtWork;
-
     private ImageView mArtWorkLargeImageView;
     private Button mTakenButton;
     private RatingBar mArtworkRatingBar;
     private TextView mArtWorkTitleTextView;
     private TextView mArtWorkArtistTextView;
     private TextView mArtworkMediaTextView;
-
     private OnArtWorkFragmentInteractionListener mListener;
-
     private ShareActionProvider mShareActionProvider;
-
-    private static final String ARG_ARTWORK_ID = "artwork_id";
 
     public ArtWorkFragment() {
         // Required empty public constructor
@@ -127,7 +123,11 @@ public class ArtWorkFragment extends Fragment {
         mArtWorkArtistTextView.setText(mArtWork.getArtist());
 
         mArtworkMediaTextView = (TextView) view.findViewById(R.id.artwork_media);
-        mArtworkMediaTextView.setText(mArtWork.getMedia());
+        mArtworkMediaTextView.setText(
+                mArtWork.getHeight().isEmpty() && mArtWork.getWidth().isEmpty()
+                        ? mArtWork.getMedia()
+                        : String.format("%s (%s\" x %s\")", mArtWork.getMedia(), mArtWork.getWidth(), mArtWork.getHeight())
+        );
 
         return view;
     }
@@ -244,6 +244,22 @@ public class ArtWorkFragment extends Fragment {
     }
 
     /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnArtWorkFragmentInteractionListener {
+
+        // TODO: Update argument type and name
+        void onArtWorkFragmentInteraction(Uri uri);
+    }
+
+    /**
      * Asynchronous task for setting this ArtWorkFragments share intent
      */
     private class setShareIntentTask extends AsyncTask<Void, Void, Void> {
@@ -262,22 +278,6 @@ public class ArtWorkFragment extends Fragment {
                 mShareActionProvider.setShareIntent(shareIntent);
             }
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnArtWorkFragmentInteractionListener {
-
-        // TODO: Update argument type and name
-        void onArtWorkFragmentInteraction(Uri uri);
     }
 
 }

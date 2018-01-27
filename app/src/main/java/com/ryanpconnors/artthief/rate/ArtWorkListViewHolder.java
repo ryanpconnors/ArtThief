@@ -64,7 +64,11 @@ public class ArtWorkListViewHolder extends RecyclerView.ViewHolder implements Vi
         mShowIdTextView.setText(artWork.getShowId().equals("x") ? "*" : "(" + artWork.getShowId() + ")");
         mTitleTextView.setText(artWork.getTitle());
         mArtistTextView.setText(artWork.getArtist());
-        mMediaTextView.setText(artWork.getMedia());
+        mMediaTextView.setText(
+                mArtWork.getHeight().isEmpty() && mArtWork.getWidth().isEmpty()
+                        ? mArtWork.getMedia()
+                        : String.format("%s (%s\" x %s\")", mArtWork.getMedia(), mArtWork.getWidth(), mArtWork.getHeight())
+        );
 
         if (mArtWork.getStars() > 0) {
             mArtWorkRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp);
