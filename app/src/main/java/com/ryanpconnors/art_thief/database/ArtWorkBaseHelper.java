@@ -15,7 +15,7 @@ import com.ryanpconnors.art_thief.database.ArtWorkDbSchema.SortArtworkTable;
  */
 public class ArtWorkBaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 3;
+    private static final int VERSION = 1;
     private static final String DATABASE_NAME = "artWorkBase.db";
 
     public ArtWorkBaseHelper(Context context) {
@@ -25,8 +25,8 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createInfoTable(db);
-        createSortArtworkTable(db);
         createArtworkTable(db);
+        createSortArtworkTable(db);
     }
 
     private void createInfoTable(SQLiteDatabase db) {
@@ -54,6 +54,8 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
                 ArtWorkTable.Cols.SMALL_IMAGE_PATH + " TEXT, " +
                 ArtWorkTable.Cols.LARGE_IMAGE_URL + " TEXT, " +
                 ArtWorkTable.Cols.LARGE_IMAGE_PATH + ", " +
+                ArtWorkTable.Cols.WIDTH + " TEXT NOT NULL DEFAULT '', " +
+                ArtWorkTable.Cols.HEIGHT + " TEXT NOT NULL DEFAULT ''," +
                 ArtWorkTable.Cols.STARS + " INTEGER NOT NULL DEFAULT 0, " +
                 ArtWorkTable.Cols.TAKEN + " BOOLEAN " +
                 ")"
@@ -76,24 +78,10 @@ public class ArtWorkBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void addArtworkMeasurements(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
-                " ADD COLUMN " + ArtWorkTable.Cols.WIDTH + " TEXT NOT NULL DEFAULT ''; "
-        );
-        db.execSQL("ALTER TABLE " + ArtWorkTable.NAME +
-                " ADD COLUMN " + ArtWorkTable.Cols.HEIGHT + " TEXT NOT NULL DEFAULT ''; "
-        );
-    }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) {
             // upgrade db from version 1 to 2
-            createSortArtworkTable(db);
-        }
-        if (oldVersion < 3) {
-            // upgrade db from version 2 to 3
-            addArtworkMeasurements(db);
         }
     }
 }
