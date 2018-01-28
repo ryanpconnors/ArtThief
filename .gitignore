@@ -11,6 +11,9 @@ local.properties
 # Gradle generated files
 .gradle/
 
+# Keystore properties
+keystore.properties
+
 # Signing files
 .signing/
 

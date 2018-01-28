@@ -1,25 +1,36 @@
 apply plugin: 'com.android.application'
 
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     signingConfigs {
-        config {
-            keyAlias 'ArtThiefAndroidKey'
-            keyPassword 'artThiefKeyPassword'
-            storeFile file('/Users/rpc80/Workspace/keystore/android.jks')
-            storePassword 'keystorePassword'
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
     compileSdkVersion 25
     defaultConfig {
-        applicationId "com.ryanpconnors.artthief"
+        applicationId "com.ryanpconnors.art_thief"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.0.5"
+        versionCode 1
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
