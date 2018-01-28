@@ -15,7 +15,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.ryanpconnors.artthief.rate.ArtWorkListFragment"
+        tools:context="com.ryanpconnors.art_thief.rate.ArtWorkListFragment"
         tools:listitem="@layout/fragment_artwork_list_item" />
 
     <TextView

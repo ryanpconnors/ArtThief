@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.ryanpconnors.artthief"
+<manifest package="com.ryanpconnors.art_thief"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,7 +13,7 @@
         android:theme="@style/TabbedTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.ryanpconnors.art_thief.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,19 +22,19 @@
         </activity>
 
         <activity
-            android:name=".rate.ArtWorkPagerActivity"
+            android:name="com.ryanpconnors.art_thief.rate.ArtWorkPagerActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.ryanpconnors.art_thief.MainActivity"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
-            android:name=".compare.SortArtWorkActivity"
-            android:parentActivityName=".MainActivity">
+            android:name="com.ryanpconnors.art_thief.compare.SortArtWorkActivity"
+            android:parentActivityName="com.ryanpconnors.art_thief.MainActivity">
         </activity>
 
         <activity
-            android:name=".vote.ScannerActivity">
+            android:name="com.ryanpconnors.art_thief.vote.ScannerActivity">
         </activity>
 
         <provider
