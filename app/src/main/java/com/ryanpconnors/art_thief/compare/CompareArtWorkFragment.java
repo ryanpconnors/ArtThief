@@ -205,7 +205,7 @@ public class CompareArtWorkFragment extends Fragment {
 
         starButton.setText(starButtonText);
 
-        /* Enable the star button iff there are at least 2 artworks */
+        /* Enable the star button iff there are at least 2 artworks available */
         starButton.setEnabled(starCount >= 2);
         starButton.setAlpha(starButton.isEnabled() ? 1f : .5f);
 
@@ -223,7 +223,8 @@ public class CompareArtWorkFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnCompareArtFragmentInteractionListener) {
             mCompareArtWorkListener = (OnCompareArtFragmentInteractionListener) context;
-        } else {
+        }
+        else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
