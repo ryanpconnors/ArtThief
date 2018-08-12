@@ -217,7 +217,7 @@ public class Gallery {
 
         ContextWrapper cw = new ContextWrapper(mContext);
 
-        // path to /data/data/com.ryanpconnors.artthief/app_data/artwork_images
+        // path to /data/data/com.ryanpconnors.art-thief/app_data/artwork_images
         File directory = cw.getDir(IMAGE_DIRECTORY_NAME, Context.MODE_PRIVATE);
 
         // Create imageDir
@@ -435,15 +435,18 @@ public class Gallery {
 
 
     /**
-     * @param numStars
-     * @return
+     * Returns the total number of available, not `TAKEN`, artworks for the given number of stars
+     *
+     * @param numStars the number of stars to get the count of artworks for
+     * @return the total number of artworks that have a rating of `numStars` that have not been marked `TAKEN`
      */
     public int getStarCount(String numStars) {
 
         Cursor cursor = mDatabase.query(
                 ArtWorkTable.NAME,
                 new String[]{"count(*)"},
-                ArtWorkTable.Cols.STARS + " = ?",
+                ArtWorkTable.Cols.STARS + " = ?" + " AND " +
+                        ArtWorkTable.Cols.TAKEN + " = 0",
                 new String[]{numStars},
                 null,
                 null,
