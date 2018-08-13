@@ -69,7 +69,7 @@ class UpdateArtWorkFragment : Fragment() {
 
         // Setup the last update date textView
         mLastUpdateTextView = v.findViewById<View>(R.id.last_update_date_text) as TextView
-        mLastUpdateTextView!!.setText(String.format("%s %s", getString(R.string.update_art_last_update), Gallery.get(activity).lastUpdateDate))
+        mLastUpdateTextView!!.text = String.format("%s %s", getString(R.string.update_art_last_update), Gallery.get(activity).lastUpdateDate)
 
         return v
     }
@@ -268,7 +268,7 @@ class UpdateArtWorkFragment : Fragment() {
 
             if (success!!) {
                 mArtWorkUpdateListener!!.onArtWorkDataSourceUpdate()
-                mLastUpdateTextView!!.setText(String.format(Locale.US, "%s %s", getString(R.string.update_art_last_update), Gallery.get(activity).lastUpdateDate))
+                mLastUpdateTextView!!.text = String.format(Locale.US, "%s %s", getString(R.string.update_art_last_update), Gallery.get(activity).lastUpdateDate)
             }
 
             val builder = AlertDialog.Builder(activity)

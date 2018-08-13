@@ -70,7 +70,7 @@ class ArtWorkListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
         if (mArtWork!!.stars > 0) {
             mArtWorkRatingStarImageView.setImageResource(R.drawable.ic_star_border_black_18dp)
-            mArtWorkRatingTextView.setText(String.format(Locale.US, "%s", Integer.toString(mArtWork!!.stars)))
+            mArtWorkRatingTextView.text = String.format(Locale.US, "%s", Integer.toString(mArtWork!!.stars))
             mArtWorkRatingStarImageView.visibility = View.VISIBLE
             mArtWorkRatingTextView.visibility = View.VISIBLE
         } else {

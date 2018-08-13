@@ -107,7 +107,7 @@ class ShowFragment : Fragment() {
                         mCurrentArtworkImageView!!.setImageBitmap(null)
                         mCurrentArtworkTextView!!.visibility = View.INVISIBLE
 
-                        mTakenButton!!.setText(String.format(Locale.US, getString(R.string.artwork_not_found), s.toString()))
+                        mTakenButton!!.text = String.format(Locale.US, getString(R.string.artwork_not_found), s.toString())
                         mTakenButton!!.visibility = View.VISIBLE
 
                         setTakenButton()
@@ -157,7 +157,7 @@ class ShowFragment : Fragment() {
             mMarkTakenButton!!.isClickable = true
             mMarkTakenButton!!.alpha = 1f
 
-            mTakenButton!!.setText(String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork!!.showId))
+            mTakenButton!!.text = String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork!!.showId)
             mTakenButton!!.visibility = if (mCurrentArtwork!!.isTaken) View.VISIBLE else View.INVISIBLE
         }
     }
@@ -180,13 +180,13 @@ class ShowFragment : Fragment() {
             mCurrentArtworkImageView!!.setImageBitmap(largeArtworkImage)
         } else {
             mCurrentArtworkImageView!!.setImageBitmap(null)
-            mTakenButton!!.setText(String.format(Locale.US, getString(R.string.artwork_image_not_found), mCurrentArtwork!!.showId))
+            mTakenButton!!.text = String.format(Locale.US, getString(R.string.artwork_image_not_found), mCurrentArtwork!!.showId)
             mTakenButton!!.visibility = View.VISIBLE
             mCurrentArtworkTextView!!.visibility = View.INVISIBLE
         }
 
         if (mCurrentArtwork!!.isTaken) {
-            mTakenButton!!.setText(String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork!!.showId))
+            mTakenButton!!.text = String.format(Locale.US, getString(R.string.artwork_taken), mCurrentArtwork!!.showId)
             mTakenButton!!.visibility = View.VISIBLE
             mCurrentArtworkTextView!!.visibility = View.INVISIBLE
         } else {
@@ -223,7 +223,7 @@ class ShowFragment : Fragment() {
 
             if (topRatedArtwork.stars > 0) {
                 mTopPickRatingStarImageView!!.setImageResource(R.drawable.ic_star_border_black_18dp)
-                mTopPickRatingTextView!!.setText(String.format(Locale.US, "%s", Integer.toString(topRatedArtwork.stars)))
+                mTopPickRatingTextView!!.text = String.format(Locale.US, "%s", Integer.toString(topRatedArtwork.stars))
                 mTopPickRatingStarImageView!!.visibility = View.VISIBLE
                 mTopPickRatingTextView!!.visibility = View.VISIBLE
             } else {

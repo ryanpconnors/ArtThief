@@ -142,7 +142,7 @@ class ArtWorkFragment : Fragment() {
         }
 
         mArtWorkTitleTextView = view.findViewById<View>(R.id.artwork_title) as TextView
-        mArtWorkTitleTextView!!.setText(String.format("(%s) %s", mArtWork!!.showId, mArtWork!!.title))
+        mArtWorkTitleTextView!!.text = String.format("(%s) %s", mArtWork!!.showId, mArtWork!!.title)
 
         mArtWorkArtistTextView = view.findViewById<View>(R.id.artwork_artist) as TextView
         mArtWorkArtistTextView!!.text = mArtWork!!.artist

@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity(), UpdateArtWorkFragment.OnUpdateArtWorkF
         val sectionsPagerAdapter = mViewPager!!.adapter as SectionsPagerAdapter?
         val artWorkListFragment = sectionsPagerAdapter!!.getItem(1) as ArtWorkListFragment
 
-        artWorkListFragment?.updateUI()
+        artWorkListFragment.updateUI()
     }
 
     companion object {

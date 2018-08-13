@@ -56,7 +56,7 @@ private constructor(context: Context) {
                     return extractInt(a1.showId!!) - extractInt(a2.showId!!)
                 }
 
-                internal fun extractInt(s: String): Int {
+                fun extractInt(s: String): Int {
                     val num = s.replace("\\D".toRegex(), "")
                     return if (num.isEmpty()) Integer.MAX_VALUE else Integer.parseInt(num)
                 }

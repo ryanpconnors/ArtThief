@@ -54,10 +54,6 @@ class ArtWorkPagerActivity : AppCompatActivity(), OnArtWorkFragmentInteractionLi
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return super.onCreateOptionsMenu(menu)
-    }
-
 
     // TODO
     override fun onArtWorkFragmentInteraction(uri: Uri) {

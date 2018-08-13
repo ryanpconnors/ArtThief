@@ -5,7 +5,7 @@ package com.ryanpconnors.art_thief
  */
 class ArtThiefException : Exception {
 
-    constructor() : super() {}
+    constructor() : super()
 
-    constructor(message: String) : super(message) {}
+    constructor(message: String) : super(message)
 }
